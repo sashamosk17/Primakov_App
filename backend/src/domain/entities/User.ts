@@ -1,0 +1,47 @@
+import { Email } from "../value-objects/Email";
+import { Password } from "../value-objects/Password";
+import { Role } from "../../shared/types";
+import { ROLE_PERMISSIONS } from "../../shared/constants";
+
+export class User {
+  public updatedAt: Date;
+
+  constructor(
+    public readonly id: string,
+    public email: Email,
+    public password: Password,
+    public firstName: string,
+    public lastName: string,
+    public role: Role,
+    public createdAt: Date,
+    updatedAt?: Date,
+    public isActive = true,
+    public vkId?: string
+  ) {
+    this.updatedAt = updatedAt ?? createdAt;
+  }
+
+  public isStudent(): boolean {
+    return this.role === "STUDENT";
+  }
+
+  public isTeacher(): boolean {
+    return this.role === "TEACHER";
+  }
+
+  public isAdmin(): boolean {
+    return this.role === "ADMIN" || this.role === "SUPERADMIN";
+  }
+
+  public hasPermission(permission: string): boolean {
+    return ROLE_PERMISSIONS[this.role].includes(permission as never);
+  }
+
+  public verify(password: string): boolean {
+    return this.password.compare(password);
+  }
+
+  public updateLastLogin(): void {
+    this.updatedAt = new Date();
+  }
+}

@@ -1,0 +1,60 @@
+# Игнорировать ВСЕ node_modules в любых поддиректориях
+node_modules/
+**/node_modules/
+
+# Игнорировать ВСЕ .md файлы в любых поддиректориях, кроме файлов с README в названии
+*.md
+**/*.md
+!README.md
+!**/README.md
+!README*.md
+!**/README*.md
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Expo
+.expo/
+.expo-shared/
+
+# React Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/.idea/
+
+# iOS
+ios/build/
+ios/Pods/
+ios/*.xcworkspace
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

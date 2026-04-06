@@ -20,68 +20,67 @@ class MockDeadlineRepository {
             {
                 title: "Эссе по Литературе",
                 description: "Написать эссе на тему: 'Роль морали в романе Достоевского'",
-                dueDate: new Date(today.getTime() + 4 * 24 * 60 * 60 * 1000), // 4 days
+                dueDate: new Date(today.getTime() + 4 * 24 * 60 * 60 * 1000),
                 subject: "Литература",
             },
             {
                 title: "Лабораторная работа по Физике",
                 description: "Провести опыт по закону сохранения энергии и подготовить отчет",
-                dueDate: new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000), // 2 days
+                dueDate: new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000),
                 subject: "Физика",
             },
             {
                 title: "Контрольная работа по Математике",
                 description: "Пройти тест по производным и интегралам (10 задач)",
-                dueDate: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000), // 1 day
+                dueDate: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000),
                 subject: "Математика",
             },
             {
                 title: "Проект по Истории",
                 description: "Создать презентацию о Российской Империи (XV-XVIII век)",
-                dueDate: new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
+                dueDate: new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000),
                 subject: "История",
             },
             {
                 title: "Тестирование по Английскому языку",
                 description: "Пройти тест на использование Present Perfect и Past Simple",
-                dueDate: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000), // 3 days
+                dueDate: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000),
                 subject: "Английский язык",
             },
             {
                 title: "Домашнее задание по Химии",
                 description: "Решить задачи по расчету молярных масс веществ (стр. 234-235)",
-                dueDate: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000), // 1 day
+                dueDate: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000),
                 subject: "Химия",
             },
             {
                 title: "Реферат по Обществознанию",
                 description: "Написать реферат на тему 'Гражданское общество в России' (10-12 стр.)",
-                dueDate: new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000), // 10 days
+                dueDate: new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000),
                 subject: "Обществознание",
             },
             {
                 title: "Программирование на Python",
                 description: "Написать программу для сортировки массива (не менее 3 методов)",
-                dueDate: new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000), // 5 days
+                dueDate: new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000),
                 subject: "Информатика",
             },
             {
                 title: "Творческий проект по Музыке",
                 description: "Составить плей-лист из 10 произведений разных эпох с описанием",
-                dueDate: new Date(today.getTime() + 8 * 24 * 60 * 60 * 1000), // 8 days
+                dueDate: new Date(today.getTime() + 8 * 24 * 60 * 60 * 1000),
                 subject: "Музыка",
             },
             {
                 title: "Доклад по Географии",
                 description: "Подготовить доклад о климатических поясах Земли (5-7 минут)",
-                dueDate: new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000), // 6 days
+                dueDate: new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000),
                 subject: "География",
             },
         ];
         testDeadlines.forEach((deadline, index) => {
             this.deadlines.push(new Deadline_1.Deadline(`deadline-${index + 1}`, deadline.title, deadline.description, deadline.dueDate, userId, DeadlineStatus_1.DeadlineStatus.PENDING, new Date(today.getTime() - (10 - index) * 24 * 60 * 60 * 1000), undefined, undefined, deadline.subject));
         });
-        // Add some completed deadlines
         const completedDeadlines = [
             {
                 title: "Презентация по Биологии",
@@ -103,6 +102,9 @@ class MockDeadlineRepository {
     async getByUser(userId) {
         const userDeadlines = this.deadlines.filter((d) => d.userId === userId);
         return Result_1.Result.ok(userDeadlines);
+    }
+    async findById(id) {
+        return this.deadlines.find((d) => d.id === id);
     }
     async save(deadline) {
         this.deadlines.push(deadline);

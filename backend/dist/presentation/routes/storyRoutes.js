@@ -8,10 +8,8 @@ const express_1 = require("express");
 const StoryController_1 = require("../controllers/StoryController");
 const GetStoriesUseCase_1 = require("../../application/story/GetStoriesUseCase");
 const MarkStoryAsViewedUseCase_1 = require("../../application/story/MarkStoryAsViewedUseCase");
-const MockStoryRepository_1 = require("../../infrastructure/database/mock/MockStoryRepository");
-const storyRoutes = () => {
+const storyRoutes = (storyRepository) => {
     const router = (0, express_1.Router)();
-    const storyRepository = new MockStoryRepository_1.MockStoryRepository();
     const getStoriesUseCase = new GetStoriesUseCase_1.GetStoriesUseCase(storyRepository);
     const markStoryAsViewedUseCase = new MarkStoryAsViewedUseCase_1.MarkStoryAsViewedUseCase(storyRepository);
     const controller = new StoryController_1.StoryController(getStoriesUseCase, markStoryAsViewedUseCase);

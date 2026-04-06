@@ -5,10 +5,9 @@ import { GetTeacherRatingsUseCase } from "../../application/rating/GetTeacherRat
 import { RatingService } from "../../domain/services/RatingService";
 import { MockRatingRepository } from "../../infrastructure/database/memory/MockRatingRepository";
 import { authMiddleware } from "../middleware/authMiddleware";
-import type { IRepository } from "../../domain/repositories/IRepository";
-import type { Rating } from "../../domain/entities/Rating";
+import type { IRatingRepository } from "../../domain/repositories/IRatingRepository";
 
-export const ratingRoutes = (repository?: IRepository<Rating>) => {
+export const ratingRoutes = (repository?: IRatingRepository) => {
   const router = Router();
   const service = new RatingService(repository || new MockRatingRepository());
   const controller = new RatingController(

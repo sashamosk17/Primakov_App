@@ -4,6 +4,7 @@ import { AuthenticatedRequest } from "../types";
 import { CreateDeadlineUseCase } from "../../application/deadline/CreateDeadlineUseCase";
 import { GetUserDeadlinesUseCase } from "../../application/deadline/GetUserDeadlinesUseCase";
 import { CompleteDeadlineUseCase } from "../../application/deadline/CompleteDeadlineUseCase";
+import type { IDeadlineRepository } from "../../domain/repositories/IDeadlineRepository";
 import { Deadline } from "../../domain/entities/Deadline";
 import { DeadlineStatus } from "../../domain/value-objects/DeadlineStatus";
 
@@ -11,7 +12,8 @@ export class DeadlineController {
   constructor(
     private readonly createDeadlineUseCase: CreateDeadlineUseCase,
     private readonly getUserDeadlinesUseCase: GetUserDeadlinesUseCase,
-    private readonly completeDeadlineUseCase: CompleteDeadlineUseCase
+    private readonly completeDeadlineUseCase: CompleteDeadlineUseCase,
+    private readonly deadlineRepository: IDeadlineRepository
   ) {}
 
   public getDeadlines = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -54,7 +56,11 @@ export class DeadlineController {
   public completeDeadline = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       const { deadlineId } = req.params;
-      const result = await this.completeDeadlineUseCase.execute(deadlineId);
+      const deadline = await this.deadlineRepository.findById(deadlineId);
+      if (!deadline) {
+        return res.status(404).json({ status: "error", error: { message: "Deadline not found" } });
+      }
+      const result = await this.completeDeadlineUseCase.execute(deadline);
       if (result.isFailure) {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }

@@ -3,7 +3,6 @@ import { ScheduleController } from "../controllers/ScheduleController";
 import { GetScheduleUseCase } from "../../application/schedule/GetScheduleUseCase";
 import { GetScheduleByDateUseCase } from "../../application/schedule/GetScheduleByDateUseCase";
 import { ScheduleService } from "../../domain/services/ScheduleService";
-import { MockScheduleRepository } from "../../infrastructure/database/memory/MockScheduleRepository";
 import type { IScheduleRepository } from "../../domain/repositories/IScheduleRepository";
 
 export const scheduleRoutes = (repository: IScheduleRepository) => {

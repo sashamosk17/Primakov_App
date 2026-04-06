@@ -33,5 +33,18 @@ class User {
     updateLastLogin() {
         this.updatedAt = new Date();
     }
+    toJSON() {
+        return {
+            id: this.id,
+            email: this.email.value,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            role: this.role,
+            createdAt: this.createdAt.toISOString(),
+            updatedAt: this.updatedAt.toISOString(),
+            isActive: this.isActive,
+            vkId: this.vkId,
+        };
+    }
 }
 exports.User = User;

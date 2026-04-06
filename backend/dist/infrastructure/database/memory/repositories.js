@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ratingRepository = exports.userRepository = exports.storyRepository = exports.announcementRepository = exports.deadlineRepository = exports.scheduleRepository = void 0;
+const MockScheduleRepository_1 = require("./MockScheduleRepository");
+const MockDeadlineRepository_1 = require("./MockDeadlineRepository");
+const MockAnnouncementRepository_1 = require("./MockAnnouncementRepository");
+const MockStoryRepository_1 = require("./MockStoryRepository");
+const MockUserRepository_1 = require("./MockUserRepository");
+const MockRatingRepository_1 = require("./MockRatingRepository");
+exports.scheduleRepository = new MockScheduleRepository_1.MockScheduleRepository();
+exports.deadlineRepository = new MockDeadlineRepository_1.MockDeadlineRepository();
+exports.announcementRepository = new MockAnnouncementRepository_1.MockAnnouncementRepository();
+exports.storyRepository = new MockStoryRepository_1.MockStoryRepository();
+exports.userRepository = new MockUserRepository_1.MockUserRepository();
+exports.ratingRepository = new MockRatingRepository_1.MockRatingRepository();

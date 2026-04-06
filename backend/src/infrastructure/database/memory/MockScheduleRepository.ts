@@ -79,7 +79,8 @@ export class MockScheduleRepository implements IScheduleRepository {
         `schedule-${dayOffset}`,
         "10A-Math",
         scheduleDate,
-        lessons as any
+        lessons as any,
+        new Date()
       );
       this.schedules.push(schedule);
     }

@@ -6,6 +6,9 @@ class DeadlineRepository {
     async getByUser(_userId) {
         return Result_1.Result.fail("Not implemented");
     }
+    async findById(_id) {
+        return undefined;
+    }
     async save(_deadline) {
         return Result_1.Result.fail("Not implemented");
     }

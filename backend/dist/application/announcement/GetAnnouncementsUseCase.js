@@ -1,7 +1,4 @@
 "use strict";
-/*
- * Use case for retrieving all announcements
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetAnnouncementsUseCase = void 0;
 class GetAnnouncementsUseCase {

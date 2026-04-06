@@ -1,7 +1,4 @@
 "use strict";
-/*
- * Use case for retrieving all active stories
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetStoriesUseCase = void 0;
 class GetStoriesUseCase {

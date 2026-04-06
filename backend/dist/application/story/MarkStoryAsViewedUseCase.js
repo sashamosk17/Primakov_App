@@ -1,7 +1,4 @@
 "use strict";
-/*
- * Use case for marking a story as viewed by a user
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MarkStoryAsViewedUseCase = void 0;
 const Result_1 = require("../../shared/Result");

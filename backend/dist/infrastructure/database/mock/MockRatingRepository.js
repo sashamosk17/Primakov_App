@@ -1,7 +1,4 @@
 "use strict";
-/*
- * In-memory rating repository with teacher ratings
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MockRatingRepository = void 0;
 const Rating_1 = require("../../../domain/entities/Rating");

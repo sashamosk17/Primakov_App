@@ -16,9 +16,9 @@ class MockScheduleRepository {
         this.initializeTestData();
     }
     initializeTestData() {
-        // Create weekly schedule for a group
+        // создаем расписание для группы
         const groupId = "10A-Math";
-        const startDate = new Date("2024-01-22"); // Monday
+        const startDate = new Date("2024-01-22");
         for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
             const currentDate = new Date(startDate);
             currentDate.setDate(currentDate.getDate() + dayOffset);
@@ -33,6 +33,7 @@ class MockScheduleRepository {
         const room = roomResult.isSuccess ? roomResult.value : null;
         if (!room)
             return lessons;
+        // Define lesson structure: different subjects for different days
         const scheduleByDay = {
             0: [
                 { subject: "Математика", time: "09:00-10:00", teacherId: "teacher-1", hasHomework: true },
@@ -76,8 +77,7 @@ class MockScheduleRepository {
                 { subject: "Русский язык", time: "10:10-11:10", teacherId: "teacher-2", hasHomework: false },
                 { subject: "Проектная деятельность", time: "11:20-12:50", teacherId: "teacher-1", hasHomework: false },
             ],
-            6: [
-            ],
+            6: [],
         };
         const dayLessons = scheduleByDay[dayOfWeek] || [];
         dayLessons.forEach((lesson, index) => {

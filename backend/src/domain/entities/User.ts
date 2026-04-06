@@ -44,4 +44,18 @@ export class User {
   public updateLastLogin(): void {
     this.updatedAt = new Date();
   }
+
+  public toJSON() {
+    return {
+      id: this.id,
+      email: this.email.value,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      role: this.role,
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+      isActive: this.isActive,
+      vkId: this.vkId,
+    };
+  }
 }

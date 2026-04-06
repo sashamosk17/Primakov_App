@@ -20,8 +20,22 @@ import {
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// CORS configuration for web development
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+
 app.use(express.json());
+
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
 
 // Используем глобальные экземпляры репозиториев, чтобы data persisted
 app.use("/api/auth", authRoutes(userRepository));

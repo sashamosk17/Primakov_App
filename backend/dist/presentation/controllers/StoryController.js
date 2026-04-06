@@ -1,5 +1,6 @@
 "use strict";
-/*
+/**
+ * StoryController
  * Handles HTTP requests for story management
  */
 Object.defineProperty(exports, "__esModule", { value: true });

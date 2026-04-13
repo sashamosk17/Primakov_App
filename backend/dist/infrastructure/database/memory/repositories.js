@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ratingRepository = exports.userRepository = exports.storyRepository = exports.announcementRepository = exports.deadlineRepository = exports.scheduleRepository = void 0;
-const MockScheduleRepository_1 = require("./MockScheduleRepository");
+const MockScheduleRepository_1 = require("../mock/MockScheduleRepository");
 const MockDeadlineRepository_1 = require("./MockDeadlineRepository");
 const MockAnnouncementRepository_1 = require("./MockAnnouncementRepository");
 const MockStoryRepository_1 = require("./MockStoryRepository");

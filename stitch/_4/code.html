@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrimakovApp - Announcements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e8e8ea",
+                        "inverse-on-surface": "#f0f0f2",
+                        "tertiary-fixed": "#e0e2e7",
+                        "tertiary-container": "#484b4f",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2f3132",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "outline": "#8b716d",
+                        "on-tertiary-fixed": "#191c20",
+                        "on-primary-fixed": "#410001",
+                        "surface-dim": "#d9dadc",
+                        "primary-fixed": "#ffdad5",
+                        "on-surface": "#1a1c1d",
+                        "on-secondary-container": "#636262",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e2e4",
+                        "primary-container": "#8c251c",
+                        "error": "#ba1a1a",
+                        "background": "#f9f9fb",
+                        "surface-container": "#eeeef0",
+                        "inverse-primary": "#ffb4a9",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-primary-container": "#ffa396",
+                        "surface-variant": "#e2e2e4",
+                        "surface-container-low": "#f3f3f5",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9fb",
+                        "outline-variant": "#dec0bb",
+                        "on-primary": "#ffffff",
+                        "surface": "#f9f9fb",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#862118",
+                        "tertiary-fixed-dim": "#c4c6cb",
+                        "secondary": "#5f5e5e",
+                        "primary": "#6c0c08",
+                        "on-background": "#1a1c1d",
+                        "on-surface-variant": "#57423e",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#b9bbc0",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#313438",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#e2dfde",
+                        "on-tertiary-fixed-variant": "#44474b",
+                        "surface-tint": "#a7382d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-effect { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body min-h-screen">
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 w-full backdrop-blur-md bg-opacity-80 bg-[#f9f9fb]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="Student Profile Photo" data-alt="close up professional headshot of a student with a friendly expression in a neutral academic setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6uVu1pTAB67RCCYHzHAnlikAOFcmNOEgxTPUfMiiIJEjn1OjwUFjZnbln6Z0vmro-bO6rWe8_fbdxHW70L-Cen3UuugdWfSR7-t6x-xfXuvtROi38tGWQdloBTxTzGiiW247rLhwtXKcHyUtSktX8-PTFHvzOpwBrvl6Ghegjp3QnrLypcG6VdHQVTBrE3NvvZAi3jZxT3HiMqXiIq9ZRDL5HE7PAjGJ9s0974GCMogvCisOI7Z_32LbMyQH_qTNNxum_9mSbHZ5-"/>
+</div>
+<h1 class="font-headline font-bold tracking-tight text-xl text-[#8C251C]">PrimakovApp</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-500">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-24 px-6 max-w-2xl mx-auto">
+<section class="mb-10">
+<div class="flex items-end justify-between mb-6">
+<h2 class="font-headline text-2xl font-extrabold tracking-tight text-on-background">Announcements</h2>
+<span class="font-label text-sm text-primary font-semibold">View All</span>
+</div>
+<div class="flex gap-6 overflow-x-auto no-scrollbar pb-2">
+<div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer">
+<div class="p-[3px] rounded-full ring-2 ring-[#8C251C] ring-offset-2 ring-offset-background">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="Admin" data-alt="minimalist academic icon representing school administration on a soft grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSa-RzAVGD0W_LzSVIcJFDBY0KSg3aPvgbt-FRbxx5k3TYlPskHb_3BSeZKEh56SCcw-seoDZaXu8Mlpga1tMzpZA-Sj0Ba3gOe55rANDBFGhVRmIOTY_Crws0teGZYBNvBRvzZHn-BY9zq_z1ZPbDFSpY8G_4ZQvh2athmAWc57_8ve3jdAEpyuEBu2ukAxQT4FOzmQyh_dG4BtcyCKN5CLXG6W_7wyRJWMSni0u74_lOg5E_2qXHhONn0NVkZO8ZA2VhVkcHPfwb"/>
+</div>
+</div>
+<span class="font-label text-xs font-medium text-on-surface-variant">Admin</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<div class="p-[3px] rounded-full ring-2 ring-[#8C251C] ring-offset-2 ring-offset-background">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="Events" data-alt="bright vibrant illustration of school event symbols like a calendar and stars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6y9fGLDQ1AGp6XYco2JIj3IGYkDzY6f4DqXZgYHNJzuOF5CgCaHVqnD4ISPSrsfjtS2MaP4DEBjmzFTNeYWhYojeWwKGsd_272r0avC1wArG6Pxu8geM5ww8Eu5Gk9lG2KnVEWCGT3GgNCUEtDnE4aLfqITzgq6GnkuG9O0dioLybuOOf0DDrgeEiBTRirxlIUsTjNkq7twXNEXD5mN4j5WdeBBuAwUaMIrlbRqMlfqLKkZR-uZQYeCSLCY030JNZ6xXqNTJEzcQl"/>
+</div>
+</div>
+<span class="font-label text-xs font-medium text-on-surface-variant">Events</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<div class="p-[3px] rounded-full ring-2 ring-[#8C251C] ring-offset-2 ring-offset-background">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="Sports" data-alt="athletic equipment icons including a trophy and ball in a clean vector style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7sGRd2ADIkC8ubzM59EX4R1Cp6jOOKEpAkBeUmRMg23XNtBnbSbbTwAcEE8Lb9hlY54zXyKG-5bfgCMPMCwU9QQZI1bOTHNgyHKPq4fImvpOgjGNh2tudzGtxQlijFIQ3PbxpO1v_D_V31jQdv4b4Sn8lzuQHhhxfyDC1Ci4Ar6i5mAnVqBB4LGa5XJXrdUA-GHsW7hF0-dPfw7zweGCcT40xgc19VPk6s0JqA_nrDRusfCugTOUtsU_s4nkMbh04hVCpu0KHEJ4_"/>
+</div>
+</div>
+<span class="font-label text-xs font-medium text-on-surface-variant">Sports</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<div class="p-[3px] rounded-full ring-2 ring-[#8C251C] ring-offset-2 ring-offset-background">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="Library" data-alt="stylized icons of open books and glasses in a classic academic illustration style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7Q2w_YGkb-F4_R1_PXSWv6ftTyWFfugbssWiH4-WdtnrKaEbaAB-_8VnrJN4U5hQU1KJ-1GpEzwu_pRZMCILiBdGgLF212EKCKS1xwSxzlqVV7WCKHWxKzuUjd50iRI109Gmwr5qnZyNjaKyqz3m6Bn8opZ0RcOzctDUJ_wH5buQEvUuIS2GAlyT8JMR6B4PFLU7RNLGXTPDwXipghhoF0HA6l2v9AOiYLxpAhDcrkY_62aPw4Fx7mxFXOIr2vzyamgamFXVBtUv"/>
+</div>
+</div>
+<span class="font-label text-xs font-medium text-on-surface-variant">Library</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<div class="p-[3px] rounded-full ring-2 ring-[#8C251C] ring-offset-2 ring-offset-background">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="Cafe" data-alt="iconography of a coffee cup and tray in a modern minimalist flat design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNal-BWdT3h5P-S29J-xFu2HgUn1cGU0rOthNC-CSMuzPm6KEcqCcJBWBXjcZ_9winq3NlQnGObJa6UCWVsiYFLw1NrhG6289qX7pPbeye5B7ZW_0kawfI38oFp9j8yQBjgSFB7aOQ7XMUxJ-gE0ZDeiH5e3aDmHkeyKsjhfiIRaSO_26mHEbScrVcW0gQWKz4sEnz51naArE8e0kCg6_hKCWF_mOf-XeBA-f94WFrEqGIS55dw8wLadzKch5zLRjgMappzuN1q_z0"/>
+</div>
+</div>
+<span class="font-label text-xs font-medium text-on-surface-variant">Cafeteria</span>
+</div>
+</div>
+</section>
+<section class="space-y-6">
+<div class="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden bg-surface-container-low shadow-xl">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+<img alt="School Event" class="absolute inset-0 w-full h-full object-cover" data-alt="grand library hall with wooden desks, green lamps, and rows of books in soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu3QtUNeECuMz-vv6ChHBRW3aNyKvq0o_93o9Onz5ihk49501ScEdyrrtd6BzZvZ-5tCGt4TkRtFBwr3y397uOXH2s1KQJeDtaDw98ErYTizNP545gC9jyp9qbjGJGfzc-sKMqAjXzzlyy04bxZej0e97U_V61f-I67amWK0o6E48B9Zy3eb_TvN_m2WCP09pyG0fAAqGmGfkN0vretQmusXmwlt4zZAsz1kB406buU9bLID5UvtUUFqb7PsO2WYNLEQBaMl6t09Sn"/>
+<div class="absolute top-0 left-0 right-0 p-4 z-20 flex gap-1">
+<div class="h-1 flex-1 bg-white rounded-full"></div>
+<div class="h-1 flex-1 bg-white/30 rounded-full"></div>
+<div class="h-1 flex-1 bg-white/30 rounded-full"></div>
+</div>
+<div class="absolute top-8 left-6 right-6 z-20 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden">
+<img alt="School Logo" data-alt="official elegant school crest with traditional heraldic symbols in deep red and gold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXiy1p4SUptnC33LDfujXK_SKFXoTAZKiYwKbEh5_Pbsao7_A6SfNfs24kkWrAe2OeMXDC2NuZmiNTfOzubhssuM9nBJXluYYt0wqUcvkSKsazs5pFavM_N9O8s6y6nOpY1txzqT_UOOyauH1PlaKG5MgJGVk55N50ht3FYyz8Vr8eN67-NcnzVxBAjmHZxKyievshlpTlqK3j8xHObtXOTao-vJzTctE36_IqQ54IrlD0SkRXFZ0yBbwUTOv65srPqtYoSRAJBuH0"/>
+</div>
+<div>
+<p class="text-white font-headline font-bold text-sm">Primakov School</p>
+<p class="text-white/70 font-label text-[10px]">2 hours ago</p>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white active:scale-90 transition-transform">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="absolute bottom-10 left-8 right-8 z-20">
+<h3 class="font-headline text-3xl font-extrabold text-white leading-tight mb-3">Annual Science Symposium 2024</h3>
+<p class="text-white/80 font-body text-sm leading-relaxed max-w-[90%]">Join us this Friday for an afternoon of innovation, research presentations, and guest speakers from the Academy of Sciences.</p>
+<div class="mt-6 flex gap-3">
+<button class="px-6 py-3 bg-[#8C251C] text-white rounded-2xl font-headline font-bold text-sm active:scale-95 transition-all">Register Now</button>
+<button class="w-12 h-12 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-2xl text-white">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] p-6 space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-background">Event Details</h4>
+<p class="font-label text-sm text-secondary">November 15, 14:00 • Grand Hall</p>
+</div>
+</div>
+<div class="h-px bg-surface-container"></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<p class="font-label text-[10px] uppercase tracking-widest text-secondary mb-1">Speaker</p>
+<p class="font-headline font-bold text-on-surface">Dr. A. Sokolov</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<p class="font-label text-[10px] uppercase tracking-widest text-secondary mb-1">Subject</p>
+<p class="font-headline font-bold text-on-surface">Bio-Tech</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 backdrop-blur-xl border-t border-white/20 bg-white/80 z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<div class="flex flex-col items-center justify-center text-[#8C251C] bg-[#f3f3f5] rounded-xl px-4 py-1 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Inter'] font-medium text-[11px]">Главная</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-[#8C251C] transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Inter'] font-medium text-[11px]">Расписание</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-[#8C251C] transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">widgets</span>
+<span class="font-['Inter'] font-medium text-[11px]">Сервисы</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-[#8C251C] transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] font-medium text-[11px]">Профиль</span>
+</div>
+</nav>
+</body></html>

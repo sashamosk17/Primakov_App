@@ -30,17 +30,24 @@ class ScheduleService {
 
     final dataField = responseData['data'];
     if (dataField == null) {
-      throw Exception('Data field is null');
+      // Возвращаем пустое расписание вместо ошибки
+      print('⚠️ No schedule found for group $groupId on $date, returning empty schedule');
+      return Schedule(
+        id: 'empty-${DateTime.now().millisecondsSinceEpoch}',
+        groupId: groupId,
+        date: date,
+        lessons: [],
+      );
     }
 
     // 🔥 ПРОВЕРКА: Логируем перед парсингом
     print('📝 Parsing schedule from: $dataField');
-    
+
     final schedule = Schedule.fromJson(dataField as Map<String, dynamic>);
-    
+
     // 🔥 ПРОВЕРКА: Логируем результат парсинга
     print('✅ Parsed schedule: ${schedule.id}, lessons: ${schedule.lessons.length}');
-    
+
     return schedule;
     
   } on DioException catch (e) {

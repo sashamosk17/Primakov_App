@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Primakov School - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f0f0f2",
+                    "secondary-container": "#e2dfde",
+                    "on-surface": "#1a1c1d",
+                    "secondary": "#5f5e5e",
+                    "surface-container-high": "#e8e8ea",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-primary-fixed-variant": "#862118",
+                    "on-error": "#ffffff",
+                    "tertiary": "#313438",
+                    "surface-container-low": "#f3f3f5",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "on-surface-variant": "#57423e",
+                    "surface-tint": "#a7382d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#484b4f",
+                    "on-primary-container": "#ffa396",
+                    "on-background": "#1a1c1d",
+                    "error": "#ba1a1a",
+                    "outline": "#8b716d",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container-highest": "#e2e2e4",
+                    "primary-fixed": "#ffdad5",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "surface-bright": "#f9f9fb",
+                    "on-tertiary-container": "#b9bbc0",
+                    "primary-container": "#8c251c",
+                    "surface": "#f9f9fb",
+                    "inverse-primary": "#ffb4a9",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed": "#e0e2e7",
+                    "on-tertiary-fixed": "#191c20",
+                    "secondary-fixed": "#e5e2e1",
+                    "background": "#f9f9fb",
+                    "inverse-surface": "#2f3132",
+                    "on-secondary-container": "#636262",
+                    "surface-dim": "#d9dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e2e2e4",
+                    "on-secondary-fixed-variant": "#474746",
+                    "primary": "#6c0c08",
+                    "outline-variant": "#dec0bb",
+                    "on-primary-fixed": "#410001"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pencil-sketch-mask {
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col items-center justify-between overflow-hidden">
+<!-- Top Branding Section -->
+<div class="w-full max-w-md px-8 pt-16 flex flex-col items-center text-center z-10">
+<!-- School Logo (Simplified Visual Representation) -->
+<div class="mb-8">
+<img alt="Primakov School Logo" class="w-24 h-24 object-contain" data-alt="Modern artistic red brushstroke emblem representing a school crest on a clean white background, minimalist and premium style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEDxpnQ4M7t0S0F34xbwPWqcKCPjsRte-agcORX6QCs5kBuUWxeX8co42j2JNBq2eU4y-MZRae-KJv4YgX4F3eILiEQdBlMCnTR_j6nWpggFsD8m6DqtxSkWz4KWRcxdckQXyNCSbe0MfljlvB_fz1Z5t58ipqnENnX1OZmgp2lVG-DH2CNu8_tf8SzUg09ynoG-BCHsx7BUpsjph0O_B9-kD-upZz47RPdFQSHWvE_VlSya1ocyYPRi-pn5A0OvjLOVLvgTrARghP"/>
+</div>
+<h1 class="font-headline text-2xl font-extrabold tracking-tight text-on-surface mb-2">
+            Добро пожаловать в PrimakovApp
+        </h1>
+<p class="font-body text-secondary text-sm">
+            Ваш персональный доступ к академической среде
+        </p>
+</div>
+<!-- Login Form Section -->
+<div class="w-full max-w-md px-8 mb-auto mt-12 z-10">
+<form class="space-y-6">
+<!-- Username Field -->
+<div class="space-y-1.5">
+<label class="font-label text-xs font-semibold uppercase tracking-widest text-secondary ml-1" for="login">
+                    Логин
+                </label>
+<div class="relative group">
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-4 py-4 rounded-t-xl transition-all outline-none text-on-surface" id="login" name="login" placeholder="Введите ваш логин" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1.5">
+<label class="font-label text-xs font-semibold uppercase tracking-widest text-secondary ml-1" for="password">
+                    Пароль
+                </label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-4 py-4 rounded-t-xl transition-all outline-none text-on-surface" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full bg-gradient-to-b from-[#6c0c08] to-[#8c251c] text-white font-headline font-bold py-4 rounded-2xl shadow-lg shadow-primary/10 active:scale-95 transition-transform" type="submit">
+                    Войти
+                </button>
+</div>
+<!-- Forgot Password -->
+<div class="text-center">
+<a class="text-primary font-body text-sm font-medium hover:underline underline-offset-4 decoration-primary/30" href="#">
+                    Забыли пароль?
+                </a>
+</div>
+</form>
+</div>
+<!-- Bottom Decorative Section -->
+<div class="relative w-full h-64 mt-auto">
+<!-- The Pencil Sketch Watermark -->
+<div class="absolute inset-0 pencil-sketch-mask opacity-20 pointer-events-none">
+<img alt="School Building Sketch" class="w-full h-full object-cover object-bottom" data-alt="Faint graphite pencil sketch of a grand neoclassical school building with columns and large windows, artistic architectural drawing style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHo-UZs5jVcYIRWV-VZlIT9mtDPuhUuGpOhGflCBZTvAIlSsGXPriaLoAgS2iC4_wIoLYMUihHMH7vMdzJ816LV_atqr-ZV4EUOnR3eqAHYQmDbemSoTa55VoYrQuhjZu0t3T5qtE_1ikgF04jZEWg-eFYbQdIYR7SuhjIu1_8LZNPRpfBB0y1FZE3ObkyAjWBTSVzmHlKundPQMrWERsLgSwzJ6s48891TOHpoMaGNyFhMI0Mp_dcMlS7rCfw2aufxQqskIDbaQr"/>
+</div>
+<!-- Subtle Gradient Overlay to blend with background -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<!-- Footer Info -->
+<div class="absolute bottom-8 w-full text-center px-8">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary/60">
+                © 2024 АНОО «Гимназия им. Е. М. Примакова»
+            </p>
+</div>
+</div>
+</body></html>

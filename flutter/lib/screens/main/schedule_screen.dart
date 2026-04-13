@@ -1,14 +1,13 @@
 /// Schedule Screen
 /// Converted from React Native ScheduleScreen.tsx
-import 'dart:async'; 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import '../../models/api_models.dart';
 import '../../providers/schedule_provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../providers/story_provider.dart';
-import '../../widgets/story_card.dart';
-import '../../widgets/lesson_card.dart';
+import '../../config/app_colors.dart';
 
 class ScheduleScreen extends ConsumerStatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
@@ -18,84 +17,138 @@ class ScheduleScreen extends ConsumerStatefulWidget {
 }
 
 class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
-  int _selectedDayIndex = 0;
-  final List<String> _daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  DateTime _selectedDate = DateTime.now();
+  final List<DateTime> _weekDates = [];
 
   @override
   void initState() {
     super.initState();
+    _generateWeekDates();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadData();
     });
   }
 
-  Future<void> _loadData() async {
-    // Загружаем stories
-    await ref.read(storyProvider.notifier).fetchStories();
-    
-    // Загружаем расписание
-    await _loadScheduleForDay(_selectedDayIndex);
+  void _generateWeekDates() {
+    _weekDates.clear();
+    final today = DateTime.now();
+    final currentWeekday = today.weekday;
+    final monday = today.subtract(Duration(days: currentWeekday - 1));
+
+    for (int i = 0; i < 6; i++) {
+      _weekDates.add(monday.add(Duration(days: i)));
+    }
   }
 
-  Future<void> _loadScheduleForDay(int dayIndex) async {
-    // Используем userId из authProvider
+  Future<void> _loadData() async {
+    await _loadScheduleForDate(_selectedDate);
+  }
+
+  Future<void> _loadScheduleForDate(DateTime date) async {
     final userId = ref.read(authProvider).userId;
     if (userId == null) {
       print('❌ User not authenticated');
       return;
     }
 
-    // Вычисляем дату для выбранного дня
-    final today = DateTime.now();
-    final currentWeekday = today.weekday; // 1=пн, 6=сб, 7=вс
-    final targetDate = today.add(Duration(days: dayIndex - (currentWeekday - 1)));
-    
-    final dateString = targetDate.toIso8601String().split('T')[0];
-    
+    final dateString = date.toIso8601String().split('T')[0];
     print('📅 Loading schedule for userId: $userId, date: $dateString');
-    
+
     await ref.read(scheduleProvider.notifier).fetchSchedule(
       userId,
       dateString,
     );
   }
 
-  void _openStoryViewer(List<Story> stories, int initialIndex) {
-    Navigator.push(
-      context,
-      FullScreenDialogRoute(
-        builder: (context) => StoryViewerScreen(
-          stories: stories,
-          initialIndex: initialIndex,
-          onStoryViewed: (storyId) {
-            // Отмечаем историю как просмотренную
-            ref.read(storyProvider.notifier).markAsViewed(storyId);
-          },
-        ),
-      ),
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2025),
+      locale: const Locale('ru', 'RU'),
     );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+      _loadScheduleForDate(picked);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final stories = ref.watch(allStoriesProvider);
-    final isLoading = ref.watch(storyLoadingProvider);
     final schedule = ref.watch(currentScheduleProvider);
     final scheduleLoading = ref.watch(scheduleLoadingProvider);
     final scheduleError = ref.watch(scheduleErrorProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Расписание'),
-        backgroundColor: const Color(0xFF1976D2),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.calendar_today),
-            onPressed: () {
-              // TODO: Open calendar picker
-            },
+      backgroundColor: AppColors.backgroundPrimary,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.backgroundPrimary.withOpacity(0.8),
           ),
-        ],
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFE8E8EA),
+                            width: 2,
+                          ),
+                        ),
+                        child: ClipOval(
+                          child: Image.network(
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuDqNQXspw8VWOz5AeaaX53YchVxqKlN0n-e5mYJjvLV0uNHNiFQTl0SgKrpGnFakAbaEOqFp4KYbIVYMIxP5F7vru4_Y1K5jks8eLo8VtVFfM4GdK0EUsxk8CXqLdYfmRCnOTVn3w7mtul9cpLqfqSO4TSk8RVKsEIVbBfKA0O4NpZw5TjlO7y_Zo36dXwgfbOodNQd0szBID1EnMTi_9ZbBaw77BTGy-1rJke6eAsUZbw6D9v-AnRqT6zAX2ppU7UsQVotSjxY0qz7',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: AppColors.primaryRedLight,
+                                child: const Icon(Icons.person, color: Colors.white, size: 24),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'Расписание',
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF8C251C),
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.event, color: Color(0xFF57423E)),
+                    onPressed: _pickDate,
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -103,170 +156,373 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+
+                // Date Selector
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DateFormat('MMMM yyyy', 'ru').format(_selectedDate),
+                      style: const TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1A1C1D),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedDate = DateTime.now();
+                        });
+                        _loadScheduleForDate(DateTime.now());
+                      },
+                      child: const Text(
+                        'Сегодня',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF8C251C),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Week Days Selector
+                SizedBox(
+                  height: 70,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _weekDates.length,
+                    itemBuilder: (context, index) {
+                      final date = _weekDates[index];
+                      final isSelected = date.day == _selectedDate.day &&
+                          date.month == _selectedDate.month &&
+                          date.year == _selectedDate.year;
+                      final dayName = DateFormat('EEE', 'ru').format(date).toUpperCase();
+
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedDate = date;
+                          });
+                          _loadScheduleForDate(date);
+                        },
+                        child: Container(
+                          width: 56,
+                          margin: const EdgeInsets.only(right: 12),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? const Color(0xFF8C251C)
+                                : const Color(0xFFF3F3F5),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: isSelected
+                                ? [
+                                    BoxShadow(
+                                      color: const Color(0xFF8C251C).withOpacity(0.2),
+                                      blurRadius: 15,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ]
+                                : null,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                dayName.substring(0, 2),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : const Color(0xFF5F5E5E),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${date.day}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : const Color(0xFF1A1C1D),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Lessons Section
+                if (scheduleError != null)
+                  Center(
+                    child: Column(
+                      children: [
+                        const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                        const SizedBox(height: 8),
+                        Text('Ошибка: $scheduleError'),
+                        const SizedBox(height: 8),
+                        ElevatedButton(
+                          onPressed: () => _loadScheduleForDate(_selectedDate),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF8C251C),
+                          ),
+                          child: const Text('Повторить'),
+                        ),
+                      ],
+                    ),
+                  )
+                else if (scheduleLoading)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(32.0),
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF8C251C),
+                      ),
+                    ),
+                  )
+                else if (schedule != null && schedule.lessons.isNotEmpty)
+                  Column(
+                    children: _buildLessonsWithBreaks(schedule.lessons),
+                  )
+                else
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.school,
+                            size: 48,
+                            color: Colors.grey.withOpacity(0.3),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Нет уроков на этот день',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 100),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildLessonsWithBreaks(List<Lesson> lessons) {
+    final widgets = <Widget>[];
+
+    for (int i = 0; i < lessons.length; i++) {
+      final lesson = lessons[i];
+
+      // Add lesson card
+      widgets.add(_CompactLessonCard(lesson: lesson));
+      widgets.add(const SizedBox(height: 8));
+
+      // Add big break after 2nd lesson (index 1)
+      if (i == 1 && lessons.length > 2) {
+        widgets.add(_BigBreakCard());
+        widgets.add(const SizedBox(height: 8));
+      }
+    }
+
+    return widgets;
+  }
+}
+
+// Compact Lesson Card Widget
+class _CompactLessonCard extends StatelessWidget {
+  final Lesson lesson;
+
+  const _CompactLessonCard({required this.lesson});
+
+  @override
+  Widget build(BuildContext context) {
+    final startTime = lesson.startTime.isNotEmpty ? lesson.startTime : '--:--';
+    final endTime = lesson.endTime.isNotEmpty ? lesson.endTime : '--:--';
+    final subject = lesson.subject.isNotEmpty ? lesson.subject : 'Без названия';
+    final teacherId = lesson.teacherId.isNotEmpty ? lesson.teacherId : 'Не указан';
+    final room = lesson.room.isNotEmpty ? lesson.room : '?';
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Time column
+        SizedBox(
+          width: 56,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // Stories Section
-              if (!isLoading && stories.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+              Text(
+                startTime,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1A1C1D),
+                ),
+              ),
+              Text(
+                endTime,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF5F5E5E),
+                  letterSpacing: -0.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 16),
+
+        // Lesson card
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // Vertical accent line
+                Container(
+                  width: 4,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF8C251C).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 12),
+
+                // Content
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Объявления',
-                        style: TextStyle(
-                          fontSize: 18,
+                      Text(
+                        subject,
+                        style: const TextStyle(
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFF1A1C1D),
+                          height: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        height: 120,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: stories.length,
-                          itemBuilder: (context, index) {
-                            final story = stories[index];
-                            return StoryCard(
-                              story: story,
-                              onTap: () {
-                                print('📖 Story tapped: ${story.title}');
-                                _openStoryViewer(stories, index);
-                              },
-                            );
-                          },
+                      const SizedBox(height: 2),
+                      Text(
+                        'Кабинет $room • $teacherId',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF5F5E5E),
+                          height: 1.2,
                         ),
                       ),
                     ],
                   ),
                 ),
+
+                // Chevron icon
+                const Icon(
+                  Icons.chevron_right,
+                  size: 18,
+                  color: Color(0xFF5F5E5E),
+                ),
               ],
-              
-              // Loading stories state
-              if (isLoading && stories.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Center(
-                    child: SizedBox(
-                      height: 100,
-                      child: Center(child: CircularProgressIndicator()),
-                    ),
-                  ),
-                ),
-              
-              // Days of week
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      _daysOfWeek.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: FilterChip(
-                          label: Text(
-                            _daysOfWeek[index],
-                            style: TextStyle(
-                              color: index == _selectedDayIndex
-                                  ? Colors.white
-                                  : const Color(0xFF333333),
-                            ),
-                          ),
-                          selected: index == _selectedDayIndex,
-                          onSelected: (selected) {
-                            if (selected) {
-                              setState(() {
-                                _selectedDayIndex = index;
-                              });
-                              _loadScheduleForDay(index);
-                            }
-                          },
-                          backgroundColor: Colors.transparent,
-                          selectedColor: const Color(0xFF1976D2),
-                          side: BorderSide(
-                            color: index == _selectedDayIndex
-                                ? const Color(0xFF1976D2)
-                                : const Color(0xFFDDDDDD),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              
-              // Lessons Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Уроки на сегодня',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    
-                    // Error state
-                    if (scheduleError != null)
-                      Center(
-                        child: Column(
-                          children: [
-                            const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                            const SizedBox(height: 8),
-                            Text('Ошибка: $scheduleError'),
-                            const SizedBox(height: 8),
-                            ElevatedButton(
-                              onPressed: () => _loadScheduleForDay(_selectedDayIndex),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1976D2),
-                              ),
-                              child: const Text('Повторить'),
-                            ),
-                          ],
-                        ),
-                      )
-                    // Loading state
-                    else if (scheduleLoading)
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    // Schedule loaded
-                    else if (schedule != null && schedule.lessons.isNotEmpty)
-                      Column(
-                        children: schedule.lessons.map((lesson) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: LessonCard(lesson: lesson),
-                          );
-                        }).toList(),
-                      )
-                    // Empty state
-                    else
-                      const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(32.0),
-                          child: Text('Нет уроков на этот день'),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+// Big Break Card Widget
+class _BigBreakCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 72),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: const Color(0xFF8C251C).withOpacity(0.05),
+          borderRadius: BorderRadius.circular(12),
+          border: Border(
+            left: BorderSide(
+              color: const Color(0xFF8C251C),
+              width: 2,
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.restaurant,
+                  size: 18,
+                  color: const Color(0xFF8C251C),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'БОЛЬШАЯ ПЕРЕМЕНА',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF8C251C),
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ],
+            ),
+            const Text(
+              '25 минут',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF8C251C),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// Экран просмотра историй (полноэкранный)
 class StoryViewerScreen extends StatefulWidget {
   final List<Story> stories;
   final int initialIndex;
@@ -287,8 +543,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
   late PageController _pageController;
   late int _currentIndex;
   bool _isPaused = false;
-  Timer? _timer;
-  
+
   // Прогресс для каждой истории
   late List<double> _progressValues;
   late List<Timer?> _storyTimers;

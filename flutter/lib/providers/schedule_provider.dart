@@ -38,7 +38,11 @@ class ScheduleNotifier extends StateNotifier<ScheduleState> {
 
   Future<void> fetchSchedule(String userId, String date) async {
   print('📡 ScheduleNotifier: fetchSchedule called with userId=$userId, date=$date');
-  state = state.copyWith(isLoading: true, error: null);
+  state = ScheduleState(
+    currentSchedule: state.currentSchedule,
+    isLoading: true,
+    error: null,
+  );
   try {
     final schedule = await _service.getScheduleByDate(userId, date);
     print('✅ ScheduleNotifier: received schedule with ${schedule.lessons.length} lessons');
@@ -46,9 +50,10 @@ class ScheduleNotifier extends StateNotifier<ScheduleState> {
     // 🔥 ДОБАВЛЕНО: Логируем состояние ДО и ПОСЛЕ
     print('📊 State before: currentSchedule=${state.currentSchedule != null}');
     
-    state = state.copyWith(
+    state = ScheduleState(
       currentSchedule: schedule,
       isLoading: false,
+      error: null,
     );
     
     print('📊 State after: currentSchedule=${state.currentSchedule != null}');
@@ -57,7 +62,8 @@ class ScheduleNotifier extends StateNotifier<ScheduleState> {
   } catch (e, stackTrace) {
     print('❌ ScheduleNotifier: error - $e');
     print('📚 Stack trace: $stackTrace');
-    state = state.copyWith(
+    state = ScheduleState(
+      currentSchedule: state.currentSchedule,
       isLoading: false,
       error: e.toString(),
     );

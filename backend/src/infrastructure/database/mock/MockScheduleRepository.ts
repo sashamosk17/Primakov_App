@@ -27,13 +27,18 @@ export class MockScheduleRepository implements IScheduleRepository {
     const users = ['user-1', 'user-2', 'user-3'];
     
     users.forEach(userId => {
-      // Создаем расписание на 7 дней вперед
+      // Создаем расписание на 7 дней текущей недели (начиная с понедельника)
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       
+      // Находим понедельник текущей недели
+      const day = today.getDay();
+      const diff = today.getDate() - day + (day === 0 ? -6 : 1); // корректировка если сегодня воскресенье
+      const monday = new Date(today.setDate(diff));
+      
       for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-        const currentDate = new Date(today);
-        currentDate.setDate(today.getDate() + dayOffset);
+        const currentDate = new Date(monday);
+        currentDate.setDate(monday.getDate() + dayOffset);
         
         const dayOfWeek = currentDate.getDay();
         
@@ -166,18 +171,16 @@ export class MockScheduleRepository implements IScheduleRepository {
   
   // 🔥 ИСПРАВЛЕНИЕ: Сравниваем только дату без времени
   const schedule = this.schedules.find((s) => {
-    const scheduleDate = new Date(s.date);
-    const targetDate = new Date(date);
+    // Получаем строку YYYY-MM-DD для обеих дат, избегая проблем с часовыми поясами
+    const sDateString = new Date(s.date.getTime() - (s.date.getTimezoneOffset() * 60000))
+        .toISOString().split('T')[0];
+    const targetDateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+        .toISOString().split('T')[0];
     
-    const isSameDate = (
-      s.groupId === groupId &&
-      scheduleDate.getFullYear() === targetDate.getFullYear() &&
-      scheduleDate.getMonth() === targetDate.getMonth() &&
-      scheduleDate.getDate() === targetDate.getDate()
-    );
+    const isSameDate = (s.groupId === groupId && sDateString === targetDateString);
     
     if (isSameDate) {
-      console.log(`✅ Found schedule for ${groupId} on ${targetDate.toISOString().split('T')[0]}`);
+      console.log(`✅ Found schedule for ${groupId} on ${targetDateString}`);
     }
     return isSameDate;
   });

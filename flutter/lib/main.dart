@@ -3,15 +3,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'screens/auth/login_screen.dart';
-import 'screens/auth/register_screen.dart';
 import 'screens/main/schedule_screen.dart';
 import 'screens/main/deadline_screen.dart';
 import 'screens/main/profile_screen.dart';
 import 'providers/auth_provider.dart';
-import 'providers/ui_provider.dart';
+import 'config/app_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ru', null);
   runApp(const ProviderScope(child: PrimakovApp()));
 }
 
@@ -25,33 +28,21 @@ class PrimakovApp extends ConsumerWidget {
     return MaterialApp(
       title: 'PrimakovApp',
       debugShowCheckedModeBanner: false,
-      theme: _buildTheme(isDarkMode: false),
-      darkTheme: _buildTheme(isDarkMode: true),
+      theme: AppTheme.lightTheme,
       themeMode: ThemeMode.light,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ru', 'RU'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('ru', 'RU'),
       home: isAuthenticated
           ? const MainNavigator()
           : const AuthNavigator(),
-    );
-  }
-
-  ThemeData _buildTheme({required bool isDarkMode}) {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: isDarkMode ? Brightness.dark : Brightness.light,
-      primaryColor: const Color(0xFF1976D2),
-      scaffoldBackgroundColor:
-          isDarkMode ? const Color(0xFF121212) : Colors.white,
-      appBarTheme: AppBarTheme(
-        backgroundColor: const Color(0xFF1976D2),
-        foregroundColor: Colors.white,
-        elevation: 0,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1976D2),
-          foregroundColor: Colors.white,
-        ),
-      ),
     );
   }
 }

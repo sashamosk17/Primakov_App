@@ -1,5 +1,5 @@
-/// Login Screen
-/// Converted from React Native LoginScreen.tsx
+/// Login Screen - Updated Design
+/// Modern login interface with improved UX
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +19,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _passwordController = TextEditingController(
     text: 'password123',
   );
+  bool _obscurePassword = true;
   String? _error;
 
   @override
@@ -42,7 +43,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _emailController.text,
         _passwordController.text,
       );
-      // Navigation handled by root widget based on auth state
     } catch (e) {
       setState(() {
         _error = e.toString();
@@ -50,135 +50,273 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-  void _handleRegister() {
-    // Navigate to register screen
-    // This would be handled by your navigation implementation
-  }
-
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authLoadingProvider);
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F9FB),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 60),
+                // Logo/Icon
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF6C0C08),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF6C0C08).withOpacity(0.3),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.school,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 32),
+
                 // Title
                 const Text(
                   'PrimakovApp',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1976D2),
+                    color: Color(0xFF1A1C1D),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
+
                 // Subtitle
                 const Text(
-                  'Вход в систему',
+                  'Добро пожаловать!',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xFF666666),
+                    color: Color(0xFF5F5E5E),
                   ),
                 ),
                 const SizedBox(height: 48),
-                // Email field
-                TextField(
-                  controller: _emailController,
-                  enabled: !isLoading,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+
+                // Email Field
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0x08000000),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _emailController,
+                    enabled: !isLoading,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      hintStyle: const TextStyle(color: Color(0xFF999999)),
+                      prefixIcon: const Icon(
+                        Icons.email_outlined,
+                        color: Color(0xFF6C0C08),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Password field
-                TextField(
-                  controller: _passwordController,
-                  enabled: !isLoading,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Пароль',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+
+                // Password Field
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0x08000000),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _passwordController,
+                    enabled: !isLoading,
+                    obscureText: _obscurePassword,
+                    decoration: InputDecoration(
+                      hintText: 'Пароль',
+                      hintStyle: const TextStyle(color: Color(0xFF999999)),
+                      prefixIcon: const Icon(
+                        Icons.lock_outlined,
+                        color: Color(0xFF6C0C08),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: const Color(0xFF5F5E5E),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                // Error message
-                if (_error != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      _error!,
-                      style: const TextStyle(
-                        color: Color(0xFFF44336),
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                // Login button
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: isLoading ? null : _handleLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1976D2),
-                      disabledBackgroundColor: const Color(0xFFCCCCCC),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      isLoading ? 'Загрузка...' : 'Войти',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+
+                // Forgot Password
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Восстановление пароля скоро появится'),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Забыли пароль?',
+                      style: TextStyle(
+                        color: Color(0xFF6C0C08),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                // Register link
-                TextButton(
-                  onPressed: isLoading ? null : _handleRegister,
-                  child: const Text(
-                    'Нет аккаунта? Зарегистрируйся',
-                    style: TextStyle(
-                      color: Color(0xFF1976D2),
-                      fontSize: 14,
+
+                // Error Message
+                if (_error != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFEBEE),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: const Color(0xFFD32F2F)),
                     ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          color: Color(0xFFD32F2F),
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: const TextStyle(
+                              color: Color(0xFFD32F2F),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                // Login Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: isLoading ? null : _handleLogin,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6C0C08),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            'Войти',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
-                const SizedBox(height: 48),
-                // Demo credentials
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF5F5F5),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Demo: ivan.petrov@primakov.school / password123',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF666666),
+
+                const SizedBox(height: 24),
+
+                // Register Link
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Нет аккаунта? ',
+                      style: TextStyle(
+                        color: Color(0xFF5F5E5E),
+                      ),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Регистрация скоро появится'),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Зарегистрироваться',
+                        style: TextStyle(
+                          color: Color(0xFF6C0C08),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 32),
+
+                // Footer
+                Text(
+                  'ACADEMIC CURATOR SYSTEM V2.4',
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: const Color(0xFF5F5E5E).withOpacity(0.6),
+                    letterSpacing: 1.2,
                   ),
                 ),
               ],

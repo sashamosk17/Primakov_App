@@ -300,6 +300,88 @@ class Announcement {
   };
 }
 
+class News {
+  final String id;
+  final String title;
+  final String description;
+  final String? imageUrl;
+  final String createdAt;
+
+  News({
+    required this.id,
+    required this.title,
+    required this.description,
+    this.imageUrl,
+    required this.createdAt,
+  });
+
+  factory News.fromJson(Map<String, dynamic> json) {
+    return News(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      imageUrl: json['imageUrl'] as String?,
+      createdAt: json['createdAt'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'imageUrl': imageUrl,
+    'createdAt': createdAt,
+  };
+}
+
+class Quote {
+  final String id;
+  final String text;
+  final String author;
+
+  Quote({
+    required this.id,
+    required this.text,
+    required this.author,
+  });
+
+  factory Quote.fromJson(Map<String, dynamic> json) {
+    return Quote(
+      id: json['id'] as String,
+      text: json['text'] as String,
+      author: json['author'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'text': text,
+    'author': author,
+  };
+}
+
+class CafeteriaInfo {
+  final double balance;
+  final String todayMenu;
+
+  CafeteriaInfo({
+    required this.balance,
+    required this.todayMenu,
+  });
+
+  factory CafeteriaInfo.fromJson(Map<String, dynamic> json) {
+    return CafeteriaInfo(
+      balance: (json['balance'] as num).toDouble(),
+      todayMenu: json['todayMenu'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'balance': balance,
+    'todayMenu': todayMenu,
+  };
+}
+
 class AuthResponse {
   final User user;
   final String token;

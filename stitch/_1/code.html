@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f0f0f2",
+                    "secondary-container": "#e2dfde",
+                    "on-surface": "#1a1c1d",
+                    "secondary": "#5f5e5e",
+                    "surface-container-high": "#e8e8ea",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-primary-fixed-variant": "#862118",
+                    "on-error": "#ffffff",
+                    "tertiary": "#313438",
+                    "surface-container-low": "#f3f3f5",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "on-surface-variant": "#57423e",
+                    "surface-tint": "#a7382d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#484b4f",
+                    "on-primary-container": "#ffa396",
+                    "on-background": "#1a1c1d",
+                    "error": "#ba1a1a",
+                    "outline": "#8b716d",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container-highest": "#e2e2e4",
+                    "primary-fixed": "#ffdad5",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "surface-bright": "#f9f9fb",
+                    "on-tertiary-container": "#b9bbc0",
+                    "primary-container": "#8c251c",
+                    "surface": "#f9f9fb",
+                    "inverse-primary": "#ffb4a9",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed": "#e0e2e7",
+                    "on-tertiary-fixed": "#191c20",
+                    "secondary-fixed": "#e5e2e1",
+                    "background": "#f9f9fb",
+                    "inverse-surface": "#2f3132",
+                    "on-secondary-container": "#636262",
+                    "surface-dim": "#d9dadc",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e2e2e4",
+                    "on-secondary-fixed-variant": "#474746",
+                    "primary": "#6c0c08",
+                    "outline-variant": "#dec0bb",
+                    "on-primary-fixed": "#410001"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #dec0bb; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex items-center justify-center p-0 md:p-8">
+<!-- Modal Backdrop simulation -->
+<div class="fixed inset-0 bg-on-surface/10 backdrop-blur-sm z-0"></div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full max-w-xl bg-surface-container-lowest md:rounded-3xl shadow-2xl overflow-hidden flex flex-col h-screen md:h-auto md:max-h-[795px]">
+<!-- Header - Derived from TopAppBar logic -->
+<header class="flex justify-between items-center px-6 py-5 bg-slate-50/80 backdrop-blur-md sticky top-0 z-20">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="close">close</span>
+</button>
+<h1 class="text-xl font-headline font-bold tracking-tight text-on-surface">Новый дедлайн</h1>
+</div>
+<div class="w-10 h-10 bg-surface-container-low rounded-full flex items-center justify-center overflow-hidden">
+<img alt="School Crest" class="w-6 h-6 opacity-80" data-alt="Official minimalist gold school crest emblem on a dark academic background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe4txYHTCIyZXp8epkxWx086rEY9jKheFptYRIzWjIJHc_TpAC8EJUinFMmDbsyOyufjrvqALZB96NRX_rvkGL7MOd4U3j4Fw6EEK0nZ3O7xkHpFeUx6zclyl2x2SBtDMbWIEeo5q-9puiSGx66RywY9dVp4dZF6N0uVl4YuHIrsGQHFzPq9C1HfCQTCiQSsnlVnJ_GvGaANaDdt5u6-6Co2_rttVuh7M2l8csCgANzX1UwTNsm9cltgbKlMRk_AIQ8gzqfcNdplyG"/>
+</div>
+</header>
+<!-- Form Area -->
+<div class="flex-1 overflow-y-auto px-6 py-8 custom-scrollbar">
+<!-- Sketch Background Watermark -->
+<div class="absolute top-0 right-0 w-full h-40 opacity-[0.03] pointer-events-none rotate-12 -z-10 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]"></div>
+<form class="space-y-8">
+<!-- Task Title Field -->
+<div class="space-y-2">
+<label class="block text-xs font-label font-semibold uppercase tracking-widest text-secondary ml-1">Название задачи</label>
+<div class="group relative">
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-xl px-4 py-4 transition-all text-on-surface placeholder:text-slate-400" placeholder="Например: Курсовая работа" type="text"/>
+</div>
+</div>
+<!-- Subject Selection -->
+<div class="space-y-2">
+<label class="block text-xs font-label font-semibold uppercase tracking-widest text-secondary ml-1">Предмет</label>
+<div class="relative">
+<select class="appearance-none w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-xl px-4 py-4 text-on-surface cursor-pointer">
+<option disabled="" selected="" value="">Выберите предмет</option>
+<option>Высшая математика</option>
+<option>Английский язык</option>
+<option>История искусств</option>
+<option>Основы программирования</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+</div>
+<!-- Date Picker Field -->
+<div class="space-y-2">
+<label class="block text-xs font-label font-semibold uppercase tracking-widest text-secondary ml-1">Дата сдачи</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-xl px-4 py-4 text-on-surface" type="date"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+<!-- Description Multi-line -->
+<div class="space-y-2">
+<label class="block text-xs font-label font-semibold uppercase tracking-widest text-secondary ml-1">Описание</label>
+<textarea class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-xl px-4 py-4 transition-all text-on-surface placeholder:text-slate-400 resize-none" placeholder="Добавьте детали задачи, ссылки или требования..." rows="4"></textarea>
+</div>
+<!-- Priority Toggle (Extra for Curator Polish) -->
+<div class="flex items-center justify-between bg-surface-container-low/50 p-4 rounded-2xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="priority_high">priority_high</span>
+<span class="font-medium text-sm">Высокий приоритет</span>
+</div>
+<div class="w-12 h-6 bg-secondary-container rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+</form>
+</div>
+<!-- Footer Action -->
+<footer class="p-6 bg-surface-container-lowest md:rounded-b-3xl">
+<button class="w-full py-4 bg-gradient-to-b from-primary to-primary-container text-on-primary font-headline font-bold rounded-2xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="check">check</span>
+                Сохранить
+            </button>
+<p class="text-center text-[10px] text-secondary mt-4 uppercase tracking-[0.2em] font-label">Academic Curator System v2.4</p>
+</footer>
+</main>
+<!-- Suppressed Nav Shell for Task-Focused Journey as per protocol -->
+<!-- Logic: This is a sub-page with a close action, so we prioritize the content canvas -->
+</body></html>

@@ -7,6 +7,10 @@ export class DeadlineRepository implements IDeadlineRepository {
     return Result.fail("Not implemented");
   }
 
+  async findById(_id: string): Promise<Deadline | undefined> {
+    return undefined;
+  }
+
   async save(_deadline: Deadline): Promise<Result<void>> {
     return Result.fail("Not implemented");
   }

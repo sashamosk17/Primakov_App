@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Curator - Primakov School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f0f0f2",
+                        "secondary-container": "#e2dfde",
+                        "on-surface": "#1a1c1d",
+                        "secondary": "#5f5e5e",
+                        "surface-container-high": "#e8e8ea",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-primary-fixed-variant": "#862118",
+                        "on-error": "#ffffff",
+                        "tertiary": "#313438",
+                        "surface-container-low": "#f3f3f5",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#44474b",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-surface-variant": "#57423e",
+                        "surface-tint": "#a7382d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#484b4f",
+                        "on-primary-container": "#ffa396",
+                        "on-background": "#1a1c1d",
+                        "error": "#ba1a1a",
+                        "outline": "#8b716d",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-highest": "#e2e2e4",
+                        "primary-fixed": "#ffdad5",
+                        "tertiary-fixed-dim": "#c4c6cb",
+                        "surface-bright": "#f9f9fb",
+                        "on-tertiary-container": "#b9bbc0",
+                        "primary-container": "#8c251c",
+                        "surface": "#f9f9fb",
+                        "inverse-primary": "#ffb4a9",
+                        "surface-container": "#eeeef0",
+                        "tertiary-fixed": "#e0e2e7",
+                        "on-tertiary-fixed": "#191c20",
+                        "secondary-fixed": "#e5e2e1",
+                        "background": "#f9f9fb",
+                        "inverse-surface": "#2f3132",
+                        "on-secondary-container": "#636262",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e4",
+                        "on-secondary-fixed-variant": "#474746",
+                        "primary": "#6c0c08",
+                        "outline-variant": "#dec0bb",
+                        "on-primary-fixed": "#410001"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.pencil-sketch-bg {
+    background-image: linear-gradient(to bottom, rgba(249, 249, 251, 0.8), #f9f9fb), url(https://lh3.googleusercontent.com/aida-public/AB6AXuAcJTDLqM2MJXs-3aycoT0dOVLgVeHB3F2VsLY18GgU0Mv8LXEvkjHxUHJILNX8SQ_Bqth0uFlnabiKfa2mheE4gRWX77v6PTMC9-7BUyOaaWJ99toDHn829GHz0kQDLQqB4uC5sBKw-xbxsRATvWYsKexdYi_kWtCexbsvxkRZcVAmEA7D0rg3D1iFOh8IsevmFwQdrMLxUOQIQmIdYKeq5z-LHfPoVIAeOHzKQkOue3DjOEq2iR-AbZXfuqFe6jxRP7jvSLTLNiHS);
+    background-size: cover;
+    background-position: top center
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background antialiased pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 bg-surface-container">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a professional man in a business casual outfit, soft natural indoor lighting, academic setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0EnKkg_d_LqOpGFvr_paBi9pI4OGYXqRHIVvCOmLXlchWPWqq7PLPua478f2NLnQhg0CdiMA0aHE-_wDhClNUwJwrTkb_fjNbejnBau-Jrvu7-dLYFyWnyi3AYcYQfDc7y3q3beKqnc1wwgxfv2bituermNOZTn-GAubaa1c_8oelGknYn7pYFtCrgKMZQnI444KxeoQABKhtkQY_mvqBFfPxlT_kRVQqlJmHpHI187z5Q1T17JXLQ5wSxIOxb9OBdl3dq1nRvNL5"/>
+</div>
+<div>
+<p class="text-[10px] font-label font-semibold uppercase tracking-widest text-secondary">Родитель</p>
+<h1 class="text-xl font-headline font-bold tracking-tight text-slate-900">Алексей Родителель</h1>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-200/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-slate-500" data-icon="search">search</span>
+</button>
+</header>
+<main class="mt-20 px-6">
+<!-- Hero Watermark Section -->
+<div class="absolute top-0 left-0 w-full h-64 pencil-sketch-bg -z-10" data-alt="Light charcoal pencil sketch of neoclassical academic architecture with columns and arches, faded into white background"></div>
+<!-- Stories Section -->
+<section class="mt-6 -mx-6 px-6">
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-4">
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="p-1 rounded-full border-2 border-primary">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Academic news flyer with school logo and red accents, professional document style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAU0IncKdHTUC03bHT3m9IOdjFgaHbdBGwidef3NY1CQtDV14UhpoNJODXJm_iHkXahzH_7DduE_NhvmleByOY-tgiO78_x95JR_IZLYDwaoDBixCNUw5VZXZAI20HKOZ1R_7ANEm__sCM33J_YaF_5CvmmDlD2YvVhcmzjC8ofyRY0ymEssTqhguRQRK4zFvcu3pky9LllMMJFRHbdwRVTYP_ghgYV6d21MFZWmMxmcCVfU0MR6rumdOEWmey0E4Ntu-fCOEce7Sl"/>
+</div>
+</div>
+<span class="text-[11px] font-label font-medium text-on-surface">События</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="p-1 rounded-full border-2 border-primary">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of a graduation cap and diploma, symbolic of academic achievement, soft focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrVoezZSoqI7a6i_Coc1d5ACEF1_7SMruO3GvzGzY2PzpB0_6T8vg_23H1a4PFA69SaJIZhAaVFaBRWl7NJs4qjLxhNd3tCn83_xxF6r48hGNASvZqoygFFd4hlS5SU3OvMRUMk0IrD0hBYJpfq92DVIDXFNjJcftIXlon5lrpHoeY8IqVsaKczqtgHnfamKXizppbecl4YS4OMR8e5fnSWbVRYOSc2W1yQMHAng4fOjZdy_rRlUMbtJ6kZ3rm_Ks0Wn9E2BMAnka4"/>
+</div>
+</div>
+<span class="text-[11px] font-label font-medium text-on-surface">Приказы</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="p-1 rounded-full border-2 border-outline-variant">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-lowest overflow-hidden grayscale">
+<img class="w-full h-full object-cover" data-alt="School cafeteria interior with modern wooden furniture and bright windows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD3671AIqh72dawggmJLOdArzm1KRvndgC_zmcZ9QkY78AY5beNeiuFddgeeyXG72SsuQq5xxm_iemT4FjebeqVikSmD-B2aXeYbn1PDoSuNjMKghyLn8n2yVyf1ezZn9DstxMTAY7cXom8fPSzjRL00qvJK1XWUmHwu3ufE5Gek_H6FW068XJoyLqruG7wDU6tE1OJLA-GPAFPgniKlh6BhC2nXs2kMx-DcLMtHcf0XUXiVSN1bWAx5EsktaTGNLLygagLdHGr90U"/>
+</div>
+</div>
+<span class="text-[11px] font-label font-medium text-secondary">Меню</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="p-1 rounded-full border-2 border-outline-variant">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-lowest overflow-hidden grayscale">
+<img class="w-full h-full object-cover" data-alt="Blurred classroom setting with teacher at a whiteboard, academic atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOUa8dFwxuGtMRRV95EWK0_VGyMS6zkiyzH9cUBrkqzHfrfbu9JLmoDBypEBffTRty_tMHvg-N6U2AwqWIFcVAQnv_hcNQuxO-hIfgl2uBUlomy2z53YgbZhzpH3NOfgo73t7j0XJXg3rwbxBizt6IngouZvY1cHscIZN3pOPqV47a_rhZ5ODgK1_OJvDW4dKqvyeykjc9jmXdTBKV8HYltmg5cWqn1kt5aUTS3pShiMMAwXtkKXLlsPEu7l1RfRddJpTLeHUhdTt9"/>
+</div>
+</div>
+<span class="text-[11px] font-label font-medium text-secondary">Оценки</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-shrink-0">
+<div class="p-1 rounded-full border-2 border-primary">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Top view of an open notebook with a pen, organized academic planning aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD49nQpaqVXZDhST4NL5vuyDX_HPSmxCdCf_VYPydkPytgMqr7dklFFtv6mgQMJwUmHGt1ndUtmTlADXdohKt6Tw0-AmGe54o1VH5QSHUgYECYfHErHlqfLxyYi0Iafwzk4qtpP4N8pxIzlOYzNELzoFr0B8QhHgmlW3JSmnSnVCtYqgX3NYSybdE-XjQnvK_xGco2wwz7P0efb0I8CvbwNL6xdpsQkdy1_jVJ9UKWOkrysRz9isFeQirVUGtiT0dMyV7XdAQe12gg5"/>
+</div>
+</div>
+<span class="text-[11px] font-label font-medium text-on-surface">Разное</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Main Content -->
+<div class="mt-8 grid grid-cols-2 gap-4">
+<!-- Schedule Card - Double Width -->
+<div class="col-span-2 bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="calendar_today">calendar_today</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface">Мое расписание</h3>
+</div>
+<span class="text-xs font-label font-semibold text-primary">Смотреть всё</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 flex justify-between items-center">
+<div>
+<p class="text-[10px] font-label font-bold uppercase tracking-wider text-secondary">Следующий урок</p>
+<p class="font-body font-semibold text-on-surface">Математика • 14:00</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-label font-bold uppercase tracking-wider text-secondary">Кабинет</p>
+<p class="font-body font-semibold text-on-surface">304-А</p>
+</div>
+</div>
+</div>
+<!-- Deadlines Card -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/10">
+<div class="w-10 h-10 bg-error-container/30 rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-error" data-icon="alarm">alarm</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface mb-1">Дедлайны</h3>
+<p class="text-xs font-body text-secondary mb-4 leading-relaxed">2 активных задачи до пятницы</p>
+<div class="h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-3/4"></div>
+</div>
+</div>
+<!-- Canteen Card -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/10">
+<div class="w-10 h-10 bg-tertiary-fixed-dim/20 rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="restaurant">restaurant</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface mb-1">Столовая</h3>
+<p class="text-xs font-body text-secondary leading-relaxed">Баланс: 1,450 ₽</p>
+<p class="text-[10px] mt-2 font-label text-primary font-bold">Обед: Паста Болоньезе</p>
+</div>
+<!-- News Card - Double Width -->
+<div class="col-span-2 relative overflow-hidden bg-surface-container-lowest rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/10">
+<div class="flex flex-col md:flex-row">
+<div class="p-5 flex-1 z-10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 bg-secondary-fixed-dim/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="newspaper">newspaper</span>
+</div>
+<h3 class="font-headline font-bold text-on-surface">Новости гимназии</h3>
+</div>
+<p class="font-body font-semibold text-on-surface mb-2 leading-tight">Открытие новой лаборатории робототехники в следующую субботу</p>
+<p class="text-xs font-body text-secondary leading-relaxed">Приглашаем родителей на торжественную презентацию новых проектов учащихся...</p>
+</div>
+<div class="h-32 md:h-auto md:w-40 relative">
+<img class="w-full h-full object-cover" data-alt="High tech laboratory with robots and engineering equipment, blue and red lighting, academic research feel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1HpWRlM8uItSNPoW9hSqZoukYSGTVfP4DkNAJbN9UDy59ud4fgw_xOH2RhyxCfiSfQPmSUzBnlE9wQ0ob1i5WEgfw06PLBhMrQ2k_rgpuiC_q5Aq10VMJJcWopPmSuMlCr2Vh4FThRmpxBEnDciBLqclL1mZuy40XIuvrhxoVvuQz_QwDgvMOZCuG5YPSl_aaHsBvaVY-S5h1yUMw8ErWOsYDWco9CK0wtQkT-TEHuVbqVOrZILG73e-AWlDM599_5ZD2y-zXOG3_"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-transparent to-transparent md:block hidden"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Quote / Curator Insight -->
+<div class="mt-8 mb-4 p-6 bg-primary-container/10 rounded-2xl border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary mb-2 opacity-50" data-icon="format_quote">format_quote</span>
+<p class="font-headline font-bold italic text-primary leading-tight text-lg">"Образование — это самое мощное оружие, которое вы можете использовать, чтобы изменить мир."</p>
+<p class="mt-3 text-[11px] font-label font-bold uppercase tracking-widest text-primary/70">— Нельсон Мандела</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-red-800 dark:text-red-500 bg-red-50 dark:bg-red-950/30 rounded-xl px-3 py-1.5 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-0.5" data-icon="newspaper" style="font-variation-settings: 'FILL' 1;">newspaper</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 dark:hover:text-red-400 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-0.5" data-icon="calendar_today">calendar_today</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 dark:hover:text-red-400 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-0.5" data-icon="apps">apps</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Services</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 dark:hover:text-red-400 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-0.5" data-icon="person">person</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+</body></html>

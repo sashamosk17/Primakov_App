@@ -13,7 +13,8 @@ export const deadlineRoutes = (repository: IDeadlineRepository) => {
   const controller = new DeadlineController(
     new CreateDeadlineUseCase(service),
     new GetUserDeadlinesUseCase(service),
-    new CompleteDeadlineUseCase(service)
+    new CompleteDeadlineUseCase(service),
+    repository as any
   );
 
   router.get("/", controller.getDeadlines);

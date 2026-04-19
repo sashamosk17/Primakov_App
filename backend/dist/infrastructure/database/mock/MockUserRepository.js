@@ -15,7 +15,6 @@ class MockUserRepository {
         this.initializeTestData();
     }
     initializeTestData() {
-        // Test students
         const student1Email = Email_1.Email.create("ivan.petrov@primakov.school").value;
         const student1Pass = Password_1.Password.create("password123");
         this.users.push(new User_1.User("user-1", student1Email, student1Pass, "Иван", "Петров", "STUDENT", new Date("2024-01-01"), undefined, true, undefined));

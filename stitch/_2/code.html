@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Curator - Дедлайны</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f0f0f2",
+                      "secondary-container": "#e2dfde",
+                      "on-surface": "#1a1c1d",
+                      "secondary": "#5f5e5e",
+                      "surface-container-high": "#e8e8ea",
+                      "primary-fixed-dim": "#ffb4a9",
+                      "on-primary-fixed-variant": "#862118",
+                      "on-error": "#ffffff",
+                      "tertiary": "#313438",
+                      "surface-container-low": "#f3f3f5",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#44474b",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-surface-variant": "#57423e",
+                      "surface-tint": "#a7382d",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#484b4f",
+                      "on-primary-container": "#ffa396",
+                      "on-background": "#1a1c1d",
+                      "error": "#ba1a1a",
+                      "outline": "#8b716d",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "surface-container-highest": "#e2e2e4",
+                      "primary-fixed": "#ffdad5",
+                      "tertiary-fixed-dim": "#c4c6cb",
+                      "surface-bright": "#f9f9fb",
+                      "on-tertiary-container": "#b9bbc0",
+                      "primary-container": "#8c251c",
+                      "surface": "#f9f9fb",
+                      "inverse-primary": "#ffb4a9",
+                      "surface-container": "#eeeef0",
+                      "tertiary-fixed": "#e0e2e7",
+                      "on-tertiary-fixed": "#191c20",
+                      "secondary-fixed": "#e5e2e1",
+                      "background": "#f9f9fb",
+                      "inverse-surface": "#2f3132",
+                      "on-secondary-container": "#636262",
+                      "surface-dim": "#d9dadc",
+                      "on-tertiary": "#ffffff",
+                      "surface-variant": "#e2e2e4",
+                      "on-secondary-fixed-variant": "#474746",
+                      "primary": "#6c0c08",
+                      "outline-variant": "#dec0bb",
+                      "on-primary-fixed": "#410001"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar Component (from JSON) -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+</div>
+<h1 class="text-xl font-bold tracking-wider text-slate-900 dark:text-slate-50">Дедлайны</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400" data-icon="search">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto">
+<!-- Date Header - Editorial Scale -->
+<div class="mb-8">
+<p class="text-secondary font-semibold text-xs tracking-[0.2em] uppercase mb-1">Предстоящие</p>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Текущая неделя</h2>
+</div>
+<!-- Deadline List - Layered Surfaces -->
+<div class="space-y-6">
+<!-- Deadline Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl flex gap-5 items-start transition-all hover:bg-white hover:scale-[1.01] duration-300">
+<div class="pt-1">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant flex items-center justify-center cursor-pointer hover:border-primary transition-colors group">
+<div class="w-3 h-3 rounded-full bg-primary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+</div>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-bold text-lg leading-tight">Подготовка эссе по классике</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Написать черновик анализа "Война и мир", главы 1-4. Минимум 500 слов.</p>
+</div>
+<span class="text-primary font-bold text-xs bg-primary-fixed px-2 py-1 rounded-lg shrink-0">12 Окт</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-secondary text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Литература</span>
+<div class="h-1 w-1 rounded-full bg-outline-variant"></div>
+<span class="text-secondary-container text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> 23:59
+                        </span>
+</div>
+</div>
+</div>
+<!-- Deadline Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl flex gap-5 items-start transition-all hover:bg-white hover:scale-[1.01] duration-300">
+<div class="pt-1">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant flex items-center justify-center cursor-pointer"></div>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-bold text-lg leading-tight">Лабораторная работа №4</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Расчет коэффициента поверхностного натяжения жидкости. Оформить в PDF.</p>
+</div>
+<span class="text-primary font-bold text-xs bg-primary-fixed px-2 py-1 rounded-lg shrink-0">14 Окт</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-secondary text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Физика</span>
+<div class="h-1 w-1 rounded-full bg-outline-variant"></div>
+<span class="text-secondary-container text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="attach_file">attach_file</span> 2 файла
+                        </span>
+</div>
+</div>
+</div>
+<!-- Visual Break - Sketch Background Container Placeholder -->
+<div class="relative py-8 px-6 rounded-2xl overflow-hidden bg-primary-container group">
+<div class="absolute inset-0 opacity-20 bg-center bg-cover" data-alt="faint vintage architectural drawing with hand-sketched lines on aged paper background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcjv9PmUwyJJJlmM3S9zQFZLXNkZtVxui5EQQCznnrW4ExMny2gKwekkyNPKus_VZzsOr-3XtxvOJ_PsF2AFGHVMIk5Sba3wycy91yv9TM9N_QWMenBRxY1Zn0qd_Bu3y3WSLKZVuov9c37hu1adRlBaI438i9laciqubglgQ5cCCTCKDWjAfnpFLdV2C6uNvSnGY2hGkfYYE5c2pruVodL936LrDern8pVW9clSxAyEiuKw9_YDyW54BHGjWaS_0QJeBjLew_gCmM')"></div>
+<div class="relative z-10">
+<h4 class="text-primary-fixed font-headline font-bold text-xl mb-1">Совет дня</h4>
+<p class="text-on-primary-container text-sm font-medium">Разбивайте сложные задачи на этапы по 25 минут для лучшей концентрации.</p>
+</div>
+</div>
+<!-- Date Header 2 -->
+<div class="pt-6 mb-4">
+<p class="text-secondary font-semibold text-xs tracking-[0.2em] uppercase mb-1">Следующая неделя</p>
+<h2 class="text-2xl font-bold text-on-surface tracking-tight">Позже</h2>
+</div>
+<!-- Deadline Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl flex gap-5 items-start transition-all hover:bg-white hover:scale-[1.01] duration-300">
+<div class="pt-1">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant flex items-center justify-center cursor-pointer"></div>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-bold text-lg leading-tight">Тригонометрические уравнения</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Решить задачи из сборника, стр. 45-48. Вариант 2.</p>
+</div>
+<span class="text-secondary font-bold text-xs bg-surface-container-high px-2 py-1 rounded-lg shrink-0">19 Окт</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-secondary text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Математика</span>
+</div>
+</div>
+</div>
+<!-- Deadline Card 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl flex gap-5 items-start transition-all hover:bg-white hover:scale-[1.01] duration-300">
+<div class="pt-1">
+<div class="w-7 h-7 rounded-full border-2 border-outline-variant flex items-center justify-center cursor-pointer"></div>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-bold text-lg leading-tight">Презентация по истории</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Тема: Эпоха Возрождения. Подготовить 10-12 слайдов с иллюстрациями.</p>
+</div>
+<span class="text-secondary font-bold text-xs bg-surface-container-high px-2 py-1 rounded-lg shrink-0">21 Окт</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-secondary text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">История</span>
+<div class="h-1 w-1 rounded-full bg-outline-variant"></div>
+<span class="text-primary font-bold text-[11px] uppercase tracking-tighter">Критически важно</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for adding new deadline -->
+<button class="fixed right-6 bottom-32 w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-2xl flex items-center justify-center transform active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar Component (from JSON) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 transition-all duration-300 tap-highlight-none" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="newspaper">newspaper</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-red-800 dark:text-red-500 bg-red-50 dark:bg-red-950/30 rounded-xl px-3 py-1.5 transition-all duration-300 tap-highlight-none" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_today">calendar_today</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 transition-all duration-300 tap-highlight-none" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="apps">apps</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Services</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1.5 hover:text-red-700 transition-all duration-300 tap-highlight-none" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-inter text-[11px] font-semibold uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+</body></html>

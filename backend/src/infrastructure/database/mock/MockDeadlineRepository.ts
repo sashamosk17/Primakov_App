@@ -138,6 +138,10 @@ export class MockDeadlineRepository implements IDeadlineRepository {
     return Result.ok(userDeadlines);
   }
 
+  async findById(id: string): Promise<Deadline | undefined> {
+    return this.deadlines.find((d) => d.id === id);
+  }
+
   async save(deadline: Deadline): Promise<Result<void>> {
     this.deadlines.push(deadline);
     return Result.ok();

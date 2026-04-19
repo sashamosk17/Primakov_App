@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e8e8ea",
+                    "inverse-on-surface": "#f0f0f2",
+                    "tertiary-fixed": "#e0e2e7",
+                    "tertiary-container": "#484b4f",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2f3132",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "outline": "#8b716d",
+                    "on-tertiary-fixed": "#191c20",
+                    "on-primary-fixed": "#410001",
+                    "surface-dim": "#d9dadc",
+                    "primary-fixed": "#ffdad5",
+                    "on-surface": "#1a1c1d",
+                    "on-secondary-container": "#636262",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e2e2e4",
+                    "primary-container": "#8c251c",
+                    "error": "#ba1a1a",
+                    "background": "#f9f9fb",
+                    "surface-container": "#eeeef0",
+                    "inverse-primary": "#ffb4a9",
+                    "on-secondary-fixed-variant": "#474746",
+                    "on-primary-container": "#ffa396",
+                    "surface-variant": "#e2e2e4",
+                    "surface-container-low": "#f3f3f5",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f9f9fb",
+                    "outline-variant": "#dec0bb",
+                    "on-primary": "#ffffff",
+                    "surface": "#f9f9fb",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#862118",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "secondary": "#5f5e5e",
+                    "primary": "#6c0c08",
+                    "on-background": "#1a1c1d",
+                    "on-surface-variant": "#57423e",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-tertiary-container": "#b9bbc0",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#313438",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#e2dfde",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "surface-tint": "#a7382d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.sketch-bg {
+    background-image: linear-gradient(to bottom, rgba(249, 249, 251, 0.8), rgba(249, 249, 251, 1)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuApWzC-yRjlqqTxN4vq0hFlEgizpby4kTUaT6ivADTsjebpyOr95YTcfHKFmHo14HU8GTR8awnlEQEA5i1BGgkZ-hMxFxrW3auJmWGCihnb5Tc8y4A1rakcAl9H7M-jswsMqIZkWXThZjaCDM-6MWR-UmiKizrlQTG43twtu0X876qWCzhoTmjn2bQfQN8Pmx-D-5juNF3TjAMWnGGnkn5XAmIH-G3tQyq21LSRZQX7h3MVZtD1Xdj_LYf3AzAzeaE8brXq5kBRWmXX);
+    background-size: cover;
+    background-blend-mode: overlay
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface">
+<!-- Top Navigation Bar (Shared Component Strategy) -->
+<header class="fixed top-0 w-full z-50 bg-[#f3f3f5] dark:bg-slate-900 bg-opacity-80 backdrop-blur-md flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-500">arrow_back</span>
+</button>
+<h1 class="font-headline font-bold tracking-tight text-xl text-[#8C251C]">Профиль</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="active:scale-95 duration-200 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-500">share</span>
+</button>
+<button class="active:scale-95 duration-200 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-500">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-28 min-h-screen">
+<!-- Hero Section with Sketch Background -->
+<section class="sketch-bg px-6 pt-10 pb-6 flex flex-col items-center">
+<div class="relative mb-4">
+<div class="w-32 h-32 rounded-full border-4 border-surface-container-lowest shadow-xl overflow-hidden">
+<img alt="Student Avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a confident teenage student in a school uniform, soft natural window lighting, academic setting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7g43cR_pyze5NzrjayQevFx_DXEQ6Gc3uAH9PS1OyVklDqopH6CMcN6TbpZBHpYZtWPcJpZGGAgXC_mlzRtUyb4jXD6kCbS6R2t_95OzncauxdK2IVVj93xf_Y_w-_5XhDk3kXet7U5T0Y5oUiZXe1q9EzlZ6-JFrX3jf4iNGx80z3tLBOPk51RfFd74U4izgdbo_uTrLiz7HBzJ1q5aPl8ykvLHt6bmCM9Q5D0S9b0j432k5Qhmi_7f70zsgnWMtaRcen2JXcaFS"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-surface-container-lowest"></div>
+</div>
+<h2 class="font-headline font-extrabold text-2xl tracking-tight text-on-surface mb-1">Александр Волков</h2>
+<div class="inline-flex items-center px-3 py-1 bg-primary-container rounded-full mb-6">
+<span class="text-on-primary-container font-label text-xs font-semibold tracking-wide">Student 10A</span>
+</div>
+<!-- Action Buttons Row -->
+<div class="flex gap-3 w-full max-w-sm mb-8">
+<button class="flex-1 bg-primary text-on-primary py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all">
+                    Написать
+                </button>
+<button class="flex-1 bg-surface-container-highest text-on-surface py-3 px-6 rounded-xl font-semibold active:scale-[0.98] transition-all">
+                    Добавить
+                </button>
+</div>
+</section>
+<!-- Profile Content Grid (Bento Style) -->
+<section class="px-6 space-y-6">
+<!-- Contact Info (Asymmetric Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/15 flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed-variant">mail</span>
+</div>
+<div>
+<p class="text-[10px] text-secondary font-label uppercase tracking-widest">Электронная почта</p>
+<p class="font-medium text-sm">a.volkov@primakov.edu</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/15 flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant">alternate_email</span>
+</div>
+<div>
+<p class="text-[10px] text-secondary font-label uppercase tracking-widest">Социальные сети</p>
+<p class="font-medium text-sm">@volkov_alex</p>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div>
+<h3 class="font-headline font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                    Академические успехи
+                </h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<p class="text-4xl font-headline font-extrabold text-primary mb-1">4.8</p>
+<p class="text-xs text-secondary font-medium">Средний балл</p>
+<div class="mt-3 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[92%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<p class="text-4xl font-headline font-extrabold text-on-surface mb-1">96%</p>
+<p class="text-xs text-secondary font-medium">Посещаемость</p>
+<div class="mt-3 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-green-600 h-full w-[96%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Schedule / Active Courses -->
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline font-bold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+                        Текущие курсы
+                    </h3>
+<button class="text-primary text-xs font-semibold">Смотреть все</button>
+</div>
+<div class="space-y-3">
+<!-- Course Item -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center justify-between border border-outline-variant/15">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-600">functions</span>
+</div>
+<div>
+<p class="font-bold text-sm">Высшая математика</p>
+<p class="text-xs text-secondary">Уровень: Продвинутый</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-bold px-2 py-1 bg-surface-container-high rounded-md">10:00</span>
+</div>
+</div>
+<!-- Course Item -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center justify-between border border-outline-variant/15">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-600">language</span>
+</div>
+<div>
+<p class="font-bold text-sm">Английский язык</p>
+<p class="text-xs text-secondary">Подготовка к IELTS</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-bold px-2 py-1 bg-surface-container-high rounded-md">11:45</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bio / About Section -->
+<div class="bg-surface-container-low p-6 rounded-2xl border-l-4 border-primary">
+<h3 class="font-headline font-bold text-sm mb-2 text-primary uppercase tracking-widest">О себе</h3>
+<p class="text-sm text-secondary leading-relaxed">
+                    Интересуюсь робототехникой и прикладной математикой. Активный участник школьной сборной по волейболу. Помогаю с подготовкой к олимпиадам по физике.
+                </p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shared Component Strategy) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 backdrop-blur-xl border-t border-white/20 bg-white/80 dark:bg-slate-900/80 rounded-t-2xl z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] font-medium text-[11px]">Главная</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Inter'] font-medium text-[11px]">Расписание</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">widgets</span>
+<span class="font-['Inter'] font-medium text-[11px]">Сервисы</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8C251C] dark:text-[#a62d22] bg-[#f3f3f5] dark:bg-slate-800 rounded-xl px-4 py-1 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] font-medium text-[11px]">Профиль</span>
+</a>
+</nav>
+</body></html>

@@ -1,5 +1,5 @@
 "use strict";
-/*
+/**
  * In-memory story repository with realistic announcements
  */
 Object.defineProperty(exports, "__esModule", { value: true });

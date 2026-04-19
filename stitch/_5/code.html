@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#ffb4a9",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "tertiary-container": "#484b4f",
+                    "outline-variant": "#dec0bb",
+                    "error-container": "#ffdad6",
+                    "background": "#f9f9fb",
+                    "inverse-on-surface": "#f0f0f2",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#ffdad5",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e8e8ea",
+                    "on-secondary-fixed-variant": "#474746",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "surface-variant": "#e2e2e4",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-tertiary-fixed": "#191c20",
+                    "outline": "#8b716d",
+                    "on-primary-fixed-variant": "#862118",
+                    "surface-dim": "#d9dadc",
+                    "surface-container": "#eeeef0",
+                    "surface": "#f9f9fb",
+                    "primary": "#6c0c08",
+                    "on-primary-fixed": "#410001",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5f5e5e",
+                    "on-primary-container": "#ffa396",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "on-secondary-container": "#636262",
+                    "on-surface-variant": "#57423e",
+                    "surface-tint": "#a7382d",
+                    "surface-bright": "#f9f9fb",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-surface": "#1a1c1d",
+                    "on-background": "#1a1c1d",
+                    "on-tertiary-container": "#b9bbc0",
+                    "tertiary-fixed": "#e0e2e7",
+                    "inverse-surface": "#2f3132",
+                    "secondary-container": "#e2dfde",
+                    "primary-container": "#8c251c",
+                    "on-error": "#ffffff",
+                    "tertiary": "#313438",
+                    "surface-container-low": "#f3f3f5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 w-full backdrop-blur-md bg-opacity-80 bg-[#f9f9fb] dark:bg-slate-950 transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high">
+<img alt="Student Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a student, professional lighting, soft background, academic setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqNQXspw8VWOz5AeaaX53YchVxqKlN0n-e5mYJjvLV0uNHNiFQTl0SgKrpGnFakAbaEOqFp4KYbIVYMIxP5F7vru4_Y1K5jks8eLo8VtVFfM4GdK0EUsxk8CXqLdYfmRCnOTVn3w7mtul9cpLqfqSO4TSk8RVKsEIVbBfKA0O4NpZw5TjlO7y_Zo36dXwgfbOodNQd0szBID1EnMTi_9ZbBaw77BTGy-1rJke6eAsUZbw6D9v-AnRqT6zAX2ppU7UsQVotSjxY0qz7"/>
+</div>
+<h1 class="font-headline font-bold tracking-tight text-xl text-[#8C251C] dark:text-[#a62d22]">Расписание</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="event">event</span>
+</button>
+</header>
+<main class="pt-20 pb-24 px-4 min-h-screen">
+<!-- Date Selector -->
+<section class="mb-6">
+<div class="flex justify-between items-center px-2 mb-4">
+<h2 class="font-headline font-bold text-lg text-on-surface">Сентябрь 2024</h2>
+<span class="text-primary font-semibold text-sm">Сегодня</span>
+</div>
+<div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+<!-- Inactive Date -->
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-surface-container-low text-secondary transition-all">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Пн</span>
+<span class="text-lg font-bold">23</span>
+</div>
+<!-- Active Date -->
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-primary-container text-white shadow-lg shadow-primary/20 scale-105 transition-all">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Вт</span>
+<span class="text-lg font-bold">24</span>
+</div>
+<!-- Inactive Date -->
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-surface-container-low text-secondary transition-all">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Ср</span>
+<span class="text-lg font-bold">25</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-surface-container-low text-secondary transition-all">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Чт</span>
+<span class="text-lg font-bold">26</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-surface-container-low text-secondary transition-all">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Пт</span>
+<span class="text-lg font-bold">27</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-14 py-3 rounded-2xl bg-surface-container-low text-secondary transition-all opacity-50">
+<span class="text-[10px] uppercase font-bold tracking-widest mb-1">Сб</span>
+<span class="text-lg font-bold">28</span>
+</div>
+</div>
+</section>
+<!-- Compact Lesson Schedule -->
+<section class="space-y-2">
+<!-- Lesson 1 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">08:30</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">09:15</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary/20"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">Алгебра и начала анализа</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">Кабинет 302 • Смирнова А.В.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Lesson 2 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">09:25</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">10:10</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary/20"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">Литература (Профиль)</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">Кабинет 415 • Петров С.И.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Break / Lunch Event (Asymmetric Layout) -->
+<div class="ml-14 my-3 p-3 bg-primary-container/5 rounded-xl border-l-2 border-primary-container flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-lg" data-icon="restaurant" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="text-xs font-bold text-primary-container uppercase tracking-widest">Большая перемена</span>
+</div>
+<span class="text-[10px] font-bold text-primary-container">25 минут</span>
+</div>
+<!-- Lesson 3 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">10:35</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">11:20</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">Физика</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">Лаборатория 2 • Иванов Д.М.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Lesson 4 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">11:30</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">12:15</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary/20"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">История России</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">Кабинет 208 • Козлова О.П.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Lesson 5 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">12:25</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">13:10</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary/20"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">Иностранный язык</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">Кабинет 501 • Jackson E.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Lesson 6 -->
+<div class="flex gap-4 items-center">
+<div class="w-14 flex flex-col items-end">
+<span class="text-sm font-bold text-on-surface">14:00</span>
+<span class="text-[10px] text-secondary font-medium uppercase tracking-tighter">14:45</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-3 flex justify-between items-center group transition-all hover:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-1 h-8 rounded-full bg-primary/20"></div>
+<div>
+<h3 class="text-[15px] font-bold text-on-surface leading-tight">Информатика</h3>
+<p class="text-[11px] text-secondary leading-none mt-0.5">IT-парк • Семенов Р.А.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Empty State Illustration Placeholder (Subtle) -->
+<div class="mt-8 flex flex-col items-center justify-center opacity-30 px-12 text-center">
+<span class="material-symbols-outlined text-4xl mb-2" data-icon="school">school</span>
+<p class="text-[11px] font-medium leading-relaxed">Расписание на сегодня сформировано согласно учебному плану гимназии им. Е.М. Примакова</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 backdrop-blur-xl border-t border-white/20 bg-white/80 dark:bg-slate-900/80 z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-['Inter'] font-medium text-[11px]">Главная</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#8C251C] dark:text-[#a62d22] bg-[#f3f3f5] dark:bg-slate-800 rounded-xl px-4 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-['Inter'] font-medium text-[11px]">Расписание</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="widgets">widgets</span>
+<span class="font-['Inter'] font-medium text-[11px]">Сервисы</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-[#8C251C] transition-all active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-['Inter'] font-medium text-[11px]">Профиль</span>
+</div>
+</nav>
+</body></html>

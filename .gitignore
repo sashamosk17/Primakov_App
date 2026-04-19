@@ -58,3 +58,13 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Claude Code
+.claude/
+CLAUDE.md
+QUICK_START.md
+PROJECT_STRUCTURE.md
+CLEAN_ARCHITECTURE.md
+
+# GitHub Copilot
+.github/copilot/

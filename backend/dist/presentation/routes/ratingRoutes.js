@@ -8,9 +8,9 @@ const GetTeacherRatingsUseCase_1 = require("../../application/rating/GetTeacherR
 const RatingService_1 = require("../../domain/services/RatingService");
 const MockRatingRepository_1 = require("../../infrastructure/database/memory/MockRatingRepository");
 const authMiddleware_1 = require("../middleware/authMiddleware");
-const ratingRoutes = () => {
+const ratingRoutes = (repository) => {
     const router = (0, express_1.Router)();
-    const service = new RatingService_1.RatingService(new MockRatingRepository_1.MockRatingRepository());
+    const service = new RatingService_1.RatingService(repository || new MockRatingRepository_1.MockRatingRepository());
     const controller = new RatingController_1.RatingController(new RateTeacherUseCase_1.RateTeacherUseCase(service), new GetTeacherRatingsUseCase_1.GetTeacherRatingsUseCase(service));
     router.get("/:teacherId", authMiddleware_1.authMiddleware, controller.getRatings);
     router.post("/", authMiddleware_1.authMiddleware, controller.rateTeacher);

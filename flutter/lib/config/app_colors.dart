@@ -34,6 +34,21 @@ class AppColors {
     colors: [primaryRed, primaryRedLight],
   );
 
+  // Status Colors (for deadlines, alerts, etc.)
+  static const Color success = Color(0xFF4CAF50);
+  static const Color warning = Color(0xFFFF9800);
+  static const Color error = Color(0xFFF44336);
+
+  // Story Colors
+  static const Color storyBackground = Color(0xFFFFEBEE);
+  static const Color storyViewed = Color(0xFFE0E0E0);
+  static const Color storyUnviewed = primaryRed;
+
+  // Additional UI Colors
+  static const Color lightGray = Color(0xFFF5F5F5);
+  static const Color mediumGray = Color(0xFFE2E2E4);
+  static const Color iconGray = Color(0xFF9E9E9E);
+
   // Shadows
   static List<BoxShadow> get buttonShadow => [
     BoxShadow(

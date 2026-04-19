@@ -1,6 +1,9 @@
 /// Story Card Widget - Исправленная версия без overflow
 import 'package:flutter/material.dart';
 import '../models/api_models.dart';
+import '../config/app_colors.dart';
+import '../config/app_spacing.dart';
+import '../config/app_typography.dart';
 
 class StoryCard extends StatelessWidget {
   final Story story;
@@ -35,15 +38,11 @@ class StoryCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isViewed ? const Color(0xFF999999) : const Color(0xFF1976D2),
+                  color: isViewed ? AppColors.storyViewed : AppColors.primaryRed,
                   width: 2,
                 ),
                 gradient: !hasImage && !hasVideo
-                    ? const LinearGradient(
-                        colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
+                    ? AppColors.primaryGradient
                     : null,
               ),
               child: ClipOval(
@@ -61,7 +60,7 @@ class StoryCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            
+
             // Заголовок - ограничиваем 2 строками
             ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 32),
@@ -70,26 +69,25 @@ class StoryCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 10,
+                style: AppTypography.bodySmall.copyWith(
                   fontWeight: isViewed ? FontWeight.normal : FontWeight.w600,
-                  color: isViewed ? const Color(0xFF999999) : const Color(0xFF333333),
+                  color: isViewed ? AppColors.textTertiary : AppColors.textPrimary,
                 ),
               ),
             ),
-            
+
             // Индикатор "Новое" - показываем только если не просмотрено
             if (!isViewed) ...[
               const SizedBox(height: 2),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: 1),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1976D2),
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.primaryRed,
+                  borderRadius: BorderRadius.circular(AppSpacing.sm),
                 ),
-                child: const Text(
+                child: Text(
                   'NEW',
-                  style: TextStyle(
+                  style: AppTypography.labelSmall.copyWith(
                     fontSize: 7,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -107,11 +105,11 @@ class StoryCard extends StatelessWidget {
     return Container(
       width: 70,
       height: 70,
-      color: const Color(0xFFE0E0E0),
+      color: AppColors.mediumGray,
       child: Icon(
         type == 'video' ? Icons.videocam : Icons.newspaper,
         size: 28,
-        color: const Color(0xFF999999),
+        color: AppColors.iconGray,
       ),
     );
   }

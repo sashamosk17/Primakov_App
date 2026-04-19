@@ -3,6 +3,9 @@
 
 import 'package:flutter/material.dart';
 import '../models/api_models.dart';
+import '../config/app_colors.dart';
+import '../config/app_spacing.dart';
+import '../config/app_typography.dart';
 
 class LessonCard extends StatelessWidget {
   final Lesson lesson;
@@ -20,85 +23,72 @@ class LessonCard extends StatelessWidget {
     final floor = lesson.floor;
 
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(bottom: 12),
+      padding: AppSpacing.paddingMD,
+      margin: EdgeInsets.only(bottom: AppSpacing.md),
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
-            color: const Color(0xFF1976D2),
+            color: AppColors.primaryRed,
             width: 4,
           ),
         ),
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
+        color: AppColors.backgroundSecondary,
+        borderRadius: AppSpacing.borderRadiusSM,
+        boxShadow: AppColors.toggleShadow,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Time
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: const Color(0xFFF0F0F0),
-              borderRadius: BorderRadius.circular(4),
+              color: AppColors.backgroundTertiary,
+              borderRadius: BorderRadius.circular(AppSpacing.xs),
             ),
             child: Text(
               '$startTime - $endTime',
-              style: const TextStyle(
-                fontSize: 12,
+              style: AppTypography.bodySmall.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF666666),
+                color: AppColors.textSecondary,
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: AppSpacing.sm),
           // Subject
           Text(
             subject,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTypography.heading3,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: AppSpacing.xs),
           // Teacher ID
           Text(
             '👨‍🏫 ID: $teacherId',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF666666),
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: AppSpacing.sm),
           // Location
           Text(
             '🚪 Каб. $room, этаж $floor',
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF999999),
+            style: AppTypography.bodySmall.copyWith(
+              color: AppColors.textTertiary,
             ),
           ),
           // Homework indicator
           if (lesson.hasHomework) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: AppSpacing.sm),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF3CD),
-                borderRadius: BorderRadius.circular(4),
+                color: AppColors.warning.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(AppSpacing.xs),
               ),
-              child: const Text(
+              child: Text(
                 '📝 Домашнее задание',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFFF0AD4E),
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.warning,
                   fontWeight: FontWeight.bold,
                 ),
               ),

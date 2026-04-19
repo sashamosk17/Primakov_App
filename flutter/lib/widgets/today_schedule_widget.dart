@@ -8,6 +8,9 @@ import '../models/api_models.dart';
 import '../providers/schedule_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/main/schedule_screen.dart';
+import '../config/app_colors.dart';
+import '../config/app_spacing.dart';
+import '../config/app_typography.dart';
 
 class TodayScheduleWidget extends ConsumerStatefulWidget {
   const TodayScheduleWidget({Key? key}) : super(key: key);
@@ -41,7 +44,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
 
     if (isLoading) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         child: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -50,25 +53,18 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
 
     if (schedule == null || schedule.lessons.isEmpty) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        padding: const EdgeInsets.all(24),
+        margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+        padding: AppSpacing.paddingLG,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0x08000000),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          color: AppColors.backgroundSecondary,
+          borderRadius: AppSpacing.borderRadiusLG,
+          boxShadow: AppColors.toggleShadow,
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'Сегодня нет уроков',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF5F5E5E),
+            style: AppTypography.heading3.copyWith(
+              color: AppColors.textSecondary,
             ),
           ),
         ),
@@ -90,7 +86,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,13 +94,9 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Расписание на сегодня',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1A1C1D),
-                ),
+                style: AppTypography.heading1,
               ),
               TextButton(
                 onPressed: () {
@@ -114,18 +106,17 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
                     ),
                   );
                 },
-                child: const Text(
+                child: Text(
                   'Полное расписание',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF6C0C08),
+                    color: AppColors.primaryRed,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: AppSpacing.md),
           // Lessons List (show max 3)
           ...schedule.lessons.take(3).toList().asMap().entries.map((entry) {
             final index = entry.key;
@@ -138,13 +129,12 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
           }),
           if (schedule.lessons.length > 3)
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: EdgeInsets.only(top: AppSpacing.sm),
               child: Center(
                 child: Text(
                   'Еще ${schedule.lessons.length - 3} уроков',
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF5F5E5E),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ),
@@ -188,21 +178,15 @@ class _LessonCompactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      padding: AppSpacing.paddingMD,
       decoration: BoxDecoration(
-        color: isNext ? const Color(0xFFFFEBEE) : Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: isNext ? AppColors.storyBackground : AppColors.backgroundSecondary,
+        borderRadius: AppSpacing.borderRadiusMD,
         border: isNext
-            ? Border.all(color: const Color(0xFF6C0C08), width: 2)
+            ? Border.all(color: AppColors.primaryRed, width: 2)
             : null,
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x08000000),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: AppColors.toggleShadow,
       ),
       child: Row(
         children: [
@@ -212,29 +196,26 @@ class _LessonCompactCard extends StatelessWidget {
             children: [
               Text(
                 lesson.startTime,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: isNext ? const Color(0xFF6C0C08) : const Color(0xFF1A1C1D),
+                style: AppTypography.heading3.copyWith(
+                  color: isNext ? AppColors.primaryRed : AppColors.textPrimary,
                 ),
               ),
               Text(
                 lesson.endTime,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF5F5E5E),
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: AppSpacing.md),
           // Divider
           Container(
             width: 2,
             height: 40,
-            color: isNext ? const Color(0xFF6C0C08) : const Color(0xFFE8E8EA),
+            color: isNext ? AppColors.primaryRed : AppColors.borderSecondary,
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: AppSpacing.md),
           // Subject and Room
           Expanded(
             child: Column(
@@ -242,28 +223,25 @@ class _LessonCompactCard extends StatelessWidget {
               children: [
                 Text(
                   lesson.subject,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: isNext ? const Color(0xFF6C0C08) : const Color(0xFF1A1C1D),
+                  style: AppTypography.heading3.copyWith(
+                    color: isNext ? AppColors.primaryRed : AppColors.textPrimary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.room,
                       size: 14,
-                      color: Color(0xFF5F5E5E),
+                      color: AppColors.textSecondary,
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: AppSpacing.xs),
                     Text(
                       'Кабинет ${lesson.room}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Color(0xFF5F5E5E),
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -274,15 +252,14 @@ class _LessonCompactCard extends StatelessWidget {
           // Next indicator
           if (isNext)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: const Color(0xFF6C0C08),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.primaryRed,
+                borderRadius: BorderRadius.circular(AppSpacing.sm),
               ),
-              child: const Text(
+              child: Text(
                 'Следующий',
-                style: TextStyle(
-                  fontSize: 10,
+                style: AppTypography.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

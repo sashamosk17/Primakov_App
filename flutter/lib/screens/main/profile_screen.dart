@@ -1,4 +1,7 @@
 /// Profile Screen - Updated Design
+import '../../config/app_typography.dart';
+import '../../config/app_spacing.dart';
+import '../../config/app_colors.dart';
 /// Shows user profile with settings and logout
 
 import 'package:flutter/material.dart';
@@ -19,21 +22,21 @@ class ProfileScreen extends ConsumerWidget {
     final userEmail = 'ivan.petrov@primakov.school';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: AppColors.backgroundPrimary,
       body: CustomScrollView(
         slivers: [
           // Profile Header
           SliverAppBar(
             expandedHeight: 200,
             pinned: true,
-            backgroundColor: const Color(0xFF6C0C08),
+            backgroundColor: AppColors.primaryRed,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Color(0xFF6C0C08), Color(0xFF8C251C)],
+                    colors: [AppColors.primaryRed, AppColors.primaryRedLight],
                   ),
                 ),
                 child: SafeArea(
@@ -59,7 +62,7 @@ class ProfileScreen extends ConsumerWidget {
                         child: const Icon(
                           Icons.person,
                           size: 40,
-                          color: Color(0xFF6C0C08),
+                          color: AppColors.primaryRed,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -217,7 +220,7 @@ class ProfileScreen extends ConsumerWidget {
                     'ACADEMIC CURATOR SYSTEM V2.4',
                     style: TextStyle(
                       fontSize: 11,
-                      color: const Color(0xFF5F5E5E).withOpacity(0.6),
+                      color: AppColors.textSecondary.withOpacity(0.6),
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -254,7 +257,7 @@ class ProfileScreen extends ConsumerWidget {
             onPressed: () => Navigator.of(context).pop(),
             child: const Text(
               'Отмена',
-              style: TextStyle(color: Color(0xFF5F5E5E)),
+              style: TextStyle(color: AppColors.textSecondary),
             ),
           ),
           TextButton(
@@ -296,7 +299,7 @@ class _InfoRow extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            color: const Color(0xFF6C0C08),
+            color: AppColors.primaryRed,
             size: 20,
           ),
         ),
@@ -309,7 +312,7 @@ class _InfoRow extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   fontSize: 13,
-                  color: Color(0xFF5F5E5E),
+                  color: AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 4),
@@ -318,7 +321,7 @@ class _InfoRow extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1A1C1D),
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -372,7 +375,7 @@ class _MenuItem extends StatelessWidget {
                 ),
                 child: Icon(
                   icon,
-                  color: const Color(0xFF6C0C08),
+                  color: AppColors.primaryRed,
                   size: 22,
                 ),
               ),
@@ -386,7 +389,7 @@ class _MenuItem extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF1A1C1D),
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -394,7 +397,7 @@ class _MenuItem extends StatelessWidget {
                       subtitle,
                       style: const TextStyle(
                         fontSize: 13,
-                        color: Color(0xFF5F5E5E),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -403,7 +406,7 @@ class _MenuItem extends StatelessWidget {
               const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Color(0xFF5F5E5E),
+                color: AppColors.textSecondary,
               ),
             ],
           ),

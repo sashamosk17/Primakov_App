@@ -1,9 +1,13 @@
 /// Deadline Screen - Material Design 3
+import '../../config/app_typography.dart';
+import '../../config/app_spacing.dart';
+import '../../config/app_colors.dart';
 /// Redesigned based on stitch/_2 design
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:confetti/confetti.dart';
 import '../../providers/deadline_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../models/api_models.dart';
@@ -16,13 +20,25 @@ class DeadlineScreen extends ConsumerStatefulWidget {
   ConsumerState<DeadlineScreen> createState() => _DeadlineScreenState();
 }
 
-class _DeadlineScreenState extends ConsumerState<DeadlineScreen> {
+class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late ConfettiController _confettiController;
+
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _confettiController = ConfettiController(duration: const Duration(milliseconds: 800));
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadDeadlines();
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _confettiController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadDeadlines() async {
@@ -33,133 +49,131 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> {
   }
 
   Future<void> _toggleDeadline(String deadlineId) async {
+    final deadline = ref.read(allDeadlinesProvider).firstWhere((d) => d.id == deadlineId);
+    final wasCompleted = deadline.status == DeadlineStatus.COMPLETED;
+
     await ref.read(deadlineProvider.notifier).completeDeadline(deadlineId);
+
+    // Запускаем конфетти только один раз при завершении (не при отмене)
+    if (!wasCompleted && mounted) {
+      _confettiController.play();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final pendingDeadlines = ref.watch(pendingDeadlinesProvider);
+    final completedDeadlines = ref.watch(completedDeadlinesProvider);
     final isLoading = ref.watch(deadlineLoadingProvider);
 
-    // Группировка дедлайнов по неделям
-    final thisWeek = <Deadline>[];
-    final nextWeek = <Deadline>[];
-    final now = DateTime.now();
-    final endOfThisWeek = now.add(Duration(days: 7 - now.weekday));
-
-    for (final deadline in pendingDeadlines) {
-      final dueDate = DateTime.parse(deadline.dueDate);
-      if (dueDate.isBefore(endOfThisWeek) || dueDate.isAtSameMomentAs(endOfThisWeek)) {
-        thisWeek.add(deadline);
-      } else {
-        nextWeek.add(deadline);
-      }
-    }
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
-      body: CustomScrollView(
-        slivers: [
-          // Top App Bar
-          SliverAppBar(
-            floating: true,
-            backgroundColor: const Color(0xCCF3F3F5),
-            elevation: 0,
-            title: Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE2E2E4),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(
-                    Icons.school,
-                    color: Color(0xFF6C0C08),
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Text(
-                  'Дедлайны',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1C1D),
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.search, color: Color(0xFF5F5E5E)),
-                onPressed: () {},
-              ),
-            ],
-          ),
-
-          // Content
-          if (isLoading)
-            const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 100),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  // Текущая неделя
-                  if (thisWeek.isNotEmpty) ...[
-                    const _SectionHeader(
-                      label: 'ПРЕДСТОЯЩИЕ',
-                      title: 'Текущая неделя',
-                    ),
-                    const SizedBox(height: 24),
-                    ...thisWeek.map((deadline) => _DeadlineCard(
-                          deadline: deadline,
-                          onToggle: () => _toggleDeadline(deadline.id),
-                        )),
-                  ],
-
-                  // Совет дня (после первых дедлайнов)
-                  if (thisWeek.isNotEmpty) ...[
-                    const SizedBox(height: 24),
-                    const _TipCard(),
-                    const SizedBox(height: 32),
-                  ],
-
-                  // Следующая неделя
-                  if (nextWeek.isNotEmpty) ...[
-                    const _SectionHeader(
-                      label: 'СЛЕДУЮЩАЯ НЕДЕЛЯ',
-                      title: 'Позже',
-                    ),
-                    const SizedBox(height: 24),
-                    ...nextWeek.map((deadline) => _DeadlineCard(
-                          deadline: deadline,
-                          onToggle: () => _toggleDeadline(deadline.id),
-                        )),
-                  ],
-
-                  // Пустое состояние
-                  if (thisWeek.isEmpty && nextWeek.isEmpty)
-                    const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(48),
-                        child: Text(
-                          'Нет активных дедлайнов',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF5F5E5E),
-                          ),
-                        ),
+      backgroundColor: AppColors.backgroundPrimary,
+      body: Stack(
+        children: [
+          NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              // Top App Bar
+              SliverAppBar(
+                floating: true,
+                pinned: true,
+                backgroundColor: const Color(0xCCF3F3F5),
+                elevation: 0,
+                title: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: AppColors.mediumGray,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Icon(
+                        Icons.school,
+                        color: AppColors.primaryRed,
+                        size: 24,
                       ),
                     ),
-                ]),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Дедлайны',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.search, color: AppColors.textSecondary),
+                    onPressed: () {},
+                  ),
+                ],
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(48),
+                  child: Container(
+                    color: const Color(0xCCF3F3F5),
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorColor: AppColors.primaryRed,
+                      indicatorWeight: 3,
+                      labelColor: AppColors.primaryRed,
+                      unselectedLabelColor: AppColors.textSecondary,
+                      labelStyle: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                      tabs: const [
+                        Tab(text: 'Предстоящие'),
+                        Tab(text: 'Выполненные'),
+                      ],
+                    ),
+                  ),
+                ),
               ),
+            ],
+            body: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : TabBarView(
+                    controller: _tabController,
+                    children: [
+                      // Предстоящие дедлайны
+                      _PendingDeadlinesTab(
+                        deadlines: pendingDeadlines,
+                        onToggle: _toggleDeadline,
+                      ),
+                      // Выполненные дедлайны
+                      _CompletedDeadlinesTab(
+                        deadlines: completedDeadlines,
+                        onToggle: _toggleDeadline,
+                      ),
+                    ],
+                  ),
+          ),
+
+          // Confetti overlay
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirection: 3.14 / 2, // down
+              emissionFrequency: 0.1,
+              numberOfParticles: 15,
+              maxBlastForce: 20,
+              minBlastForce: 10,
+              gravity: 0.5,
+              shouldLoop: false,
+              colors: [
+                AppColors.primaryRed,
+                AppColors.primaryRedLight,
+                Colors.red.shade200,
+                Colors.red.shade100,
+              ],
             ),
+          ),
         ],
       ),
 
@@ -172,11 +186,11 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF6C0C08), Color(0xFF8C251C)],
+            colors: [AppColors.primaryRed, AppColors.primaryRedLight],
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0x4D6C0C08), // 0.3 opacity
+              color: const Color(0x4D6C0C08),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -205,6 +219,199 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> {
   }
 }
 
+// Pending Deadlines Tab
+class _PendingDeadlinesTab extends StatelessWidget {
+  final List<Deadline> deadlines;
+  final Function(String) onToggle;
+
+  const _PendingDeadlinesTab({
+    required this.deadlines,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Группировка дедлайнов по неделям
+    final thisWeek = <Deadline>[];
+    final nextWeek = <Deadline>[];
+    final now = DateTime.now();
+    final endOfThisWeek = now.add(Duration(days: 7 - now.weekday));
+
+    for (final deadline in deadlines) {
+      final dueDate = DateTime.parse(deadline.dueDate);
+      if (dueDate.isBefore(endOfThisWeek) || dueDate.isAtSameMomentAs(endOfThisWeek)) {
+        thisWeek.add(deadline);
+      } else {
+        nextWeek.add(deadline);
+      }
+    }
+
+    if (thisWeek.isEmpty && nextWeek.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(48),
+          child: Text(
+            'Нет активных дедлайнов',
+            style: TextStyle(
+              fontSize: 16,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 100),
+      children: [
+        // Текущая неделя
+        if (thisWeek.isNotEmpty) ...[
+          const _SectionHeader(
+            label: 'ПРЕДСТОЯЩИЕ',
+            title: 'Текущая неделя',
+          ),
+          const SizedBox(height: 24),
+          ...thisWeek.map((deadline) => _AnimatedDeadlineCard(
+                key: ValueKey(deadline.id),
+                deadline: deadline,
+                onToggle: () => onToggle(deadline.id),
+              )),
+        ],
+
+        // Совет дня - показываем всегда если есть хоть какие-то дедлайны
+        if (thisWeek.isNotEmpty || nextWeek.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          const _TipCard(),
+          const SizedBox(height: 32),
+        ],
+
+        // Следующая неделя
+        if (nextWeek.isNotEmpty) ...[
+          const _SectionHeader(
+            label: 'СЛЕДУЮЩАЯ НЕДЕЛЯ',
+            title: 'Позже',
+          ),
+          const SizedBox(height: 24),
+          ...nextWeek.map((deadline) => _AnimatedDeadlineCard(
+                key: ValueKey(deadline.id),
+                deadline: deadline,
+                onToggle: () => onToggle(deadline.id),
+              )),
+        ],
+      ],
+    );
+  }
+}
+
+// Animated wrapper for deadline card
+class _AnimatedDeadlineCard extends StatefulWidget {
+  final Deadline deadline;
+  final VoidCallback onToggle;
+
+  const _AnimatedDeadlineCard({
+    Key? key,
+    required this.deadline,
+    required this.onToggle,
+  }) : super(key: key);
+
+  @override
+  State<_AnimatedDeadlineCard> createState() => _AnimatedDeadlineCardState();
+}
+
+class _AnimatedDeadlineCardState extends State<_AnimatedDeadlineCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleToggle() async {
+    if (widget.deadline.status == DeadlineStatus.PENDING) {
+      await _controller.forward();
+    }
+    widget.onToggle();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: _DeadlineCard(
+          deadline: widget.deadline,
+          onToggle: _handleToggle,
+        ),
+      ),
+    );
+  }
+}
+
+// Completed Deadlines Tab
+class _CompletedDeadlinesTab extends StatelessWidget {
+  final List<Deadline> deadlines;
+  final Function(String) onToggle;
+
+  const _CompletedDeadlinesTab({
+    required this.deadlines,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (deadlines.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(48),
+          child: Text(
+            'Нет выполненных дедлайнов',
+            style: TextStyle(
+              fontSize: 16,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 100),
+      children: [
+        const _SectionHeader(
+          label: 'ВЫПОЛНЕНО',
+          title: 'Завершенные задачи',
+        ),
+        const SizedBox(height: 24),
+        ...deadlines.map((deadline) => _DeadlineCard(
+              deadline: deadline,
+              onToggle: () => onToggle(deadline.id),
+            )),
+      ],
+    );
+  }
+}
+
 // Section Header Widget
 class _SectionHeader extends StatelessWidget {
   final String label;
@@ -225,7 +432,7 @@ class _SectionHeader extends StatelessWidget {
           style: const TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF5F5E5E),
+            color: AppColors.textSecondary,
             letterSpacing: 2,
           ),
         ),
@@ -235,7 +442,7 @@ class _SectionHeader extends StatelessWidget {
           style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1A1C1D),
+            color: AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -269,7 +476,7 @@ class _DeadlineCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x08000000), // 0.03 opacity
+            color: const Color(0x08000000),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -290,12 +497,12 @@ class _DeadlineCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: isCompleted
-                        ? const Color(0xFF6C0C08)
+                        ? AppColors.primaryRed
                         : const Color(0xFFDEC0BB),
                     width: 2,
                   ),
                   color: isCompleted
-                      ? const Color(0xFF6C0C08)
+                      ? AppColors.primaryRed
                       : Colors.transparent,
                 ),
                 child: isCompleted
@@ -327,16 +534,16 @@ class _DeadlineCard extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF1A1C1D),
+                              color: AppColors.textPrimary,
                               height: 1.3,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             deadline.description,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xFF57423E),
+                              color: Color(0xCC1A1C1D),
                               height: 1.5,
                             ),
                           ),
@@ -351,7 +558,7 @@ class _DeadlineCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFDAD5),
+                        color: Colors.red.shade100,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -359,7 +566,7 @@ class _DeadlineCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF6C0C08),
+                          color: AppColors.primaryRed,
                         ),
                       ),
                     ),
@@ -385,7 +592,7 @@ class _DeadlineCard extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF5F5E5E),
+                            color: AppColors.textSecondary,
                             letterSpacing: 1.2,
                           ),
                         ),
@@ -395,7 +602,7 @@ class _DeadlineCard extends StatelessWidget {
                         width: 4,
                         height: 4,
                         decoration: const BoxDecoration(
-                          color: Color(0xFFDEC0BB),
+                          color: AppColors.borderPrimary,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -404,7 +611,7 @@ class _DeadlineCard extends StatelessWidget {
                     const Icon(
                       Icons.schedule,
                       size: 14,
-                      color: Color(0x995F5E5E), // 0.6 opacity
+                      color: Color(0x995F5E5E),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -412,7 +619,7 @@ class _DeadlineCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xCC5F5E5E), // 0.8 opacity
+                        color: Color(0xCC5F5E5E),
                       ),
                     ),
                   ],
@@ -426,7 +633,7 @@ class _DeadlineCard extends StatelessWidget {
   }
 }
 
-// Tip Card Widget
+// Tip Card Widget - Enhanced design from stitch/_2
 class _TipCard extends StatelessWidget {
   const _TipCard();
 
@@ -435,39 +642,110 @@ class _TipCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF8C251C),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primaryRedLight,
+            AppColors.primaryRed,
+          ],
+        ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x336C0C08), // 0.2 opacity
+            color: const Color(0x336C0C08),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          const Text(
-            'Совет дня',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFB4A9),
+          // Decorative pattern overlay
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.1,
+              child: CustomPaint(
+                painter: _PatternPainter(),
+              ),
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'Разбивайте сложные задачи на этапы по 25 минут для лучшей концентрации.',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Color(0xE6FFFFFF), // 0.9 opacity
-              height: 1.5,
-            ),
+
+          // Content
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0x33FFFFFF),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      Icons.lightbulb_outline,
+                      color: Colors.red.shade200,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Совет дня',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red.shade200,
+                      fontFamily: 'Manrope',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Разбивайте сложные задачи на этапы по 25 минут для лучшей концентрации.',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xE6FFFFFF),
+                  height: 1.5,
+                  fontFamily: 'Inter',
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+}
+
+// Custom painter for decorative pattern
+class _PatternPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 1.5
+      ..style = PaintingStyle.stroke;
+
+    // Draw diagonal lines pattern
+    for (double i = -size.height; i < size.width; i += 20) {
+      canvas.drawLine(
+        Offset(i, 0),
+        Offset(i + size.height, size.height),
+        paint,
+      );
+    }
+
+    // Draw dots pattern
+    for (double x = 10; x < size.width; x += 30) {
+      for (double y = 10; y < size.height; y += 30) {
+        canvas.drawCircle(Offset(x, y), 2, paint..style = PaintingStyle.fill);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

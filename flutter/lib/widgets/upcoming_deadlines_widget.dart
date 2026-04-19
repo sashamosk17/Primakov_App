@@ -7,6 +7,9 @@ import 'package:intl/intl.dart';
 import '../models/api_models.dart';
 import '../providers/deadline_provider.dart';
 import '../screens/main/deadline_screen.dart';
+import '../config/app_colors.dart';
+import '../config/app_spacing.dart';
+import '../config/app_typography.dart';
 
 class UpcomingDeadlinesWidget extends ConsumerWidget {
   const UpcomingDeadlinesWidget({Key? key}) : super(key: key);
@@ -21,7 +24,7 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,13 +32,9 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Ближайшие дедлайны',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1A1C1D),
-                ),
+                style: AppTypography.heading1,
               ),
               TextButton(
                 onPressed: () {
@@ -45,18 +44,17 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
                     ),
                   );
                 },
-                child: const Text(
+                child: Text(
                   'Смотреть все',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF6C0C08),
+                    color: AppColors.primaryRed,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: AppSpacing.md),
           // Deadlines List
           ...upcomingDeadlines.map((deadline) => _DeadlineCompactCard(
                 deadline: deadline,
@@ -86,78 +84,68 @@ class _DeadlineCompactCard extends StatelessWidget {
 
     if (daysUntil == 0) {
       urgencyText = 'Сегодня';
-      urgencyColor = const Color(0xFFD32F2F);
+      urgencyColor = AppColors.error;
     } else if (daysUntil == 1) {
       urgencyText = 'Завтра';
-      urgencyColor = const Color(0xFFFF6F00);
+      urgencyColor = AppColors.warning;
     } else if (daysUntil <= 3) {
       urgencyText = 'Через $daysUntil дня';
-      urgencyColor = const Color(0xFFFF6F00);
+      urgencyColor = AppColors.warning;
     } else {
       urgencyText = dateFormat.format(dueDate);
-      urgencyColor = const Color(0xFF5F5E5E);
+      urgencyColor = AppColors.textSecondary;
     }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      padding: AppSpacing.paddingMD,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x08000000),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: AppColors.backgroundSecondary,
+        borderRadius: AppSpacing.borderRadiusMD,
+        boxShadow: AppColors.toggleShadow,
       ),
       child: Row(
         children: [
           // Subject Badge
           if (deadline.subject != null)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8E8EA),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.backgroundTertiary,
+                borderRadius: BorderRadius.circular(AppSpacing.sm),
               ),
               child: Text(
                 deadline.subject!.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 10,
+                style: AppTypography.labelSmall.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF5F5E5E),
+                  color: AppColors.textSecondary,
                   letterSpacing: 1,
                 ),
               ),
             ),
-          const SizedBox(width: 12),
+          SizedBox(width: AppSpacing.md),
           // Title
           Expanded(
             child: Text(
               deadline.title,
-              style: const TextStyle(
+              style: AppTypography.heading3.copyWith(
                 fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1C1D),
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: AppSpacing.md),
           // Due Date
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
               color: urgencyColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppSpacing.sm),
             ),
             child: Text(
               urgencyText,
-              style: TextStyle(
-                fontSize: 11,
+              style: AppTypography.bodySmall.copyWith(
                 fontWeight: FontWeight.bold,
                 color: urgencyColor,
               ),

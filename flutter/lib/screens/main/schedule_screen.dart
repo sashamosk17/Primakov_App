@@ -1,4 +1,7 @@
 /// Schedule Screen - Updated Design
+import '../../config/app_typography.dart';
+import '../../config/app_spacing.dart';
+import '../../config/app_colors.dart';
 /// Shows weekly schedule with lesson cards and navigation to lesson details
 
 import 'package:flutter/material.dart';
@@ -64,7 +67,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Color(0xFF6C0C08),
+              primary: AppColors.primaryRed,
               onPrimary: Colors.white,
               surface: Colors.white,
             ),
@@ -89,7 +92,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     final scheduleError = ref.watch(scheduleErrorProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: AppColors.backgroundPrimary,
       body: CustomScrollView(
         slivers: [
           // App Bar
@@ -102,12 +105,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1C1D),
+                color: AppColors.textPrimary,
               ),
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.calendar_today, color: Color(0xFF6C0C08)),
+                icon: const Icon(Icons.calendar_today, color: AppColors.primaryRed),
                 onPressed: _pickDate,
               ),
             ],
@@ -125,7 +128,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1C1D),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   TextButton(
@@ -140,7 +143,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF6C0C08),
+                        color: AppColors.primaryRed,
                       ),
                     ),
                   ),
@@ -178,11 +181,11 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       margin: const EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? const Color(0xFF6C0C08)
+                            ? AppColors.primaryRed
                             : Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: isToday && !isSelected
-                            ? Border.all(color: const Color(0xFF6C0C08), width: 2)
+                            ? Border.all(color: AppColors.primaryRed, width: 2)
                             : null,
                         boxShadow: [
                           BoxShadow(
@@ -202,7 +205,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                               fontWeight: FontWeight.bold,
                               color: isSelected
                                   ? Colors.white70
-                                  : const Color(0xFF5F5E5E),
+                                  : AppColors.textSecondary,
                               letterSpacing: 1,
                             ),
                           ),
@@ -214,7 +217,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                               fontWeight: FontWeight.bold,
                               color: isSelected
                                   ? Colors.white
-                                  : const Color(0xFF1A1C1D),
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -247,7 +250,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       scheduleError,
                       style: const TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF5F5E5E),
+                        color: AppColors.textSecondary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -255,7 +258,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                     ElevatedButton(
                       onPressed: _loadData,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6C0C08),
+                        backgroundColor: AppColors.primaryRed,
                       ),
                       child: const Text('Повторить'),
                     ),
@@ -279,7 +282,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       'Нет уроков на эту дату',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF5F5E5E),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -379,14 +382,14 @@ class _LessonCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1C1D),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   Text(
                     lesson.endTime,
                     style: const TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF5F5E5E),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
@@ -397,7 +400,7 @@ class _LessonCard extends StatelessWidget {
                 width: 3,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6C0C08),
+                  color: AppColors.primaryRed,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -412,7 +415,7 @@ class _LessonCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF1A1C1D),
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -421,14 +424,14 @@ class _LessonCard extends StatelessWidget {
                         const Icon(
                           Icons.room,
                           size: 16,
-                          color: Color(0xFF5F5E5E),
+                          color: AppColors.textSecondary,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           'Кабинет ${lesson.room}',
                           style: const TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF5F5E5E),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         if (lesson.hasHomework) ...[
@@ -461,7 +464,7 @@ class _LessonCard extends StatelessWidget {
               const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Color(0xFF5F5E5E),
+                color: AppColors.textSecondary,
               ),
             ],
           ),

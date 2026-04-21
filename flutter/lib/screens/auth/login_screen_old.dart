@@ -1,59 +1,44 @@
-/// Register Screen
-import '../../config/app_colors.dart';
-/// Converted from React Native RegisterScreen.tsx
+/// Login Screen
+/// Converted from React Native LoginScreen.tsx
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
 
-class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _emailController = TextEditingController(
+    text: 'ivan.petrov@primakov.school',
+  );
+  final _passwordController = TextEditingController(
+    text: 'password123',
+  );
   String? _error;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleRegister() async {
-    if (_emailController.text.isEmpty || 
-        _passwordController.text.isEmpty ||
-        _confirmPasswordController.text.isEmpty) {
+  Future<void> _handleLogin() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       setState(() {
         _error = 'Пожалуйста, заполните все поля';
       });
       return;
     }
 
-    if (_passwordController.text != _confirmPasswordController.text) {
-      setState(() {
-        _error = 'Пароли не совпадают';
-      });
-      return;
-    }
-
-    if (_passwordController.text.length < 6) {
-      setState(() {
-        _error = 'Пароль должен быть не менее 6 символов';
-      });
-      return;
-    }
-
     try {
       final authNotifier = ref.read(authProvider.notifier);
-      await authNotifier.register(
+      await authNotifier.login(
         _emailController.text,
         _passwordController.text,
       );
@@ -65,8 +50,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     }
   }
 
-  void _handleBack() {
-    Navigator.of(context).pop();
+  void _handleRegister() {
+    // Navigate to register screen
+    // This would be handled by your navigation implementation
   }
 
   @override
@@ -74,37 +60,40 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final isLoading = ref.watch(authLoadingProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Регистрация'),
-        backgroundColor: const Color(0xFF1976D2),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: _handleBack,
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Subtitle
+                const SizedBox(height: 60),
+                // Title
                 const Text(
-                  'Создайте аккаунт',
+                  'PrimakovApp',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF333333),
+                    color: Color(0xFF1976D2),
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 12),
+                // Subtitle
+                const Text(
+                  'Вход в систему',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF666666),
+                  ),
+                ),
+                const SizedBox(height: 48),
                 // Email field
                 TextField(
                   controller: _emailController,
                   enabled: !isLoading,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    hintText: 'Email',
                     hintStyle: const TextStyle(color: Color(0xFF999999)),
                     contentPadding: const EdgeInsets.all(16),
                     border: OutlineInputBorder(
@@ -119,22 +108,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   enabled: !isLoading,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Пароль',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Confirm Password field
-                TextField(
-                  controller: _confirmPasswordController,
-                  enabled: !isLoading,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Подтвердите пароль',
+                    hintText: 'Пароль',
                     hintStyle: const TextStyle(color: Color(0xFF999999)),
                     contentPadding: const EdgeInsets.all(16),
                     border: OutlineInputBorder(
@@ -155,12 +129,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                   ),
-                // Register button
+                // Login button
                 SizedBox(
                   width: double.infinity,
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: isLoading ? null : _handleRegister,
+                    onPressed: isLoading ? null : _handleLogin,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1976D2),
                       disabledBackgroundColor: const Color(0xFFCCCCCC),
@@ -169,12 +143,41 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                     child: Text(
-                      isLoading ? 'Загрузка...' : 'Зарегистрироваться',
+                      isLoading ? 'Загрузка...' : 'Войти',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Register link
+                TextButton(
+                  onPressed: isLoading ? null : _handleRegister,
+                  child: const Text(
+                    'Нет аккаунта? Зарегистрируйся',
+                    style: TextStyle(
+                      color: Color(0xFF1976D2),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 48),
+                // Demo credentials
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    'Demo: ivan.petrov@primakov.school / password123',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF666666),
                     ),
                   ),
                 ),

@@ -1,4 +1,5 @@
 /// Settings Screen
+import '../../config/app_colors.dart';
 /// App settings and preferences
 
 import 'package:flutter/material.dart';
@@ -41,9 +42,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: AppColors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF6C0C08),
+        backgroundColor: AppColors.primaryRed,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -84,7 +85,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                 );
               },
-              activeColor: const Color(0xFF6C0C08),
+              activeColor: AppColors.primaryRed,
             ),
           ),
 
@@ -109,7 +110,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                 );
               },
-              activeColor: const Color(0xFF6C0C08),
+              activeColor: AppColors.primaryRed,
             ),
           ),
           const SizedBox(height: 8),
@@ -120,7 +121,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Color(0xFF5F5E5E),
+              color: AppColors.textSecondary,
             ),
             onTap: () {
               _showLanguageDialog();
@@ -144,7 +145,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Color(0xFF5F5E5E),
+              color: AppColors.textSecondary,
             ),
             onTap: () {
               showLicensePage(
@@ -161,7 +162,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Color(0xFF5F5E5E),
+              color: AppColors.textSecondary,
             ),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -206,7 +207,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               'ACADEMIC CURATOR SYSTEM V2.4',
               style: TextStyle(
                 fontSize: 11,
-                color: const Color(0xFF5F5E5E).withOpacity(0.6),
+                color: AppColors.textSecondary.withOpacity(0.6),
                 letterSpacing: 1.2,
               ),
             ),
@@ -234,7 +235,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 });
                 Navigator.of(context).pop();
               },
-              activeColor: const Color(0xFF6C0C08),
+              activeColor: AppColors.primaryRed,
             ),
             RadioListTile<String>(
               title: const Text('English'),
@@ -249,7 +250,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   const SnackBar(content: Text('English language coming soon')),
                 );
               },
-              activeColor: const Color(0xFF6C0C08),
+              activeColor: AppColors.primaryRed,
             ),
           ],
         ),
@@ -268,7 +269,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             onPressed: () => Navigator.of(context).pop(),
             child: const Text(
               'Отмена',
-              style: TextStyle(color: Color(0xFF5F5E5E)),
+              style: TextStyle(color: AppColors.textSecondary),
             ),
           ),
           TextButton(
@@ -299,7 +300,7 @@ class _SectionHeader extends StatelessWidget {
       style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
-        color: Color(0xFF5F5E5E),
+        color: AppColors.textSecondary,
         letterSpacing: 1.5,
       ),
     );
@@ -351,7 +352,7 @@ class _SettingsTile extends StatelessWidget {
                 ),
                 child: Icon(
                   icon,
-                  color: const Color(0xFF6C0C08),
+                  color: AppColors.primaryRed,
                   size: 20,
                 ),
               ),
@@ -365,7 +366,7 @@ class _SettingsTile extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF1A1C1D),
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     if (subtitle != null) ...[
@@ -374,7 +375,7 @@ class _SettingsTile extends StatelessWidget {
                         subtitle!,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF5F5E5E),
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],

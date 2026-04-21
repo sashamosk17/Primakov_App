@@ -1,4 +1,5 @@
 /// Services Screen
+import '../../config/app_colors.dart';
 /// Shows various school services and people search (mock)
 
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: AppColors.backgroundPrimary,
       body: CustomScrollView(
         slivers: [
           // App Bar
@@ -37,7 +38,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1C1D),
+                color: AppColors.textPrimary,
               ),
             ),
           ),
@@ -54,7 +55,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1C1D),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -69,10 +70,10 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     decoration: InputDecoration(
                       hintText: 'Поиск учителей и учеников...',
                       hintStyle: const TextStyle(color: Color(0xFF999999)),
-                      prefixIcon: const Icon(Icons.search, color: Color(0xFF5F5E5E)),
+                      prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
                       suffixIcon: _isSearching
                           ? IconButton(
-                              icon: const Icon(Icons.clear, color: Color(0xFF5F5E5E)),
+                              icon: const Icon(Icons.clear, color: AppColors.textSecondary),
                               onPressed: () {
                                 _searchController.clear();
                                 setState(() {
@@ -93,7 +94,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFF6C0C08), width: 2),
+                        borderSide: const BorderSide(color: AppColors.primaryRed, width: 2),
                       ),
                     ),
                   ),
@@ -144,7 +145,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1C1D),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -266,7 +267,7 @@ class _ServiceCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1A1C1D),
+                  color: AppColors.textPrimary,
                   height: 1.3,
                 ),
               ),
@@ -325,7 +326,7 @@ class _PersonCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1C1D),
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -333,7 +334,7 @@ class _PersonCard extends StatelessWidget {
                   person.role,
                   style: const TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF5F5E5E),
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],

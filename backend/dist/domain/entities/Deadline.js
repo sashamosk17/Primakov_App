@@ -22,6 +22,7 @@ class Deadline {
         }
         this.status = DeadlineStatus_1.DeadlineStatus.COMPLETED;
         this.completedAt = new Date();
+        this.updatedAt = new Date();
         return Result_1.Result.ok();
     }
     isOverdue() {

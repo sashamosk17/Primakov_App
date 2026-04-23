@@ -60,11 +60,17 @@ export class DeadlineController {
       if (!deadline) {
         return res.status(404).json({ status: "error", error: { message: "Deadline not found" } });
       }
+
+      const completeResult = deadline.complete();
+      if (completeResult.isFailure) {
+        return res.status(400).json({ status: "error", error: { message: completeResult.error } });
+      }
+
       const result = await this.completeDeadlineUseCase.execute(deadline);
       if (result.isFailure) {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }
-      return res.json({ status: "success", data: result.value });
+      return res.json({ status: "success", data: deadline });
     } catch (error) {
       return next(error);
     }

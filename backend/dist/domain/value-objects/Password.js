@@ -1,22 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Password = void 0;
-const crypto_1 = require("crypto");
+const bcrypt_1 = require("bcrypt");
 class Password {
-    constructor(_encrypted) {
-        this._encrypted = _encrypted;
+    constructor(_hash) {
+        this._hash = _hash;
     }
-    get encrypted() {
-        return this._encrypted;
+    get hash() {
+        return this._hash;
     }
     compare(plainText) {
-        return Password.hash(plainText) === this._encrypted;
+        return (0, bcrypt_1.compareSync)(plainText, this._hash);
     }
     static create(plainText) {
-        return new Password(Password.hash(plainText));
+        const hashed = (0, bcrypt_1.hashSync)(plainText, 10);
+        return new Password(hashed);
     }
-    static hash(plainText) {
-        return (0, crypto_1.createHash)("sha256").update(plainText).digest("hex");
+    static fromHash(hash) {
+        return new Password(hash);
     }
 }
 exports.Password = Password;

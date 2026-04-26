@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { PostgresRequestRepository } from "../../infrastructure/database/postgres/PostgresRequestRepository";
 import { RequestController } from "../controllers/RequestController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 export function requestRoutes(repository: PostgresRequestRepository): Router {
   const router = Router();
   const controller = new RequestController(repository);
+
+  router.use(authMiddleware);
 
   router.post("/", controller.create);
   router.get("/", controller.getUserRequests);

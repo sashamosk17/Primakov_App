@@ -18,7 +18,6 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
       const query = `
         SELECT id, title, description, content, image_url, date, category, author_id, created_at
         FROM announcements
-        WHERE deleted_at IS NULL
         ORDER BY date DESC, created_at DESC
       `;
 
@@ -37,7 +36,7 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
       const query = `
         SELECT id, title, description, content, image_url, date, category, author_id, created_at
         FROM announcements
-        WHERE id = $1 AND deleted_at IS NULL
+        WHERE id = $1
       `;
 
       const result = await this.pool.query(query, [id]);
@@ -59,7 +58,7 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
       const query = `
         SELECT id, title, description, content, image_url, date, category, author_id, created_at
         FROM announcements
-        WHERE category = $1 AND deleted_at IS NULL
+        WHERE category = $1
         ORDER BY date DESC, created_at DESC
       `;
 

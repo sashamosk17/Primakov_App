@@ -25,6 +25,7 @@ export class Deadline {
     }
     this.status = DeadlineStatus.COMPLETED;
     this.completedAt = new Date();
+    this.updatedAt = new Date();
     return Result.ok();
   }
 

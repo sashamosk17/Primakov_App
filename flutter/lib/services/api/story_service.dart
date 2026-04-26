@@ -55,8 +55,8 @@ class StoryService {
   Future<void> markStoryAsViewed(String storyId) async {
     try {
       print('🔄 Marking story as viewed: $storyId');
-      
-      final response = await _dio.patch('/stories/$storyId/view');
+
+      final response = await _dio.post('/stories/$storyId/view');
 
       print('✅ Mark viewed response status: ${response.statusCode}');
       print('📦 Mark viewed response data: ${response.data}');
@@ -65,7 +65,7 @@ class StoryService {
       if (response.statusCode == 200) {
         print('✅ Story marked as viewed');
       }
-      
+
     } on DioException catch (e) {
       print('❌ Mark viewed error: ${e.message}');
       throw Exception('Mark story viewed error: ${e.message}');

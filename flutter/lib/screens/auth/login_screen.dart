@@ -1,4 +1,5 @@
 /// Login Screen - Updated Design
+import '../../config/app_colors.dart';
 /// Modern login interface with improved UX
 
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final isLoading = ref.watch(authLoadingProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: AppColors.backgroundPrimary,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -68,11 +69,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF6C0C08),
+                    color: AppColors.primaryRed,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF6C0C08).withOpacity(0.3),
+                        color: AppColors.primaryRed.withOpacity(0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -92,7 +93,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1C1D),
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -102,7 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   'Добро пожаловать!',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xFF5F5E5E),
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -129,7 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       hintStyle: const TextStyle(color: Color(0xFF999999)),
                       prefixIcon: const Icon(
                         Icons.email_outlined,
-                        color: Color(0xFF6C0C08),
+                        color: AppColors.primaryRed,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -165,14 +166,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       hintStyle: const TextStyle(color: Color(0xFF999999)),
                       prefixIcon: const Icon(
                         Icons.lock_outlined,
-                        color: Color(0xFF6C0C08),
+                        color: AppColors.primaryRed,
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
-                          color: const Color(0xFF5F5E5E),
+                          color: AppColors.textSecondary,
                         ),
                         onPressed: () {
                           setState(() {
@@ -205,7 +206,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: const Text(
                       'Забыли пароль?',
                       style: TextStyle(
-                        color: Color(0xFF6C0C08),
+                        color: AppColors.primaryRed,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -251,7 +252,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: isLoading ? null : _handleLogin,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF6C0C08),
+                      backgroundColor: AppColors.primaryRed,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -286,7 +287,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const Text(
                       'Нет аккаунта? ',
                       style: TextStyle(
-                        color: Color(0xFF5F5E5E),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     TextButton(
@@ -300,7 +301,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       child: const Text(
                         'Зарегистрироваться',
                         style: TextStyle(
-                          color: Color(0xFF6C0C08),
+                          color: AppColors.primaryRed,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -315,7 +316,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   'ACADEMIC CURATOR SYSTEM V2.4',
                   style: TextStyle(
                     fontSize: 11,
-                    color: const Color(0xFF5F5E5E).withOpacity(0.6),
+                    color: AppColors.textSecondary.withOpacity(0.6),
                     letterSpacing: 1.2,
                   ),
                 ),

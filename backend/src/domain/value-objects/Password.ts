@@ -1,21 +1,22 @@
-import { createHash } from "crypto";
+import { hashSync, compareSync } from "bcrypt";
 
 export class Password {
-  private constructor(private readonly _encrypted: string) {}
+  private constructor(private readonly _hash: string) {}
 
-  public get encrypted(): string {
-    return this._encrypted;
+  public get hash(): string {
+    return this._hash;
   }
 
   public compare(plainText: string): boolean {
-    return Password.hash(plainText) === this._encrypted;
+    return compareSync(plainText, this._hash);
   }
 
   public static create(plainText: string): Password {
-    return new Password(Password.hash(plainText));
+    const hashed = hashSync(plainText, 10);
+    return new Password(hashed);
   }
 
-  private static hash(plainText: string): string {
-    return createHash("sha256").update(plainText).digest("hex");
+  public static fromHash(hash: string): Password {
+    return new Password(hash);
   }
 }

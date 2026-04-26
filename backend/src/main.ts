@@ -7,15 +7,23 @@ import { deadlineRoutes } from "./presentation/routes/deadlineRoutes";
 import { ratingRoutes } from "./presentation/routes/ratingRoutes";
 import { storyRoutes } from "./presentation/routes/storyRoutes";
 import { announcementRoutes } from "./presentation/routes/announcementRoutes";
+import { roomRoutes } from "./presentation/routes/roomRoutes";
+import { requestRoutes } from "./presentation/routes/requestRoutes";
+import { canteenRoutes } from "./presentation/routes/canteenRoutes";
 import { errorHandlerMiddleware } from "./presentation/middleware/errorHandlerMiddleware";
 import { createDatabasePool, closeDatabasePool } from "./infrastructure/config/database";
 import { runMigrations } from "./infrastructure/database/migrations/migrationRunner";
-import { UserRepository } from "./infrastructure/database/postgres/UserRepository";
-import { ScheduleRepository } from "./infrastructure/database/postgres/ScheduleRepository";
-import { DeadlineRepository } from "./infrastructure/database/postgres/DeadlineRepository";
-import { AnnouncementRepository } from "./infrastructure/database/postgres/AnnouncementRepository";
-import { StoryRepository } from "./infrastructure/database/postgres/StoryRepository";
-import { RatingRepository } from "./infrastructure/database/postgres/RatingRepository";
+import {
+  PostgresUserRepository,
+  PostgresScheduleRepository,
+  PostgresDeadlineRepository,
+  PostgresRatingRepository,
+  PostgresStoryRepository,
+  PostgresAnnouncementRepository,
+  PostgresRoomRepository,
+  PostgresRequestRepository,
+  PostgresCanteenMenuRepository,
+} from "./infrastructure/database/postgres";
 
 dotenv.config();
 
@@ -28,12 +36,15 @@ async function startServer() {
     await runMigrations(pool);
 
     console.log("Creating repository instances...");
-    const userRepository = new UserRepository(pool);
-    const scheduleRepository = new ScheduleRepository(pool);
-    const deadlineRepository = new DeadlineRepository(pool);
-    const announcementRepository = new AnnouncementRepository(pool);
-    const storyRepository = new StoryRepository(pool);
-    const ratingRepository = new RatingRepository(pool);
+    const userRepository = new PostgresUserRepository(pool);
+    const scheduleRepository = new PostgresScheduleRepository(pool);
+    const deadlineRepository = new PostgresDeadlineRepository(pool);
+    const announcementRepository = new PostgresAnnouncementRepository(pool);
+    const storyRepository = new PostgresStoryRepository(pool);
+    const ratingRepository = new PostgresRatingRepository(pool);
+    const roomRepository = new PostgresRoomRepository(pool);
+    const requestRepository = new PostgresRequestRepository(pool);
+    const canteenMenuRepository = new PostgresCanteenMenuRepository(pool);
 
     const app = express();
 
@@ -60,6 +71,9 @@ async function startServer() {
     app.use("/api/ratings", ratingRoutes(ratingRepository));
     app.use("/api/stories", storyRoutes(storyRepository));
     app.use("/api/announcements", announcementRoutes(announcementRepository));
+    app.use("/api/rooms", roomRoutes(roomRepository));
+    app.use("/api/requests", requestRoutes(requestRepository));
+    app.use("/api/canteen", canteenRoutes(canteenMenuRepository));
 
     app.use(errorHandlerMiddleware);
 

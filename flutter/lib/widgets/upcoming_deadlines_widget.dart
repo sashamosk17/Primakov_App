@@ -24,7 +24,7 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,7 +32,7 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Ближайшие дедлайны',
                 style: AppTypography.heading1,
               ),
@@ -54,7 +54,7 @@ class UpcomingDeadlinesWidget extends ConsumerWidget {
               ),
             ],
           ),
-          SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           // Deadlines List
           ...upcomingDeadlines.map((deadline) => _DeadlineCompactCard(
                 deadline: deadline,
@@ -97,10 +97,10 @@ class _DeadlineCompactCard extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       padding: AppSpacing.paddingMD,
       decoration: BoxDecoration(
-        color: AppColors.backgroundSecondary,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppSpacing.borderRadiusMD,
         boxShadow: AppColors.toggleShadow,
       ),
@@ -109,7 +109,7 @@ class _DeadlineCompactCard extends StatelessWidget {
           // Subject Badge
           if (deadline.subject != null)
             Container(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
                 color: AppColors.backgroundTertiary,
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -123,7 +123,7 @@ class _DeadlineCompactCard extends StatelessWidget {
                 ),
               ),
             ),
-          SizedBox(width: AppSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           // Title
           Expanded(
             child: Text(
@@ -135,10 +135,10 @@ class _DeadlineCompactCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SizedBox(width: AppSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           // Due Date
           Container(
-            padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
               color: urgencyColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -156,3 +156,4 @@ class _DeadlineCompactCard extends StatelessWidget {
     );
   }
 }
+

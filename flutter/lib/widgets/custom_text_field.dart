@@ -28,26 +28,31 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Label
         Text(
           label.toUpperCase(),
-          style: AppTypography.labelLarge,
+          style: AppTypography.labelLarge.copyWith(
+            color: theme.colorScheme.onSurface,
+          ),
         ),
         const SizedBox(height: 8),
         // Input Field
         Container(
           decoration: BoxDecoration(
-            color: AppColors.backgroundTertiary,
+            color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundTertiary,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            border: const Border(
+            border: Border(
               bottom: BorderSide(
-                color: AppColors.borderPrimary,
+                color: isDarkMode ? AppColors.darkBorderPrimary : AppColors.borderPrimary,
                 width: 2,
               ),
             ),
@@ -59,10 +64,14 @@ class CustomTextField extends StatelessWidget {
             readOnly: readOnly,
             onTap: onTap,
             validator: validator,
-            style: AppTypography.bodyLarge,
+            style: AppTypography.bodyLarge.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
             decoration: InputDecoration(
               hintText: placeholder,
-              hintStyle: AppTypography.placeholder,
+              hintStyle: AppTypography.placeholder.copyWith(
+                color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+              ),
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,

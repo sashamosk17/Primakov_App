@@ -33,7 +33,7 @@ class PriorityToggle extends StatelessWidget {
                 height: 18,
               ),
               const SizedBox(width: 12),
-              Text(
+              const Text(
                 'Высокий приоритет',
                 style: AppTypography.bodyMedium,
               ),
@@ -60,7 +60,7 @@ class PriorityToggle extends StatelessWidget {
                   width: 16,
                   height: 16,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.circle,
                     boxShadow: AppColors.toggleShadow,
                   ),
@@ -73,3 +73,4 @@ class PriorityToggle extends StatelessWidget {
     );
   }
 }
+

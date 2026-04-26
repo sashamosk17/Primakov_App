@@ -431,3 +431,253 @@ class ApiResponse<T> {
     );
   }
 }
+
+// --- New Features (Vision 3) ---
+
+class Room {
+  final String id;
+  final String number;
+  final String? name;
+  final String building;
+  final int floor;
+  final int? capacity;
+  final double? latitude;
+  final double? longitude;
+  final String? description;
+  final bool isActive;
+
+  Room({
+    required this.id,
+    required this.number,
+    this.name,
+    required this.building,
+    required this.floor,
+    this.capacity,
+    this.latitude,
+    this.longitude,
+    this.description,
+    required this.isActive,
+  });
+
+  factory Room.fromJson(Map<String, dynamic> json) {
+    return Room(
+      id: json['id'] as String,
+      number: json['number'] as String,
+      name: json['name'] as String?,
+      building: json['building'] as String? ?? 'A',
+      floor: json['floor'] as int? ?? 1,
+      capacity: json['capacity'] as int?,
+      latitude: json['latitude'] != null ? (json['latitude'] as num).toDouble() : null,
+      longitude: json['longitude'] != null ? (json['longitude'] as num).toDouble() : null,
+      description: json['description'] as String?,
+      isActive: json['isActive'] as bool? ?? true,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'number': number,
+    'name': name,
+    'building': building,
+    'floor': floor,
+    'capacity': capacity,
+    'latitude': latitude,
+    'longitude': longitude,
+    'description': description,
+    'isActive': isActive,
+  };
+}
+
+enum RequestType { IT, MAINTENANCE, CLEANING }
+enum RequestPriority { LOW, MEDIUM, HIGH, URGENT }
+enum RequestStatus { PENDING, IN_PROGRESS, COMPLETED, CANCELLED }
+
+class SupportRequest {
+  final String id;
+  final String title;
+  final String description;
+  final RequestType type;
+  final RequestPriority priority;
+  final RequestStatus status;
+  final String creatorId;
+  final String? assigneeId;
+  final String? roomId;
+  final String? notes;
+  final String createdAt;
+  final String updatedAt;
+  final String? completedAt;
+
+  SupportRequest({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.priority,
+    required this.status,
+    required this.creatorId,
+    this.assigneeId,
+    this.roomId,
+    this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+    this.completedAt,
+  });
+
+  factory SupportRequest.fromJson(Map<String, dynamic> json) {
+    return SupportRequest(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      type: RequestType.values.firstWhere(
+        (e) => e.name == json['type'],
+        orElse: () => RequestType.IT,
+      ),
+      priority: RequestPriority.values.firstWhere(
+        (e) => e.name == json['priority'],
+        orElse: () => RequestPriority.LOW,
+      ),
+      status: RequestStatus.values.firstWhere(
+        (e) => e.name == json['status'],
+        orElse: () => RequestStatus.PENDING,
+      ),
+      creatorId: json['creatorId'] as String,
+      assigneeId: json['assigneeId'] as String?,
+      roomId: json['roomId'] as String?,
+      notes: json['notes'] as String?,
+      createdAt: json['createdAt'] as String? ?? '',
+      updatedAt: json['updatedAt'] as String? ?? '',
+      completedAt: json['completedAt'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'type': type.name,
+    'priority': priority.name,
+    'status': status.name,
+    'creatorId': creatorId,
+    'assigneeId': assigneeId,
+    'roomId': roomId,
+    'notes': notes,
+    'createdAt': createdAt,
+    'updatedAt': updatedAt,
+    'completedAt': completedAt,
+  };
+}
+
+enum MealType { BREAKFAST, LUNCH, DINNER, SNACK }
+
+class CanteenMenuItem {
+  final String id;
+  final String name;
+  final String? description;
+  final String? category;
+  final int calories;
+  final double? protein;
+  final double? carbs;
+  final double? fat;
+  final int? weight;
+  final String? imageUrl;
+  final List<String> allergens;
+  final bool isVegetarian;
+  final bool isVegan;
+  final double? price;
+  final int displayOrder;
+
+  CanteenMenuItem({
+    required this.id,
+    required this.name,
+    this.description,
+    this.category,
+    required this.calories,
+    this.protein,
+    this.carbs,
+    this.fat,
+    this.weight,
+    this.imageUrl,
+    required this.allergens,
+    required this.isVegetarian,
+    required this.isVegan,
+    this.price,
+    required this.displayOrder,
+  });
+
+  factory CanteenMenuItem.fromJson(Map<String, dynamic> json) {
+    return CanteenMenuItem(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      category: json['category'] as String?,
+      calories: json['calories'] as int? ?? 0,
+      protein: json['protein'] != null ? (json['protein'] as num).toDouble() : null,
+      carbs: json['carbs'] != null ? (json['carbs'] as num).toDouble() : null,
+      fat: json['fat'] != null ? (json['fat'] as num).toDouble() : null,
+      weight: json['weight'] as int?,
+      imageUrl: json['imageUrl'] as String?,
+      allergens: (json['allergens'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      isVegetarian: json['isVegetarian'] as bool? ?? false,
+      isVegan: json['isVegan'] as bool? ?? false,
+      price: json['price'] != null ? (json['price'] as num).toDouble() : null,
+      displayOrder: json['displayOrder'] as int? ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'description': description,
+    'category': category,
+    'calories': calories,
+    'protein': protein,
+    'carbs': carbs,
+    'fat': fat,
+    'weight': weight,
+    'imageUrl': imageUrl,
+    'allergens': allergens,
+    'isVegetarian': isVegetarian,
+    'isVegan': isVegan,
+    'price': price,
+    'displayOrder': displayOrder,
+  };
+}
+
+class CanteenMenu {
+  final String id;
+  final String date;
+  final MealType mealType;
+  final List<CanteenMenuItem> items;
+  final String createdAt;
+
+  CanteenMenu({
+    required this.id,
+    required this.date,
+    required this.mealType,
+    required this.items,
+    required this.createdAt,
+  });
+
+  factory CanteenMenu.fromJson(Map<String, dynamic> json) {
+    return CanteenMenu(
+      id: json['id'] as String,
+      date: json['date'] as String,
+      mealType: MealType.values.firstWhere(
+        (e) => e.name == json['mealType'],
+        orElse: () => MealType.LUNCH,
+      ),
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => CanteenMenuItem.fromJson(e as Map<String, dynamic>))
+          .toList() ?? [],
+      createdAt: json['createdAt'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'date': date,
+    'mealType': mealType.name,
+    'items': items.map((e) => e.toJson()).toList(),
+    'createdAt': createdAt,
+  };
+}

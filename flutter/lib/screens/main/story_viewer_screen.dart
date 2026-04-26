@@ -144,7 +144,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                             height: 3,
                             margin: const EdgeInsets.symmetric(horizontal: 2),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(2),
                             ),
                             child: FractionallySizedBox(
@@ -154,7 +154,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                                   : (index < _currentIndex ? 1.0 : 0.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.surface,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -173,13 +173,13 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                         Container(
                           width: 40,
                           height: 40,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: AppColors.primaryRed,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.school,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             size: 24,
                           ),
                         ),
@@ -190,16 +190,16 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                             children: [
                               Text(
                                 story.title,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.surface,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 'Гимназия Примакова',
                                 style: TextStyle(
-                                  color: Colors.white70,
+                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                                   fontSize: 12,
                                 ),
                               ),
@@ -207,7 +207,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close, color: Colors.white),
+                          icon: Icon(Icons.close, color: Theme.of(context).colorScheme.surface),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       ],
@@ -226,9 +226,9 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                     color: Colors.black54,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.pause,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     size: 48,
                   ),
                 ),
@@ -252,13 +252,13 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
               Container(
                 width: 120,
                 height: 120,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.primaryRed,
                 ),
                 child: Icon(
                   _getStoryIcon(story.title),
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   size: 60,
                 ),
               ),
@@ -267,8 +267,8 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
               // Title
               Text(
                 story.title,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surface,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -279,8 +279,8 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
               // Description
               Text(
                 story.description,
-                style: const TextStyle(
-                  color: Colors.white70,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                   fontSize: 16,
                   height: 1.5,
                 ),
@@ -310,3 +310,5 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
     }
   }
 }
+
+

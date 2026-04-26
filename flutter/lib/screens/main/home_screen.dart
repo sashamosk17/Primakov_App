@@ -14,6 +14,7 @@ import '../../config/app_typography.dart';
 import 'schedule_screen.dart';
 import 'deadline_screen.dart';
 import 'story_viewer_screen.dart';
+import '../canteen_menu_screen.dart';
 
 // Mock data providers
 final mockNewsListProvider = Provider<List<News>>((ref) {
@@ -114,11 +115,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
     // TODO: Get actual user name from API
-    final userName = 'Иванов Алексей';
-    final userRole = 'Ученик';
+    const userName = 'Иванов Алексей';
+    const userRole = 'Ученик';
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -140,7 +141,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   children: [
                     // Row 1: Schedule (full width)
                     _buildScheduleCard(),
-                    SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
 
                     // Row 2: Deadlines + Cafeteria
                     Row(
@@ -155,11 +156,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
 
                     // Row 3: News (full width)
                     _buildNewsCard(),
-                    SizedBox(height: AppSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
 
                     // Quote Card
                     _buildQuoteCard(),
@@ -175,7 +176,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildTopAppBar(String userName, String userRole) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg - 4, vertical: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg - 4, vertical: AppSpacing.md),
       child: Row(
         children: [
           // Avatar
@@ -190,7 +191,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Text(
                 'ИА',
                 style: AppTypography.heading2.copyWith(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
             ),
@@ -203,10 +204,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 Text(
                   userName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 Text(
@@ -222,7 +223,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Search Button
           IconButton(
             icon: const Icon(Icons.search, size: 28),
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
             onPressed: () {
               // TODO: Implement search
             },
@@ -443,7 +444,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -472,13 +473,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 12),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Мое расписание',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -521,10 +522,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Text(
                     'Следующий урок: ${nextLesson.subject} • ${nextLesson.startTime}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -569,7 +570,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         height: 180,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -600,12 +601,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
+                Text(
                   'Дедлайны',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -636,68 +637,77 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildCafeteriaCard() {
     final cafeteria = ref.watch(mockCafeteriaProvider);
 
-    return Container(
-      height: 180,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const CanteenMenuScreen(),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.lightGray,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.restaurant_menu,
-                  color: AppColors.iconGray,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Столовая',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Баланс: ${cafeteria.balance.toStringAsFixed(0)} ₽',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ],
-          ),
-          Text(
-            'Обед: ${cafeteria.todayMenu}',
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.primaryRed,
-              fontWeight: FontWeight.w600,
+        );
+      },
+      child: Container(
+        height: 180,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.lightGray,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.restaurant_menu,
+                    color: AppColors.iconGray,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Столовая',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Баланс: ${cafeteria.balance.toStringAsFixed(0)} ₽',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              'Обед: ${cafeteria.todayMenu}',
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.primaryRed,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -714,7 +724,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       decoration: BoxDecoration(
         color: AppColors.primaryRed.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border(
+        border: const Border(
           left: BorderSide(
             color: AppColors.primaryRed,
             width: 4,
@@ -818,14 +828,14 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
     }
 
     final currentNewsHeight = _newsHeights[_currentPage] ?? 100.0;
-    final headerHeight = 60.0; // Approximate header height
+    const headerHeight = 60.0; // Approximate header height
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       height: headerHeight + currentNewsHeight,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -857,12 +867,12 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Новости гимназии',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -894,10 +904,10 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                           children: [
                             Text(
                               news.title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -968,3 +978,6 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
     );
   }
 }
+
+
+

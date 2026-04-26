@@ -11,6 +11,7 @@ import 'screens/main/schedule_screen.dart';
 import 'screens/main/services_screen.dart';
 import 'screens/main/profile_screen.dart';
 import 'providers/auth_provider.dart';
+import 'providers/ui_provider.dart';
 import 'config/app_theme.dart';
 
 void main() async {
@@ -25,12 +26,14 @@ class PrimakovApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isAuthenticated = ref.watch(isAuthenticatedProvider);
+    final isDarkMode = ref.watch(isDarkModeProvider);
 
     return MaterialApp(
       title: 'PrimakovApp',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      themeMode: ThemeMode.light,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -55,10 +58,10 @@ class AuthNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: [
+      pages: const [
         MaterialPage(
           child: LoginScreen(),
-          key: const ValueKey('login'),
+          key: ValueKey('login'),
         ),
       ],
       onPopPage: (route, result) => route.didPop(result),
@@ -110,6 +113,9 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
@@ -122,14 +128,16 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.95),
+          color: isDarkMode
+              ? const Color(0xFF1A1C1D).withOpacity(0.95)
+              : Colors.white.withOpacity(0.95),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.08),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
@@ -145,8 +153,10 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
             onTap: _onItemTapped,
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.transparent,
-            selectedItemColor: const Color(0xFF6C0C08),
-            unselectedItemColor: const Color(0xFF9E9E9E),
+            selectedItemColor: theme.colorScheme.primary,
+            unselectedItemColor: isDarkMode
+                ? const Color(0xFF8A9099)
+                : const Color(0xFF9E9E9E),
             selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 11,
@@ -176,6 +186,8 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
     int index,
   ) {
     final isSelected = _selectedIndex == index;
+    final theme = Theme.of(context);
+
     return BottomNavigationBarItem(
       icon: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -185,7 +197,7 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF6C0C08).withOpacity(0.1)
+              ? theme.colorScheme.primary.withOpacity(0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
@@ -198,10 +210,3 @@ class _MainNavigatorState extends ConsumerState<MainNavigator> with TickerProvid
     );
   }
 }
-
-/// Get dark mode from UI provider
-final isDarkModeProvider = FutureProvider<bool>((ref) async {
-  // This is a placeholder implementation
-  // In a real app, you'd fetch this from shared preferences or similar
-  return false;
-});

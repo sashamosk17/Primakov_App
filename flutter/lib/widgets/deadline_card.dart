@@ -40,17 +40,19 @@ class DeadlineCard extends StatelessWidget {
     final dueDate = DateTime.parse(deadline.dueDate);
     final daysLeft = dueDate.difference(now).inDays;
 
-    return '${daysLeft}д';
+    return '$daysLeftд';
   }
 
   @override
   Widget build(BuildContext context) {
     final statusColor = _getStatusColor();
     final daysLeftText = _getDaysLeftText();
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
 
     return Container(
       padding: AppSpacing.paddingMD,
-      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
@@ -58,9 +60,15 @@ class DeadlineCard extends StatelessWidget {
             width: 4,
           ),
         ),
-        color: AppColors.backgroundSecondary,
+        color: theme.colorScheme.surface,
         borderRadius: AppSpacing.borderRadiusSM,
-        boxShadow: AppColors.toggleShadow,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.05),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,13 +80,15 @@ class DeadlineCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   deadline.title,
-                  style: AppTypography.heading3,
+                  style: AppTypography.heading3.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
                   color: statusColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(AppSpacing.xs),
@@ -93,35 +103,35 @@ class DeadlineCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           // Description
           Text(
             deadline.description,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           // Subject if available
           if (deadline.subject != null) ...[
-            SizedBox(height: AppSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               '📚 ${deadline.subject}',
               style: AppTypography.bodySmall.copyWith(
-                color: AppColors.textTertiary,
+                color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
               ),
             ),
           ],
           // Footer: Date + Complete button
-          SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '📅 До: ${_formatDate(deadline.dueDate)}',
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textTertiary,
+                  color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
                 ),
               ),
               if (deadline.status != DeadlineStatus.COMPLETED &&
@@ -130,7 +140,7 @@ class DeadlineCard extends StatelessWidget {
                   onPressed: onComplete,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.success,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.md,
                       vertical: AppSpacing.xs,
                     ),
@@ -157,3 +167,4 @@ class DeadlineCard extends StatelessWidget {
     return '${date.day}.${date.month}.${date.year}';
   }
 }
+

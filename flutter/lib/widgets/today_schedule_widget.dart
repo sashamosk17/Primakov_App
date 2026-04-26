@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import '../models/api_models.dart';
 import '../providers/schedule_provider.dart';
 import '../providers/auth_provider.dart';
@@ -44,7 +43,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
 
     if (isLoading) {
       return Container(
-        margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+        margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         child: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -53,10 +52,10 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
 
     if (schedule == null || schedule.lessons.isEmpty) {
       return Container(
-        margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+        margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         padding: AppSpacing.paddingLG,
         decoration: BoxDecoration(
-          color: AppColors.backgroundSecondary,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: AppSpacing.borderRadiusLG,
           boxShadow: AppColors.toggleShadow,
         ),
@@ -86,7 +85,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -94,7 +93,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Расписание на сегодня',
                 style: AppTypography.heading1,
               ),
@@ -116,7 +115,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
               ),
             ],
           ),
-          SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.md),
           // Lessons List (show max 3)
           ...schedule.lessons.take(3).toList().asMap().entries.map((entry) {
             final index = entry.key;
@@ -129,7 +128,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
           }),
           if (schedule.lessons.length > 3)
             Padding(
-              padding: EdgeInsets.only(top: AppSpacing.sm),
+              padding: const EdgeInsets.only(top: AppSpacing.sm),
               child: Center(
                 child: Text(
                   'Еще ${schedule.lessons.length - 3} уроков',
@@ -178,7 +177,7 @@ class _LessonCompactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       padding: AppSpacing.paddingMD,
       decoration: BoxDecoration(
         color: isNext ? AppColors.storyBackground : AppColors.backgroundSecondary,
@@ -208,14 +207,14 @@ class _LessonCompactCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: AppSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           // Divider
           Container(
             width: 2,
             height: 40,
             color: isNext ? AppColors.primaryRed : AppColors.borderSecondary,
           ),
-          SizedBox(width: AppSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           // Subject and Room
           Expanded(
             child: Column(
@@ -229,15 +228,15 @@ class _LessonCompactCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: AppSpacing.xs),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.room,
                       size: 14,
                       color: AppColors.textSecondary,
                     ),
-                    SizedBox(width: AppSpacing.xs),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Кабинет ${lesson.room}',
                       style: AppTypography.bodyMedium.copyWith(
@@ -252,7 +251,7 @@ class _LessonCompactCard extends StatelessWidget {
           // Next indicator
           if (isNext)
             Container(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
                 color: AppColors.primaryRed,
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -261,7 +260,7 @@ class _LessonCompactCard extends StatelessWidget {
                 'Следующий',
                 style: AppTypography.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
             ),
@@ -270,3 +269,4 @@ class _LessonCompactCard extends StatelessWidget {
     );
   }
 }
+

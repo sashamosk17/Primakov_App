@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/ui_provider.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
   String _selectedLanguage = 'Русский';
   String _appVersion = '...';
 
@@ -41,16 +41,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryRed,
+        backgroundColor: theme.colorScheme.primary,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
+        title: Text(
           'Настройки',
           style: TextStyle(
             color: Colors.white,
@@ -63,7 +66,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         padding: const EdgeInsets.all(24),
         children: [
           // Notifications Section
-          const _SectionHeader(title: 'Уведомления'),
+          _SectionHeader(title: 'Уведомления'),
           const SizedBox(height: 12),
           _SettingsTile(
             icon: Icons.notifications,
@@ -85,32 +88,34 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                 );
               },
-              activeColor: AppColors.primaryRed,
+              activeColor: theme.colorScheme.primary,
             ),
           ),
 
           const SizedBox(height: 24),
 
           // Appearance Section
-          const _SectionHeader(title: 'Внешний вид'),
+          _SectionHeader(title: 'Внешний вид'),
           const SizedBox(height: 12),
           _SettingsTile(
             icon: Icons.dark_mode,
             title: 'Темная тема',
             subtitle: 'Использовать темную тему оформления',
             trailing: Switch(
-              value: _darkModeEnabled,
+              value: isDarkMode,
               onChanged: (value) {
-                setState(() {
-                  _darkModeEnabled = value;
-                });
+                ref.read(uiProvider.notifier).toggleDarkMode();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Темная тема скоро появится'),
+                  SnackBar(
+                    content: Text(
+                      value
+                          ? 'Темная тема включена'
+                          : 'Светлая тема включена',
+                    ),
                   ),
                 );
               },
-              activeColor: AppColors.primaryRed,
+              activeColor: theme.colorScheme.primary,
             ),
           ),
           const SizedBox(height: 8),
@@ -118,10 +123,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icons.language,
             title: 'Язык',
             subtitle: _selectedLanguage,
-            trailing: const Icon(
+            trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.textSecondary,
+              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
             ),
             onTap: () {
               _showLanguageDialog();
@@ -131,7 +136,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const SizedBox(height: 24),
 
           // About Section
-          const _SectionHeader(title: 'О приложении'),
+          _SectionHeader(title: 'О приложении'),
           const SizedBox(height: 12),
           _SettingsTile(
             icon: Icons.info,
@@ -142,10 +147,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _SettingsTile(
             icon: Icons.description,
             title: 'Лицензии',
-            trailing: const Icon(
+            trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.textSecondary,
+              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
             ),
             onTap: () {
               showLicensePage(
@@ -159,10 +164,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _SettingsTile(
             icon: Icons.privacy_tip,
             title: 'Политика конфиденциальности',
-            trailing: const Icon(
+            trailing: Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: AppColors.textSecondary,
+              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
             ),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -207,7 +212,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               'ACADEMIC CURATOR SYSTEM V2.4',
               style: TextStyle(
                 fontSize: 11,
-                color: AppColors.textSecondary.withOpacity(0.6),
+                color: (isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary).withOpacity(0.6),
                 letterSpacing: 1.2,
               ),
             ),
@@ -218,6 +223,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showLanguageDialog() {
+    final theme = Theme.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -235,7 +241,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 });
                 Navigator.of(context).pop();
               },
-              activeColor: AppColors.primaryRed,
+              activeColor: theme.colorScheme.primary,
             ),
             RadioListTile<String>(
               title: const Text('English'),
@@ -250,7 +256,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   const SnackBar(content: Text('English language coming soon')),
                 );
               },
-              activeColor: AppColors.primaryRed,
+              activeColor: theme.colorScheme.primary,
             ),
           ],
         ),
@@ -288,26 +294,27 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
+class _SectionHeader extends ConsumerWidget {
   final String title;
 
   const _SectionHeader({required this.title});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
     return Text(
       title.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
-        color: AppColors.textSecondary,
+        color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
         letterSpacing: 1.5,
       ),
     );
   }
 }
 
-class _SettingsTile extends StatelessWidget {
+class _SettingsTile extends ConsumerWidget {
   final IconData icon;
   final String title;
   final String? subtitle;
@@ -323,9 +330,12 @@ class _SettingsTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
+    final theme = Theme.of(context);
+
     return Material(
-      color: Colors.white,
+      color: theme.colorScheme.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -336,7 +346,7 @@ class _SettingsTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: const Color(0x08000000),
+                color: Colors.black.withOpacity(isDarkMode ? 0.3 : 0.08),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -347,12 +357,14 @@ class _SettingsTile extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFEBEE),
+                  color: isDarkMode
+                      ? AppColors.darkStoryBackground
+                      : const Color(0xFFFFEBEE),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   icon,
-                  color: AppColors.primaryRed,
+                  color: theme.colorScheme.primary,
                   size: 20,
                 ),
               ),
@@ -363,19 +375,19 @@ class _SettingsTile extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
                       Text(
                         subtitle!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.textSecondary,
+                          color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -393,3 +405,6 @@ class _SettingsTile extends StatelessWidget {
     );
   }
 }
+
+
+

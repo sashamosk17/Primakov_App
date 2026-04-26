@@ -1,6 +1,3 @@
-/// Deadline Screen - Material Design 3
-import '../../config/app_typography.dart';
-import '../../config/app_spacing.dart';
 import '../../config/app_colors.dart';
 /// Redesigned based on stitch/_2 design
 
@@ -67,7 +64,7 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
     final isLoading = ref.watch(deadlineLoadingProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           NestedScrollView(
@@ -188,11 +185,11 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
             end: Alignment.bottomRight,
             colors: [AppColors.primaryRed, AppColors.primaryRedLight],
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: const Color(0x4D6C0C08),
+              color: Color(0x4D6C0C08),
               blurRadius: 20,
-              offset: const Offset(0, 10),
+              offset: Offset(0, 10),
             ),
           ],
         ),
@@ -207,9 +204,9 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
                 ),
               );
             },
-            child: const Icon(
+            child: Icon(
               Icons.add,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               size: 32,
             ),
           ),
@@ -439,10 +436,10 @@ class _SectionHeader extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
             letterSpacing: -0.5,
           ),
         ),
@@ -472,13 +469,13 @@ class _DeadlineCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x08000000),
+            color: Color(0x08000000),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -506,10 +503,10 @@ class _DeadlineCard extends StatelessWidget {
                       : Colors.transparent,
                 ),
                 child: isCompleted
-                    ? const Icon(
+                    ? Icon(
                         Icons.check,
                         size: 16,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                       )
                     : null,
               ),
@@ -531,17 +528,17 @@ class _DeadlineCard extends StatelessWidget {
                         children: [
                           Text(
                             deadline.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                               height: 1.3,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             deadline.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xCC1A1C1D),
                               height: 1.5,
@@ -651,11 +648,11 @@ class _TipCard extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x336C0C08),
+            color: Color(0x336C0C08),
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -749,3 +746,6 @@ class _PatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+

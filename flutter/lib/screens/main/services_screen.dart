@@ -1,9 +1,12 @@
 /// Services Screen
-import '../../config/app_colors.dart';
 /// Shows various school services and people search (mock)
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../config/app_colors.dart';
+import '../canteen_menu_screen.dart';
+import '../rooms_list_screen.dart';
+import '../create_request_screen.dart';
 
 class ServicesScreen extends ConsumerStatefulWidget {
   const ServicesScreen({Key? key}) : super(key: key);
@@ -25,7 +28,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
         slivers: [
           // App Bar
@@ -33,12 +36,12 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
             floating: true,
             backgroundColor: const Color(0xCCF3F3F5),
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Сервисы',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),
@@ -50,12 +53,12 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Поиск людей',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -83,7 +86,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                             )
                           : null,
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(color: Color(0xFFE8E8EA)),
@@ -108,8 +111,8 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: const Color(0xFFFF6F00)),
                       ),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(Icons.info_outline, color: Color(0xFFFF6F00)),
                           SizedBox(width: 12),
                           Expanded(
@@ -140,12 +143,12 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Все сервисы',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -158,16 +161,28 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     childAspectRatio: 1.1,
                     children: [
                       _ServiceCard(
-                        icon: Icons.library_books,
-                        title: 'Библиотека',
-                        color: const Color(0xFF1976D2),
-                        onTap: () => _showComingSoon(context),
+                        icon: Icons.support_agent,
+                        title: 'Заявки',
+                        color: const Color(0xFFE91E63),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CreateRequestScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _ServiceCard(
                         icon: Icons.restaurant,
                         title: 'Столовая',
                         color: const Color(0xFF4CAF50),
-                        onTap: () => _showComingSoon(context),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CanteenMenuScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _ServiceCard(
                         icon: Icons.schedule,
@@ -179,7 +194,13 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                         icon: Icons.map,
                         title: 'Карта школы',
                         color: const Color(0xFF9C27B0),
-                        onTap: () => _showComingSoon(context),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const RoomsListScreen(),
+                            ),
+                          );
+                        },
                       ),
                       _ServiceCard(
                         icon: Icons.announcement,
@@ -227,7 +248,7 @@ class _ServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -236,11 +257,11 @@ class _ServiceCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: const Color(0x08000000),
+                color: Color(0x08000000),
                 blurRadius: 10,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -264,10 +285,10 @@ class _ServiceCard extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                   height: 1.3,
                 ),
               ),
@@ -290,13 +311,13 @@ class _PersonCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x08000000),
+            color: Color(0x08000000),
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -323,10 +344,10 @@ class _PersonCard extends StatelessWidget {
               children: [
                 Text(
                   person.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -402,3 +423,6 @@ final List<_MockPerson> _mockPeople = [
     color: const Color(0xFF4CAF50),
   ),
 ];
+
+
+

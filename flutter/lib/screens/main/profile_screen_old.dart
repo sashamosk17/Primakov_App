@@ -31,9 +31,9 @@ class ProfileScreen extends ConsumerWidget {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                     child: const Icon(
                       Icons.person,
@@ -42,20 +42,20 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Ivan Petrov',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'ivan.petrov@primakov.school',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white70,
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                     ),
                   ),
                 ],
@@ -84,10 +84,10 @@ class ProfileScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Выход',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
@@ -141,3 +141,5 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 }
+
+

@@ -20,16 +20,17 @@ class StoryCard extends StatelessWidget {
     final isViewed = story.viewedBy.isNotEmpty;
     final hasImage = story.imageUrl != null && story.imageUrl!.isNotEmpty;
     final hasVideo = story.videoUrl != null && story.videoUrl!.isNotEmpty;
-    
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
     final displayType = hasImage ? 'image' : (hasVideo ? 'video' : 'text');
 
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
         width: 80,
-        // 🔥 Увеличиваем высоту, чтобы всё влезло
         child: Column(
-          mainAxisSize: MainAxisSize.min, // 🔥 Важно: не растягивать на всю высоту
+          mainAxisSize: MainAxisSize.min,
           children: [
             // Аватар/превью
             Container(
@@ -38,7 +39,9 @@ class StoryCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isViewed ? AppColors.storyViewed : AppColors.primaryRed,
+                  color: isViewed
+                      ? (isDarkMode ? AppColors.darkStoryViewed : AppColors.storyViewed)
+                      : (isDarkMode ? AppColors.darkPrimaryRed : AppColors.primaryRed),
                   width: 2,
                 ),
                 gradient: !hasImage && !hasVideo
@@ -53,10 +56,10 @@ class StoryCard extends StatelessWidget {
                         width: 70,
                         height: 70,
                         errorBuilder: (context, error, stackTrace) {
-                          return _buildPlaceholder(displayType);
+                          return _buildPlaceholder(displayType, isDarkMode);
                         },
                       )
-                    : _buildPlaceholder(displayType),
+                    : _buildPlaceholder(displayType, isDarkMode),
               ),
             ),
             const SizedBox(height: 6),
@@ -71,7 +74,9 @@ class StoryCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTypography.bodySmall.copyWith(
                   fontWeight: isViewed ? FontWeight.normal : FontWeight.w600,
-                  color: isViewed ? AppColors.textTertiary : AppColors.textPrimary,
+                  color: isViewed
+                      ? (isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary)
+                      : (isDarkMode ? AppColors.darkTextPrimary : AppColors.textPrimary),
                 ),
               ),
             ),
@@ -80,9 +85,9 @@ class StoryCard extends StatelessWidget {
             if (!isViewed) ...[
               const SizedBox(height: 2),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: 1),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: 1),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryRed,
+                  color: isDarkMode ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                   borderRadius: BorderRadius.circular(AppSpacing.sm),
                 ),
                 child: Text(
@@ -101,15 +106,15 @@ class StoryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholder(String type) {
+  Widget _buildPlaceholder(String type, bool isDarkMode) {
     return Container(
       width: 70,
       height: 70,
-      color: AppColors.mediumGray,
+      color: isDarkMode ? AppColors.darkMediumGray : AppColors.mediumGray,
       child: Icon(
         type == 'video' ? Icons.videocam : Icons.newspaper,
         size: 28,
-        color: AppColors.iconGray,
+        color: isDarkMode ? AppColors.darkIconGray : AppColors.iconGray,
       ),
     );
   }

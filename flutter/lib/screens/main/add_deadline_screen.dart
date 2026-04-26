@@ -140,7 +140,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Modal Backdrop
@@ -161,7 +161,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                 maxHeight: MediaQuery.of(context).size.height * 0.95,
               ),
               decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
+                color: Theme.of(context).colorScheme.surface,
                 boxShadow: AppColors.cardShadow,
               ),
               child: Stack(
@@ -193,7 +193,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                         trailing: Container(
                           width: 40,
                           height: 40,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.backgroundTertiary,
                             shape: BoxShape.circle,
                           ),
@@ -292,7 +292,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                       ),
                       // Footer Action
                       Container(
-                        color: AppColors.backgroundSecondary,
+                        color: Theme.of(context).colorScheme.surface,
                         padding: const EdgeInsets.all(24),
                         child: Column(
                           children: [
@@ -307,7 +307,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            Text(
+                            const Text(
                               'ACADEMIC CURATOR SYSTEM V2.4',
                               style: AppTypography.labelSmall,
                               textAlign: TextAlign.center,
@@ -326,3 +326,5 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
     );
   }
 }
+
+

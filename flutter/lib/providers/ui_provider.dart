@@ -2,6 +2,7 @@
 /// Converted from Redux uiSlice.ts
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// UI State
 class UIState {
@@ -28,12 +29,31 @@ class UIState {
   }
 }
 
-/// UI Notifier
+/// UI Notifier with persistence
 class UINotifier extends StateNotifier<UIState> {
-  UINotifier() : super(const UIState());
+  UINotifier() : super(const UIState()) {
+    _loadPreferences();
+  }
 
-  void toggleDarkMode() {
-    state = state.copyWith(isDarkMode: !state.isDarkMode);
+  static const String _darkModeKey = 'isDarkMode';
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDarkMode = prefs.getBool(_darkModeKey) ?? false;
+    state = state.copyWith(isDarkMode: isDarkMode);
+  }
+
+  Future<void> toggleDarkMode() async {
+    final newValue = !state.isDarkMode;
+    state = state.copyWith(isDarkMode: newValue);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_darkModeKey, newValue);
+  }
+
+  Future<void> setDarkMode(bool isDarkMode) async {
+    state = state.copyWith(isDarkMode: isDarkMode);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_darkModeKey, isDarkMode);
   }
 
   void setSelectedTab(String tab) {

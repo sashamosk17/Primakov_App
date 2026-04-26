@@ -32,13 +32,13 @@ class CustomDropdown<T> extends StatelessWidget {
         const SizedBox(height: 8),
         // Dropdown
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.backgroundTertiary,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            border: const Border(
+            border: Border(
               bottom: BorderSide(
                 color: AppColors.borderPrimary,
                 width: 2,
@@ -62,7 +62,7 @@ class CustomDropdown<T> extends StatelessWidget {
               items: items,
               onChanged: onChanged,
               style: AppTypography.bodyLarge,
-              dropdownColor: AppColors.backgroundSecondary,
+              dropdownColor: Theme.of(context).colorScheme.surface,
             ),
           ),
         ),
@@ -70,3 +70,4 @@ class CustomDropdown<T> extends StatelessWidget {
     );
   }
 }
+

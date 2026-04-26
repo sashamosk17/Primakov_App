@@ -1,6 +1,3 @@
-/// Schedule Screen - Updated Design
-import '../../config/app_typography.dart';
-import '../../config/app_spacing.dart';
 import '../../config/app_colors.dart';
 /// Shows weekly schedule with lesson cards and navigation to lesson details
 
@@ -10,7 +7,6 @@ import 'package:intl/intl.dart';
 import '../../models/api_models.dart';
 import '../../providers/schedule_provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../config/app_colors.dart';
 import 'lesson_detail_screen.dart';
 
 class ScheduleScreen extends ConsumerStatefulWidget {
@@ -92,7 +88,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     final scheduleError = ref.watch(scheduleErrorProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
         slivers: [
           // App Bar
@@ -100,12 +96,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
             floating: true,
             backgroundColor: const Color(0xCCF3F3F5),
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Расписание',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             actions: [
@@ -125,10 +121,10 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                 children: [
                   Text(
                     DateFormat('MMMM yyyy', 'ru').format(_selectedDate),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   TextButton(
@@ -187,11 +183,11 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                         border: isToday && !isSelected
                             ? Border.all(color: AppColors.primaryRed, width: 2)
                             : null,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: const Color(0x08000000),
+                            color: Color(0x08000000),
                             blurRadius: 8,
-                            offset: const Offset(0, 2),
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
@@ -354,7 +350,7 @@ class _LessonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -363,11 +359,11 @@ class _LessonCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: const Color(0x08000000),
+                color: Color(0x08000000),
                 blurRadius: 10,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -379,10 +375,10 @@ class _LessonCard extends StatelessWidget {
                 children: [
                   Text(
                     lesson.startTime,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   Text(
@@ -412,10 +408,10 @@ class _LessonCard extends StatelessWidget {
                   children: [
                     Text(
                       lesson.subject,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -484,8 +480,8 @@ class _BigBreakCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFFF6F00)),
       ),
-      child: Row(
-        children: const [
+      child: const Row(
+        children: [
           Icon(Icons.free_breakfast, color: Color(0xFFFF6F00)),
           SizedBox(width: 12),
           Text(
@@ -501,3 +497,6 @@ class _BigBreakCard extends StatelessWidget {
     );
   }
 }
+
+
+

@@ -84,12 +84,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     final scheduleError = ref.watch(scheduleErrorProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.backgroundPrimary.withOpacity(0.8),
+            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
           ),
           child: SafeArea(
             child: Padding(
@@ -116,7 +116,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 color: AppColors.primaryRedLight,
-                                child: const Icon(Icons.person, color: Colors.white, size: 24),
+                                child:  Icon(Icons.person, color: Theme.of(context).colorScheme.surface, size: 24),
                               );
                             },
                           ),
@@ -403,7 +403,7 @@ class _CompactLessonCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -479,14 +479,14 @@ class _BigBreakCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color(0xFF8C251C).withOpacity(0.05),
           borderRadius: BorderRadius.circular(12),
-          border: Border(
+          border: const Border(
             left: BorderSide(
-              color: const Color(0xFF8C251C),
+              color: Color(0xFF8C251C),
               width: 2,
             ),
           ),
         ),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
@@ -494,10 +494,10 @@ class _BigBreakCard extends StatelessWidget {
                 Icon(
                   Icons.restaurant,
                   size: 18,
-                  color: const Color(0xFF8C251C),
+                  color: Color(0xFF8C251C),
                 ),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'БОЛЬШАЯ ПЕРЕМЕНА',
                   style: TextStyle(
                     fontSize: 12,
@@ -508,7 +508,7 @@ class _BigBreakCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
+            Text(
               '25 минут',
               style: TextStyle(
                 fontSize: 10,
@@ -582,8 +582,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
     
     if (_isCompleted[_currentIndex]) return;
     
-    final duration = const Duration(seconds: 10);
-    final interval = const Duration(milliseconds: 50);
+    const duration = Duration(seconds: 10);
+    const interval = Duration(milliseconds: 50);
     
     _storyTimers[_currentIndex] = Timer.periodic(interval, (timer) {
       if (!_isPaused && mounted) {
@@ -701,8 +701,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                           const SizedBox(height: 16),
                                           Text(
                                             story.title,
-                                            style: const TextStyle(
-                                              color: Colors.white,
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.surface,
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -711,8 +711,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                           const SizedBox(height: 8),
                                           Text(
                                             story.description,
-                                            style: const TextStyle(
-                                              color: Colors.white70,
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                                               fontSize: 16,
                                             ),
                                             textAlign: TextAlign.center,
@@ -738,8 +738,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                     const SizedBox(height: 16),
                                     Text(
                                       story.title,
-                                      style: const TextStyle(
-                                        color: Colors.white,
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.surface,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -748,8 +748,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                     const SizedBox(height: 8),
                                     Text(
                                       story.description,
-                                      style: const TextStyle(
-                                        color: Colors.white70,
+                                      style:  TextStyle(
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                                         fontSize: 16,
                                       ),
                                       textAlign: TextAlign.center,
@@ -764,11 +764,11 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                     if (_isPaused)
                       Container(
                         color: Colors.black.withOpacity(0.5),
-                        child: const Center(
+                        child:  Center(
                           child: Icon(
                             Icons.pause_circle_filled,
                             size: 80,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                           ),
                         ),
                       ),
@@ -790,7 +790,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                       height: 3,
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(2),
                       ),
                       child: Stack(
@@ -801,7 +801,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                   (1 / widget.stories.length) * _progressValues[index],
                               height: 3,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Theme.of(context).colorScheme.surface,
                                 borderRadius: BorderRadius.circular(2),
                               ),
                             ),
@@ -847,9 +847,9 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                     color: Colors.black.withOpacity(0.5),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     size: 24,
                   ),
                 ),
@@ -866,8 +866,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                 children: [
                   Text(
                     widget.stories[_currentIndex].title,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.surface,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -875,8 +875,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                   const SizedBox(height: 8),
                   Text(
                     widget.stories[_currentIndex].description,
-                    style: const TextStyle(
-                      color: Colors.white70,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                       fontSize: 16,
                     ),
                   ),
@@ -919,3 +919,5 @@ class FullScreenDialogRoute<T> extends PageRoute<T> {
   @override
   bool get barrierDismissible => true;
 }
+
+

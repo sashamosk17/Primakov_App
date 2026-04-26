@@ -1,5 +1,3 @@
-/// Register Screen
-import '../../config/app_colors.dart';
 /// Converted from React Native RegisterScreen.tsx
 
 import 'package:flutter/material.dart';

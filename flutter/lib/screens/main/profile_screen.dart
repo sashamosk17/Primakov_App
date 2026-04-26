@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/ui_provider.dart';
 import '../../models/api_models.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -29,7 +30,6 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
   bool _gradesNotificationsEnabled = true;
   bool _emailNotificationsEnabled = false;
   bool _twoFactorEnabled = true;
-  String _selectedTheme = 'light';
   String _appVersion = '2.4.0';
 
   @override
@@ -52,6 +52,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
+    final isDarkMode = ref.watch(isDarkModeProvider);
     final userRole = authState.userRole ?? UserRole.STUDENT;
 
     // Mock user data (TODO: Get from API)
@@ -59,13 +60,13 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
     const userClass = '11 «А» класс';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF9F9FB).withOpacity(0.8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
         elevation: 0,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFF9F9FB).withOpacity(0.8),
+            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
           ),
         ),
         title: Row(
@@ -127,7 +128,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
             // Stats Grid (only for students)
             if (userRole == UserRole.STUDENT) ...[
               const SizedBox(height: 40),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: _StatsCard(
@@ -136,7 +137,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                       isPrimary: true,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16),
                   Expanded(
                     child: _StatsCard(
                       label: 'Посещаемость',
@@ -269,9 +270,9 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                             child: _ThemeCard(
                               icon: Icons.light_mode,
                               label: 'Светлая',
-                              isSelected: _selectedTheme == 'light',
+                              isSelected: !isDarkMode,
                               onTap: () {
-                                setState(() => _selectedTheme = 'light');
+                                ref.read(uiProvider.notifier).setDarkMode(false);
                               },
                             ),
                           ),
@@ -280,14 +281,9 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                             child: _ThemeCard(
                               icon: Icons.dark_mode,
                               label: 'Темная',
-                              isSelected: _selectedTheme == 'dark',
+                              isSelected: isDarkMode,
                               onTap: () {
-                                setState(() => _selectedTheme = 'dark');
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Темная тема скоро появится'),
-                                  ),
-                                );
+                                ref.read(uiProvider.notifier).setDarkMode(true);
                               },
                               isDark: true,
                             ),
@@ -346,16 +342,16 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                 onPressed: _showLogoutDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFBA1A1A),
-                  foregroundColor: Colors.white,
+                  foregroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   shadowColor: const Color(0xFFBA1A1A).withOpacity(0.05),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.logout, size: 20),
                     SizedBox(width: 12),
                     Text(
@@ -414,30 +410,30 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
-        child: Column(
+        child: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Активные сессии',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _SessionTile(
               device: 'iPhone 13 Pro',
               location: 'Москва, Россия',
               isCurrentDevice: true,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _SessionTile(
               device: 'MacBook Pro',
               location: 'Москва, Россия',
               isCurrentDevice: false,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
           ],
         ),
       ),
@@ -538,7 +534,7 @@ class _ProfileHeader extends StatelessWidget {
               height: 128,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xFF6C0C08).withOpacity(0.1),
@@ -547,7 +543,7 @@ class _ProfileHeader extends StatelessWidget {
                   ),
                 ],
                 border: Border.all(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   width: 4,
                 ),
               ),
@@ -576,10 +572,10 @@ class _ProfileHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.edit,
                   size: 16,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
             ),
@@ -642,7 +638,7 @@ class _StatsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: const Color(0xFFDEC0BB).withOpacity(0.1),
@@ -701,7 +697,7 @@ class _SettingsGroup extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           child: Column(children: children),
         ),
       ),
@@ -731,7 +727,7 @@ class _SettingsRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         child: Row(
           children: [
             Container(
@@ -807,7 +803,7 @@ class _SettingToggleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Row(
         children: [
           Container(
@@ -947,7 +943,7 @@ class _SessionTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9F9FB),
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -955,7 +951,7 @@ class _SessionTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(
@@ -989,11 +985,11 @@ class _SessionTile extends StatelessWidget {
                           color: const Color(0xFF4CAF50),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Текущее',
                           style: TextStyle(
                             fontSize: 10,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -1017,3 +1013,5 @@ class _SessionTile extends StatelessWidget {
     );
   }
 }
+
+

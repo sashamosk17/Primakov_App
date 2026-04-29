@@ -1,9 +1,9 @@
 import 'dart:ui';
+import '../../config/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import '../../config/app_colors.dart';
 import '../../config/app_typography.dart';
 import '../../widgets/glassmorphic_app_bar.dart';
 import '../../widgets/custom_text_field.dart';
@@ -140,7 +140,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: AppColors.backgroundPrimary,
       body: Stack(
         children: [
           // Modal Backdrop
@@ -161,7 +161,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                 maxHeight: MediaQuery.of(context).size.height * 0.95,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: AppColors.backgroundSecondary,
                 boxShadow: AppColors.cardShadow,
               ),
               child: Stack(
@@ -194,7 +194,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                           width: 40,
                           height: 40,
                           decoration: const BoxDecoration(
-                            color: AppColors.backgroundTertiary,
+                            color: AppColors.backgroundSecondary,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -292,7 +292,7 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
                       ),
                       // Footer Action
                       Container(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: AppColors.backgroundSecondary,
                         padding: const EdgeInsets.all(24),
                         child: Column(
                           children: [

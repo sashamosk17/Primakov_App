@@ -2,13 +2,13 @@
 /// Redesigned with Bento Grid layout, Stories section, and modern UI
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/story_provider.dart';
 import '../../providers/deadline_provider.dart';
 import '../../providers/schedule_provider.dart';
 import '../../models/api_models.dart';
-import '../../config/app_colors.dart';
 import '../../config/app_spacing.dart';
 import '../../config/app_typography.dart';
 import 'schedule_screen.dart';
@@ -118,8 +118,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const userName = 'Иванов Алексей';
     const userRole = 'Ученик';
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -175,6 +177,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildTopAppBar(String userName, String userRole) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg - 4, vertical: AppSpacing.md),
       child: Row(
@@ -184,14 +188,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppColors.primaryRed,
+              color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Center(
               child: Text(
                 'ИА',
                 style: AppTypography.heading2.copyWith(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
                 ),
               ),
             ),
@@ -207,15 +211,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 Text(
                   userRole,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 ),
               ],
             ),
@@ -223,7 +224,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Search Button
           IconButton(
             icon: const Icon(Icons.search, size: 28),
-            color: Theme.of(context).colorScheme.onSurface,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             onPressed: () {
               // TODO: Implement search
             },
@@ -300,6 +301,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildStoryItem(Story story, bool isViewed) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return GestureDetector(
       onTap: () {
         final stories = ref.read(allStoriesProvider);
@@ -370,7 +373,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isViewed ? Colors.grey.shade300 : AppColors.primaryRed,
+                  color: isViewed 
+                      ? (isDark ? AppColors.darkBorderPrimary : Colors.grey.shade300)
+                      : (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
                   width: 3,
                 ),
               ),
@@ -378,11 +383,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 margin: const EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isViewed ? Colors.grey.shade200 : AppColors.storyBackground,
+                  color: isViewed 
+                      ? (isDark ? AppColors.darkSurfaceVariant : Colors.grey.shade200) 
+                      : (isDark ? AppColors.darkStoryBackground : AppColors.storyBackground),
                 ),
                 child: Icon(
                   _getStoryIcon(story.title),
-                  color: isViewed ? Colors.grey.shade400 : AppColors.primaryRed,
+                  color: isViewed 
+                      ? (isDark ? AppColors.darkIconGray : Colors.grey.shade400) 
+                      : (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
                   size: 28,
                 ),
               ),
@@ -392,7 +401,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               story.title,
               style: TextStyle(
                 fontSize: 11,
-                color: isViewed ? Colors.grey.shade500 : AppColors.textPrimary,
+                color: isViewed 
+                    ? (isDark ? AppColors.darkTextSecondary : Colors.grey.shade500) 
+                    : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
@@ -425,6 +436,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildScheduleCard() {
     final schedule = ref.watch(currentScheduleProvider);
     final isLoading = ref.watch(scheduleLoadingProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     Lesson? nextLesson;
     if (schedule != null && schedule.lessons.isNotEmpty) {
@@ -444,11 +456,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDark ? null : [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha((0.05 * 255).round()),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -463,12 +476,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppColors.storyBackground,
+                  color: isDark ? AppColors.darkStoryBackground : AppColors.storyBackground,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.calendar_today,
-                  color: AppColors.primaryRed,
+                  color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                   size: 20,
                 ),
               ),
@@ -479,7 +492,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
               ),
@@ -491,11 +504,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   );
                 },
-                child: const Text(
+                child: Text(
                   'Смотреть всё',
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.primaryRed,
+                    color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -514,7 +527,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.lightGray,
+                color: isDark ? AppColors.darkLightGray : AppColors.lightGray,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -525,26 +538,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'Кабинет: ${nextLesson.room}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                   ),
                 ],
               ),
             )
           else
-            const Text(
+            Text(
               'Сегодня нет уроков',
               style: TextStyle(
                 fontSize: 14,
-                color: AppColors.textSecondary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
         ],
@@ -557,6 +567,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final activeDeadlines = deadlines.where((d) => d.status == DeadlineStatus.PENDING).toList();
     final completedDeadlines = deadlines.where((d) => d.status == DeadlineStatus.COMPLETED).toList();
     final progress = deadlines.isEmpty ? 0.0 : completedDeadlines.length / deadlines.length;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: () {
@@ -570,11 +581,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         height: 180,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
+          border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+          boxShadow: isDark ? null : [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withAlpha((0.05 * 255).round()),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -591,12 +603,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.storyBackground,
+                    color: isDark ? AppColors.darkStoryBackground : AppColors.storyBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.alarm,
-                    color: AppColors.primaryRed,
+                    color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                     size: 20,
                   ),
                 ),
@@ -606,16 +618,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '${activeDeadlines.length} активных задачи до пятницы',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 ),
               ],
             ),
@@ -623,8 +632,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: progress,
-                backgroundColor: Colors.grey.shade200,
-                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primaryRed),
+                backgroundColor: isDark ? AppColors.darkMediumGray : Colors.grey.shade200,
+                valueColor: AlwaysStoppedAnimation<Color>(isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
                 minHeight: 8,
               ),
             ),
@@ -636,6 +645,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildCafeteriaCard() {
     final cafeteria = ref.watch(mockCafeteriaProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: () {
@@ -649,11 +659,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         height: 180,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
+          border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+          boxShadow: isDark ? null : [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withAlpha((0.05 * 255).round()),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -670,12 +681,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.lightGray,
+                    color: isDark ? AppColors.darkLightGray : AppColors.lightGray,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
-                    Icons.restaurant_menu,
-                    color: AppColors.iconGray,
+                  child: Icon(
+                    Icons.restaurant,
+                    color: isDark ? AppColors.darkIconGray : AppColors.iconGray,
                     size: 20,
                   ),
                 ),
@@ -685,24 +696,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Баланс: ${cafeteria.balance.toStringAsFixed(0)} ₽',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 ),
               ],
             ),
             Text(
               'Обед: ${cafeteria.todayMenu}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
-                color: AppColors.primaryRed,
+                color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -718,15 +726,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildQuoteCard() {
     final quote = ref.watch(mockQuoteProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.primaryRed.withOpacity(0.05),
+        color: isDark ? AppColors.darkPrimaryRed.withAlpha((0.05 * 255).round()) : AppColors.primaryRed.withAlpha((0.05 * 255).round()),
         borderRadius: BorderRadius.circular(16),
-        border: const Border(
+        border: Border(
           left: BorderSide(
-            color: AppColors.primaryRed,
+            color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
             width: 4,
           ),
         ),
@@ -736,15 +745,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           Icon(
             Icons.format_quote,
-            color: AppColors.primaryRed.withOpacity(0.5),
+            color: isDark ? AppColors.darkPrimaryRed.withAlpha((0.5 * 255).round()) : AppColors.primaryRed.withAlpha((0.5 * 255).round()),
             size: 32,
           ),
           const SizedBox(height: 8),
           Text(
             quote.text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              color: AppColors.primaryRed,
+              color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.bold,
               height: 1.5,
@@ -755,7 +764,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             '— ${quote.author}'.toUpperCase(),
             style: TextStyle(
               fontSize: 11,
-              color: AppColors.primaryRed.withOpacity(0.7),
+              color: isDark ? AppColors.darkPrimaryRed.withAlpha((0.7 * 255).round()) : AppColors.primaryRed.withAlpha((0.7 * 255).round()),
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5,
             ),
@@ -821,6 +830,7 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
   @override
   Widget build(BuildContext context) {
     final newsList = ref.watch(mockNewsListProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Pre-calculate heights for all news items
     for (int i = 0; i < newsList.length; i++) {
@@ -835,11 +845,12 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
       curve: Curves.easeInOut,
       height: headerHeight + currentNewsHeight,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDark ? null : [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha((0.05 * 255).round()),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -857,12 +868,12 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.lightGray,
+                    color: isDark ? AppColors.darkLightGray : AppColors.lightGray,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.campaign,
-                    color: AppColors.iconGray,
+                    color: isDark ? AppColors.darkIconGray : AppColors.iconGray,
                     size: 20,
                   ),
                 ),
@@ -872,7 +883,7 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
               ],
@@ -907,7 +918,7 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.onSurface,
+                                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -915,9 +926,8 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                             const SizedBox(height: 6),
                             Text(
                               news.description,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: AppColors.textSecondary,
+                              style: TextStyle(
+                                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                                 height: 1.4,
                               ),
                               maxLines: 2,
@@ -961,8 +971,8 @@ class _NewsCarouselState extends ConsumerState<_NewsCarousel> {
                           height: isActive ? 24 : 8,
                           decoration: BoxDecoration(
                             color: isActive
-                                ? AppColors.primaryRed
-                                : AppColors.mediumGray,
+                                ? (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed)
+                                : (isDark ? AppColors.darkMediumGray : AppColors.mediumGray),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         );

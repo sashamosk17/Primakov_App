@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../config/app_colors.dart';
 import '../../providers/auth_provider.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -70,14 +71,27 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authLoadingProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.backgroundPrimary,
       appBar: AppBar(
-        title: const Text('Регистрация'),
-        backgroundColor: const Color(0xFF1976D2),
+        title: Text(
+          'Регистрация',
+          style: TextStyle(
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+          ),
+        ),
+        backgroundColor: isDark ? AppColors.darkSurface : AppColors.primaryRed,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: isDark ? AppColors.darkTextPrimary : Colors.white,
+          ),
           onPressed: _handleBack,
+        ),
+        iconTheme: IconThemeData(
+          color: isDark ? AppColors.darkTextPrimary : Colors.white,
         ),
       ),
       body: SafeArea(
@@ -87,93 +101,207 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Column(
               children: [
                 // Subtitle
-                const Text(
+                Text(
                   'Создайте аккаунт',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF333333),
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 32),
                 // Email field
-                TextField(
-                  controller: _emailController,
-                  enabled: !isLoading,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: isDark ? [] : const [
+                      BoxShadow(
+                        color: Color(0x08000000),
+                        blurRadius: 10,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _emailController,
+                    enabled: !isLoading,
+                    keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                      ),
+                      hintStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                      contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 // Password field
-                TextField(
-                  controller: _passwordController,
-                  enabled: !isLoading,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Пароль',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: isDark ? [] : const [
+                      BoxShadow(
+                        color: Color(0x08000000),
+                        blurRadius: 10,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _passwordController,
+                    enabled: !isLoading,
+                    obscureText: true,
+                    style: TextStyle(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Пароль',
+                      labelStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                      ),
+                      hintStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock_outlined,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                      contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 // Confirm Password field
-                TextField(
-                  controller: _confirmPasswordController,
-                  enabled: !isLoading,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Подтвердите пароль',
-                    hintStyle: const TextStyle(color: Color(0xFF999999)),
-                    contentPadding: const EdgeInsets.all(16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: isDark ? [] : const [
+                      BoxShadow(
+                        color: Color(0x08000000),
+                        blurRadius: 10,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _confirmPasswordController,
+                    enabled: !isLoading,
+                    obscureText: true,
+                    style: TextStyle(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Подтвердите пароль',
+                      labelStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                      ),
+                      hintStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock_outlined,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: isDark ? AppColors.darkSurfaceContainer : Colors.white,
+                      contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 // Error message
                 if (_error != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      _error!,
-                      style: const TextStyle(
-                        color: Color(0xFFF44336),
-                        fontSize: 14,
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkErrorContainer : const Color(0xFFFFEBEE),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isDark ? AppColors.darkError : const Color(0xFFD32F2F),
                       ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: isDark ? AppColors.darkError : const Color(0xFFD32F2F),
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _error!,
+                            style: TextStyle(
+                              color: isDark ? AppColors.darkOnErrorContainer : const Color(0xFFD32F2F),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 // Register button
                 SizedBox(
                   width: double.infinity,
-                  height: 48,
+                  height: 52,
                   child: ElevatedButton(
                     onPressed: isLoading ? null : _handleRegister,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1976D2),
-                      disabledBackgroundColor: const Color(0xFFCCCCCC),
+                      backgroundColor: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
+                      disabledBackgroundColor: isDark ? AppColors.darkSurfaceContainerHigh : const Color(0xFFCCCCCC),
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                      elevation: 0,
                     ),
-                    child: Text(
-                      isLoading ? 'Загрузка...' : 'Зарегистрироваться',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    child: isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            'Зарегистрироваться',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],

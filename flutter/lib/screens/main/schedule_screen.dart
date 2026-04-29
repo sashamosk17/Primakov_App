@@ -60,13 +60,20 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
       lastDate: DateTime(2027),
       locale: const Locale('ru', 'RU'),
       builder: (context, child) {
+        final isDarkLocal = Theme.of(context).brightness == Brightness.dark;
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: AppColors.primaryRed,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-            ),
+            colorScheme: isDarkLocal
+                ? ColorScheme.dark(
+                    primary: AppColors.darkPrimaryRed,
+                    onPrimary: AppColors.darkOnPrimary,
+                    surface: AppColors.darkSurface,
+                  )
+                : const ColorScheme.light(
+                    primary: AppColors.primaryRed,
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                  ),
           ),
           child: child!,
         );
@@ -87,26 +94,31 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     final scheduleLoading = ref.watch(scheduleLoadingProvider);
     final scheduleError = ref.watch(scheduleErrorProvider);
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final scaffoldBg = isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary;
+    final appBarBg = isDark ? AppColors.darkSurfaceContainerLow.withAlpha((0.9 * 255).round()) : const Color(0xCCF3F3F5);
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: scaffoldBg,
       body: CustomScrollView(
         slivers: [
           // App Bar
           SliverAppBar(
             floating: true,
-            backgroundColor: const Color(0xCCF3F3F5),
+            backgroundColor: appBarBg,
             elevation: 0,
             title: Text(
               'Расписание',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.calendar_today, color: AppColors.primaryRed),
+                icon: Icon(Icons.calendar_today, color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
                 onPressed: _pickDate,
               ),
             ],
@@ -124,7 +136,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
                   TextButton(
@@ -134,12 +146,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       });
                       _loadScheduleForDate(DateTime.now());
                     },
-                    child: const Text(
+                    child: Text(
                       'Сегодня',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primaryRed,
+                        color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                       ),
                     ),
                   ),
@@ -172,52 +184,58 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                       });
                       _loadScheduleForDate(date);
                     },
-                    child: Container(
-                      width: 60,
-                      margin: const EdgeInsets.only(right: 12),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primaryRed
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: isToday && !isSelected
-                            ? Border.all(color: AppColors.primaryRed, width: 2)
-                            : null,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x08000000),
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
+                    child: Builder(
+                      builder: (context) {
+                        final isDarkLocal = Theme.of(context).brightness == Brightness.dark;
+                        final primaryColor = isDarkLocal ? AppColors.darkPrimaryRed : AppColors.primaryRed;
+                        final cardBg = isSelected
+                            ? primaryColor
+                            : (isDarkLocal ? AppColors.darkBackgroundSecondary : Colors.white);
+                        final textColor = isSelected
+                            ? Colors.white
+                            : (isDarkLocal ? AppColors.darkTextPrimary : AppColors.textPrimary);
+                        return Container(
+                          width: 60,
+                          margin: const EdgeInsets.only(right: 12),
+                          decoration: BoxDecoration(
+                            color: cardBg,
+                            borderRadius: BorderRadius.circular(16),
+                            border: isToday && !isSelected
+                                ? Border.all(color: primaryColor, width: 2)
+                                : null,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x08000000),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            DateFormat('EEE', 'ru').format(date).toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: isSelected
-                                  ? Colors.white70
-                                  : AppColors.textSecondary,
-                              letterSpacing: 1,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                DateFormat('EEE', 'ru').format(date).toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: isSelected ? Colors.white70 : textColor,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${date.day}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${date.day}',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: isSelected
-                                  ? Colors.white
-                                  : AppColors.textPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   );
                 },
@@ -244,17 +262,14 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                     const SizedBox(height: 16),
                     Text(
                       scheduleError,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: _loadData,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryRed,
+                        backgroundColor: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                       ),
                       child: const Text('Повторить'),
                     ),
@@ -271,14 +286,14 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                     Icon(
                       Icons.event_busy,
                       size: 64,
-                      color: Colors.grey[400],
+                      color: isDark ? AppColors.darkIconGray : Colors.grey[400],
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Нет уроков на эту дату',
                       style: TextStyle(
                         fontSize: 16,
-                        color: AppColors.textSecondary,
+                        color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -349,8 +364,17 @@ class _LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed;
+    final hwBg = isDark ? AppColors.darkStoryBackground : const Color(0xFFFFEBEE);
+    final hwText = isDark ? AppColors.darkPrimary : const Color(0xFFD32F2F);
+
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: cardColor,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -359,7 +383,8 @@ class _LessonCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
+            border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+            boxShadow: isDark ? null : const [
               BoxShadow(
                 color: Color(0x08000000),
                 blurRadius: 10,
@@ -378,15 +403,12 @@ class _LessonCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: textPrimary,
                     ),
                   ),
                   Text(
                     lesson.endTime,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: TextStyle(color: textSecondary),
                   ),
                 ],
               ),
@@ -396,7 +418,7 @@ class _LessonCard extends StatelessWidget {
                 width: 3,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryRed,
+                  color: primaryColor,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -411,24 +433,17 @@ class _LessonCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: textPrimary,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.room,
-                          size: 16,
-                          color: AppColors.textSecondary,
-                        ),
+                        Icon(Icons.location_on, color: textSecondary, size: 16),
                         const SizedBox(width: 4),
                         Text(
                           'Кабинет ${lesson.room}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.textSecondary,
-                          ),
+                          style: TextStyle(color: textSecondary),
                         ),
                         if (lesson.hasHomework) ...[
                           const SizedBox(width: 12),
@@ -438,15 +453,15 @@ class _LessonCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFFEBEE),
+                              color: hwBg,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
+                            child: Text(
                               'ДЗ',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFFD32F2F),
+                                color: hwText,
                               ),
                             ),
                           ),
@@ -457,10 +472,10 @@ class _LessonCard extends StatelessWidget {
                 ),
               ),
               // Arrow
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: AppColors.textSecondary,
+                color: textSecondary,
               ),
             ],
           ),
@@ -473,23 +488,28 @@ class _LessonCard extends StatelessWidget {
 class _BigBreakCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF2A2200) : const Color(0xFFFFF3E0);
+    final borderColor = const Color(0xFFFF6F00);
+    const accentColor = Color(0xFFFF6F00);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF3E0),
+        color: bgColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFF6F00)),
+        border: Border.all(color: borderColor),
       ),
       child: const Row(
         children: [
-          Icon(Icons.free_breakfast, color: Color(0xFFFF6F00)),
+          Icon(Icons.free_breakfast, color: accentColor),
           SizedBox(width: 12),
           Text(
             'Большая перемена',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Color(0xFFFF6F00),
+              color: accentColor,
             ),
           ),
         ],

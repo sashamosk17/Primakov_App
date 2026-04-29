@@ -1,7 +1,7 @@
 /// Story Card Widget - Исправленная версия без overflow
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -75,8 +75,8 @@ class StoryCard extends StatelessWidget {
                 style: AppTypography.bodySmall.copyWith(
                   fontWeight: isViewed ? FontWeight.normal : FontWeight.w600,
                   color: isViewed
-                      ? (isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary)
-                      : (isDarkMode ? AppColors.darkTextPrimary : AppColors.textPrimary),
+                      ? (AppColors.textTertiary)
+                      : (AppColors.textPrimary),
                 ),
               ),
             ),

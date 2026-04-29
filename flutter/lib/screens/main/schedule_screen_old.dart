@@ -1,13 +1,13 @@
 /// Schedule Screen
 /// Converted from React Native ScheduleScreen.tsx
 import 'dart:async';
+import '../../config/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../models/api_models.dart';
 import '../../providers/schedule_provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../config/app_colors.dart';
 
 class ScheduleScreen extends ConsumerStatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
@@ -84,12 +84,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     final scheduleError = ref.watch(scheduleErrorProvider);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: AppColors.backgroundPrimary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+            color: AppColors.backgroundPrimary.withOpacity(0.8),
           ),
           child: SafeArea(
             child: Padding(
@@ -116,7 +116,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 color: AppColors.primaryRedLight,
-                                child:  Icon(Icons.person, color: Theme.of(context).colorScheme.surface, size: 24),
+                                child:  const Icon(Icons.person, color: AppColors.backgroundSecondary, size: 24),
                               );
                             },
                           ),
@@ -403,7 +403,7 @@ class _CompactLessonCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: AppColors.backgroundSecondary,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -701,8 +701,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                           const SizedBox(height: 16),
                                           Text(
                                             story.title,
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.surface,
+                                            style: const TextStyle(
+                                              color: AppColors.backgroundSecondary,
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -712,7 +712,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                           Text(
                                             story.description,
                                             style: TextStyle(
-                                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                              color: AppColors.textPrimary.withOpacity(0.7),
                                               fontSize: 16,
                                             ),
                                             textAlign: TextAlign.center,
@@ -738,8 +738,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                     const SizedBox(height: 16),
                                     Text(
                                       story.title,
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.surface,
+                                      style: const TextStyle(
+                                        color: AppColors.backgroundSecondary,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -749,7 +749,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                     Text(
                                       story.description,
                                       style:  TextStyle(
-                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                        color: AppColors.textPrimary.withOpacity(0.7),
                                         fontSize: 16,
                                       ),
                                       textAlign: TextAlign.center,
@@ -764,11 +764,11 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                     if (_isPaused)
                       Container(
                         color: Colors.black.withOpacity(0.5),
-                        child:  Center(
+                        child:  const Center(
                           child: Icon(
                             Icons.pause_circle_filled,
                             size: 80,
-                            color: Theme.of(context).colorScheme.surface,
+                            color: AppColors.backgroundSecondary,
                           ),
                         ),
                       ),
@@ -790,7 +790,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                       height: 3,
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
+                        color: AppColors.backgroundSecondary.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(2),
                       ),
                       child: Stack(
@@ -801,7 +801,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                   (1 / widget.stories.length) * _progressValues[index],
                               height: 3,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
+                                color: AppColors.backgroundSecondary,
                                 borderRadius: BorderRadius.circular(2),
                               ),
                             ),
@@ -847,9 +847,9 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                     color: Colors.black.withOpacity(0.5),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.close,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: AppColors.backgroundSecondary,
                     size: 24,
                   ),
                 ),
@@ -866,8 +866,8 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                 children: [
                   Text(
                     widget.stories[_currentIndex].title,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.surface,
+                    style: const TextStyle(
+                      color: AppColors.backgroundSecondary,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -876,7 +876,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                   Text(
                     widget.stories[_currentIndex].description,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: AppColors.textPrimary.withOpacity(0.7),
                       fontSize: 16,
                     ),
                   ),

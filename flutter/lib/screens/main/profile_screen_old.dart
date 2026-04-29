@@ -2,6 +2,7 @@
 /// Converted from React Native ProfileScreen.tsx
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
 
@@ -31,9 +32,9 @@ class ProfileScreen extends ConsumerWidget {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.surface,
+                      color: AppColors.backgroundSecondary,
                     ),
                     child: const Icon(
                       Icons.person,
@@ -42,12 +43,12 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Ivan Petrov',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.surface,
+                      color: AppColors.backgroundSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -55,7 +56,7 @@ class ProfileScreen extends ConsumerWidget {
                     'ivan.petrov@primakov.school',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: AppColors.textPrimary.withOpacity(0.7),
                     ),
                   ),
                 ],
@@ -84,10 +85,10 @@ class ProfileScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Выход',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.surface,
+                          color: AppColors.backgroundSecondary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),

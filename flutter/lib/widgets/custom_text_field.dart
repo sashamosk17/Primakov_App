@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../config/app_colors.dart';
+import '../../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -45,7 +45,7 @@ class CustomTextField extends StatelessWidget {
         // Input Field
         Container(
           decoration: BoxDecoration(
-            color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundTertiary,
+            color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundSecondary,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
@@ -70,7 +70,7 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: placeholder,
               hintStyle: AppTypography.placeholder.copyWith(
-                color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+                color: AppColors.textTertiary,
               ),
               border: InputBorder.none,
               enabledBorder: InputBorder.none,

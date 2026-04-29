@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/canteen_provider.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 
 class CanteenMenuScreen extends ConsumerStatefulWidget {
@@ -109,7 +109,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
+              color: isSelected ? Colors.white : AppColors.textPrimary,
             ),
           ),
         ),
@@ -219,11 +219,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                       Expanded(
                         child: Text(
                           item.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: const TextStyle(color: AppColors.textPrimary),
                         ),
                       ),
                       if (item.price != null)
@@ -241,10 +237,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                     const SizedBox(height: 4),
                     Text(
                       item.description!,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: const TextStyle(color: AppColors.textSecondary),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -286,12 +279,11 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.textSecondary),
+          Icon(icon, size: 14, color: AppColors.textPrimary),
           const SizedBox(width: 4),
           Text(
             text,
             style: const TextStyle(
-              fontSize: 11,
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w500,
             ),

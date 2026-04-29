@@ -2,8 +2,8 @@
 /// Converted from React Native LessonCard component
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -52,14 +52,14 @@ class LessonCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundTertiary,
+              color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundSecondary,
               borderRadius: BorderRadius.circular(AppSpacing.xs),
             ),
             child: Text(
               '$startTime - $endTime',
               style: AppTypography.bodySmall.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                color: AppColors.textPrimary,
               ),
             ),
           ),
@@ -76,7 +76,7 @@ class LessonCard extends StatelessWidget {
           Text(
             '👨‍🏫 ID: $teacherId',
             style: AppTypography.bodyMedium.copyWith(
-              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -84,7 +84,7 @@ class LessonCard extends StatelessWidget {
           Text(
             '🚪 Каб. $room, этаж $floor',
             style: AppTypography.bodySmall.copyWith(
-              color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+              color: AppColors.textTertiary,
             ),
           ),
           // Homework indicator

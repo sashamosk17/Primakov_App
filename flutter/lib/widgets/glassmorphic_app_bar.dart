@@ -1,7 +1,7 @@
 import 'dart:ui';
+import '../../config/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 class GlassmorphicAppBar extends StatelessWidget implements PreferredSizeWidget {

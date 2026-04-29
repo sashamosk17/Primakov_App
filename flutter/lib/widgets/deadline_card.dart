@@ -2,8 +2,8 @@
 /// Converted from React Native DeadlineCard component
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -108,7 +108,7 @@ class DeadlineCard extends StatelessWidget {
           Text(
             deadline.description,
             style: AppTypography.bodyMedium.copyWith(
-              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -119,7 +119,7 @@ class DeadlineCard extends StatelessWidget {
             Text(
               '📚 ${deadline.subject}',
               style: AppTypography.bodySmall.copyWith(
-                color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+                color: AppColors.textTertiary,
               ),
             ),
           ],
@@ -131,7 +131,7 @@ class DeadlineCard extends StatelessWidget {
               Text(
                 '📅 До: ${_formatDate(deadline.dueDate)}',
                 style: AppTypography.bodySmall.copyWith(
-                  color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+                  color: AppColors.textTertiary,
                 ),
               ),
               if (deadline.status != DeadlineStatus.COMPLETED &&

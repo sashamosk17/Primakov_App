@@ -315,10 +315,7 @@ class _InfoRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+            style: const TextStyle(color: AppColors.textSecondary),
           ),
           Text(
             value,
@@ -348,7 +345,7 @@ class _ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: AppColors.backgroundSecondary,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -366,17 +363,17 @@ class _ActionButton extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: AppColors.textSecondary,
+                color: AppColors.textPrimary.withAlpha((0.4 * 255).round()),
               ),
             ],
           ),

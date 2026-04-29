@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
@@ -33,7 +33,7 @@ class CustomDropdown<T> extends StatelessWidget {
         // Dropdown
         Container(
           decoration: const BoxDecoration(
-            color: AppColors.backgroundTertiary,
+            color: AppColors.backgroundSecondary,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
@@ -62,7 +62,7 @@ class CustomDropdown<T> extends StatelessWidget {
               items: items,
               onChanged: onChanged,
               style: AppTypography.bodyLarge,
-              dropdownColor: Theme.of(context).colorScheme.surface,
+              dropdownColor: AppColors.backgroundSecondary,
             ),
           ),
         ),

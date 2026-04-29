@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/request_provider.dart';
 import '../providers/room_provider.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 
 class CreateRequestScreen extends ConsumerStatefulWidget {
@@ -222,7 +222,6 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                 decoration: InputDecoration(
                   hintText: 'Выберите аудиторию',
                   hintStyle: const TextStyle(color: AppColors.textSecondary),
-                  prefixIcon: const Icon(Icons.meeting_room, color: AppColors.iconGray),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -341,7 +340,7 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.textSecondary,
+            color: isSelected ? Colors.white : AppColors.textPrimary,
           ),
         ),
       ),

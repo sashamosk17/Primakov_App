@@ -63,8 +63,17 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
     final completedDeadlines = ref.watch(completedDeadlinesProvider);
     final isLoading = ref.watch(deadlineLoadingProvider);
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final scaffoldBg = isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary;
+    final appBarBg = isDark ? AppColors.darkSurfaceContainerLow.withAlpha((0.9 * 255).round()) : const Color(0xCCF3F3F5);
+    final primaryColor = isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final iconBg = isDark ? AppColors.darkMediumGray : AppColors.mediumGray;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: scaffoldBg,
       body: Stack(
         children: [
           NestedScrollView(
@@ -73,7 +82,7 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
               SliverAppBar(
                 floating: true,
                 pinned: true,
-                backgroundColor: const Color(0xCCF3F3F5),
+                backgroundColor: appBarBg,
                 elevation: 0,
                 title: Row(
                   children: [
@@ -81,22 +90,22 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.mediumGray,
+                        color: iconBg,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.school,
-                        color: AppColors.primaryRed,
+                        color: primaryColor,
                         size: 24,
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const Text(
+                    Text(
                       'Дедлайны',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: textPrimary,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -104,20 +113,20 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
                 ),
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.search, color: AppColors.textSecondary),
+                    icon: Icon(Icons.search, color: textSecondary),
                     onPressed: () {},
                   ),
                 ],
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(48),
                   child: Container(
-                    color: const Color(0xCCF3F3F5),
+                    color: appBarBg,
                     child: TabBar(
                       controller: _tabController,
-                      indicatorColor: AppColors.primaryRed,
+                      indicatorColor: primaryColor,
                       indicatorWeight: 3,
-                      labelColor: AppColors.primaryRed,
-                      unselectedLabelColor: AppColors.textSecondary,
+                      labelColor: primaryColor,
+                      unselectedLabelColor: textSecondary,
                       labelStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -204,9 +213,9 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
                 ),
               );
             },
-            child: Icon(
+            child: const Icon(
               Icons.add,
-              color: Theme.of(context).colorScheme.surface,
+              color: AppColors.backgroundSecondary,
               size: 32,
             ),
           ),
@@ -244,15 +253,20 @@ class _PendingDeadlinesTab extends StatelessWidget {
     }
 
     if (thisWeek.isEmpty && nextWeek.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(48),
-          child: Text(
-            'Нет активных дедлайнов',
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.textSecondary,
-            ),
+          padding: const EdgeInsets.all(48),
+          child: Builder(
+            builder: (context) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              return Text(
+                'Нет активных дедлайнов',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                ),
+              );
+            },
           ),
         ),
       );
@@ -378,15 +392,20 @@ class _CompletedDeadlinesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (deadlines.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(48),
-          child: Text(
-            'Нет выполненных дедлайнов',
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.textSecondary,
-            ),
+          padding: const EdgeInsets.all(48),
+          child: Builder(
+            builder: (context) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              return Text(
+                'Нет выполненных дедлайнов',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                ),
+              );
+            },
           ),
         ),
       );
@@ -421,15 +440,16 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
+          style: TextStyle(
+            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
             letterSpacing: 2,
           ),
         ),
@@ -439,7 +459,7 @@ class _SectionHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -460,18 +480,34 @@ class _DeadlineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final dueDate = DateTime.parse(deadline.dueDate);
     final dateFormat = DateFormat('d MMM', 'ru');
     final timeFormat = DateFormat('HH:mm');
     final isCompleted = deadline.status == DeadlineStatus.COMPLETED;
+    final cardColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed;
+    final borderColor = isDark ? AppColors.darkBorderPrimary : AppColors.borderPrimary;
+    final subjectBg = isDark ? AppColors.darkSurfaceContainerHigh : const Color(0xFFE8E8EA);
+    final dateBg = isDark ? AppColors.darkStoryBackground : Colors.red.shade100;
+    final descColor = isDark
+        ? AppColors.darkTextPrimary.withAlpha((0.8 * 255).round())
+        : const Color(0xCC1A1C1D);
+    final timeColor = isDark
+        ? AppColors.darkTextSecondary.withAlpha((0.8 * 255).round())
+        : const Color(0xCC5F5E5E);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
+        border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDark ? null : const [
           BoxShadow(
             color: Color(0x08000000),
             blurRadius: 10,
@@ -493,20 +529,16 @@ class _DeadlineCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isCompleted
-                        ? AppColors.primaryRed
-                        : const Color(0xFFDEC0BB),
+                    color: isCompleted ? primaryColor : borderColor,
                     width: 2,
                   ),
-                  color: isCompleted
-                      ? AppColors.primaryRed
-                      : Colors.transparent,
+                  color: isCompleted ? primaryColor : Colors.transparent,
                 ),
                 child: isCompleted
                     ? Icon(
                         Icons.check,
                         size: 16,
-                        color: Theme.of(context).colorScheme.surface,
+                        color: isDark ? AppColors.darkOnPrimary : AppColors.backgroundSecondary,
                       )
                     : null,
               ),
@@ -531,16 +563,16 @@ class _DeadlineCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: textPrimary,
                               height: 1.3,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             deadline.description,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xCC1A1C1D),
+                              color: descColor,
                               height: 1.5,
                             ),
                           ),
@@ -555,15 +587,15 @@ class _DeadlineCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.red.shade100,
+                        color: dateBg,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         dateFormat.format(dueDate),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryRed,
+                          color: primaryColor,
                         ),
                       ),
                     ),
@@ -581,42 +613,37 @@ class _DeadlineCard extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8E8EA),
+                          color: subjectBg,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           deadline.subject!.toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textSecondary,
-                            letterSpacing: 1.2,
-                          ),
+                          style: TextStyle(color: textSecondary, letterSpacing: 1.2),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Container(
                         width: 4,
                         height: 4,
-                        decoration: const BoxDecoration(
-                          color: AppColors.borderPrimary,
+                        decoration: BoxDecoration(
+                          color: isDark ? AppColors.darkBorderPrimary : AppColors.borderPrimary,
                           shape: BoxShape.circle,
                         ),
                       ),
                       const SizedBox(width: 8),
                     ],
-                    const Icon(
+                    Icon(
                       Icons.schedule,
                       size: 14,
-                      color: Color(0x995F5E5E),
+                      color: timeColor,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       timeFormat.format(dueDate),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xCC5F5E5E),
+                        color: timeColor,
                       ),
                     ),
                   ],

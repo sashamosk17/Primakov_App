@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 class PriorityToggle extends StatelessWidget {
@@ -18,7 +18,7 @@ class PriorityToggle extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.backgroundTertiary.withOpacity(0.5),
+        color: AppColors.backgroundSecondary.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -60,7 +60,7 @@ class PriorityToggle extends StatelessWidget {
                   width: 16,
                   height: 16,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: AppColors.backgroundSecondary,
                     shape: BoxShape.circle,
                     boxShadow: AppColors.toggleShadow,
                   ),

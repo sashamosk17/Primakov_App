@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../config/app_colors.dart';
+import '../../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 enum ButtonType { primary, secondary, tertiary }
@@ -83,7 +83,7 @@ class CustomButton extends StatelessWidget {
       case ButtonType.secondary:
         return AppColors.backgroundSecondary;
       case ButtonType.tertiary:
-        return AppColors.backgroundTertiary;
+        return AppColors.backgroundSecondary;
     }
   }
 

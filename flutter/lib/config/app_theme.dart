@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import '../../config/app_colors.dart';
 import 'app_typography.dart';
 
 /// Main Theme Configuration
@@ -123,15 +123,39 @@ class AppTheme {
 
       // Color Scheme
       colorScheme: const ColorScheme.dark(
-        primary: AppColors.darkPrimaryRed,
-        secondary: AppColors.darkPrimaryRedLight,
-        surface: AppColors.darkBackgroundSecondary,
-        onSurface: AppColors.darkTextPrimary,
-        error: AppColors.error,
+        primary: AppColors.darkPrimary,
+        secondary: AppColors.darkSecondary,
+        surface: AppColors.darkSurface,
+        onSurface: AppColors.darkOnSurface,
+        error: AppColors.darkError,
+        onPrimary: AppColors.darkOnPrimary,
+        primaryContainer: AppColors.darkPrimaryContainer,
+        onPrimaryContainer: AppColors.darkOnPrimaryContainer,
+        surfaceContainerLowest: AppColors.darkSurfaceContainerLowest,
+        surfaceContainerLow: AppColors.darkSurfaceContainerLow,
+        surfaceContainer: AppColors.darkSurfaceContainer,
+        surfaceContainerHigh: AppColors.darkSurfaceContainerHigh,
+        surfaceContainerHighest: AppColors.darkSurfaceContainerHighest,
+        onSecondary: AppColors.darkOnSecondary,
+        secondaryContainer: AppColors.darkSecondaryContainer,
+        onSecondaryContainer: AppColors.darkOnSecondaryContainer,
+        tertiary: AppColors.darkTertiary,
+        onTertiary: AppColors.darkOnTertiary,
+        tertiaryContainer: AppColors.darkTertiaryContainer,
+        onTertiaryContainer: AppColors.darkOnTertiaryContainer,
+        onError: AppColors.darkOnError,
+        errorContainer: AppColors.darkErrorContainer,
+        onErrorContainer: AppColors.darkOnErrorContainer,
+        outline: AppColors.darkOutline,
+        outlineVariant: AppColors.darkOutlineVariant,
+        inverseSurface: AppColors.darkInverseSurface,
+        onInverseSurface: AppColors.darkInverseOnSurface,
+        inversePrimary: AppColors.darkInversePrimary,
+        surfaceTint: AppColors.darkSurfaceTint,
       ),
 
       // Scaffold
-      scaffoldBackgroundColor: AppColors.darkBackgroundPrimary,
+      scaffoldBackgroundColor: AppColors.darkBackground,
 
       // App Bar
       appBarTheme: AppBarTheme(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/room_provider.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
+import '../../config/app_colors.dart';
 import '../config/app_spacing.dart';
+import '../config/app_typography.dart';
 
 class RoomsListScreen extends ConsumerStatefulWidget {
   const RoomsListScreen({super.key});
@@ -33,7 +34,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
   Widget build(BuildContext context) {
     final roomState = ref.watch(roomProvider);
 
-    // Filter rooms
     var filteredRooms = roomState.rooms;
     if (_searchQuery.isNotEmpty) {
       filteredRooms = filteredRooms.where((room) {
@@ -45,7 +45,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
       filteredRooms = filteredRooms.where((room) => room.building == _selectedBuilding).toList();
     }
 
-    // Group by building
     final buildings = <String>[];
     for (var room in roomState.rooms) {
       if (!buildings.contains(room.building)) {
@@ -75,7 +74,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
       ),
       body: Column(
         children: [
-          // Search bar
           Container(
             color: Colors.white,
             padding: const EdgeInsets.all(AppSpacing.lg),
@@ -105,8 +103,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
               ),
             ),
           ),
-
-          // Building filter chips
           if (buildings.isNotEmpty)
             Container(
               color: Colors.white,
@@ -131,8 +127,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                 ),
               ),
             ),
-
-          // Rooms list
           Expanded(
             child: roomState.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -197,7 +191,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.textSecondary,
+            color: isSelected ? Colors.white : AppColors.textPrimary,
           ),
         ),
       ),
@@ -205,24 +199,14 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
   }
 
   Widget _buildRoomCard(Room room) {
-    return Container(
+    return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            // Room icon
             Container(
               width: 56,
               height: 56,
@@ -237,7 +221,6 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
               ),
             ),
             const SizedBox(width: 16),
-            // Room details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,9 +229,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                     children: [
                       Text(
                         room.number,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        style: AppTypography.heading3.copyWith(
                           color: AppColors.textPrimary,
                         ),
                       ),
@@ -274,8 +255,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                     const SizedBox(height: 4),
                     Text(
                       room.name!,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: AppTypography.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -283,25 +263,19 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(Icons.layers, size: 14, color: Colors.grey.shade600),
+                      const Icon(Icons.layers, size: 14, color: Colors.grey),
                       const SizedBox(width: 4),
                       Text(
                         '${room.floor} этаж',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
-                        ),
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                       if (room.capacity != null) ...[
                         const SizedBox(width: 12),
-                        Icon(Icons.people, size: 14, color: Colors.grey.shade600),
+                        const Icon(Icons.people, size: 14, color: Colors.grey),
                         const SizedBox(width: 4),
                         Text(
                           '${room.capacity} мест',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
                     ],
@@ -309,12 +283,10 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                 ],
               ),
             ),
-            // Map button
             if (room.latitude != null && room.longitude != null)
               IconButton(
                 icon: const Icon(Icons.map, color: AppColors.primaryRed),
                 onPressed: () {
-                  // TODO: Open map with room location
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Карта для аудитории ${room.number}'),

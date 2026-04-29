@@ -2,8 +2,8 @@
 /// Shows various school services and people search (mock)
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../canteen_menu_screen.dart';
 import '../rooms_list_screen.dart';
 import '../create_request_screen.dart';
@@ -27,21 +27,31 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final scaffoldBg = isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary;
+    final appBarBg = isDark ? AppColors.darkSurfaceContainerLow.withAlpha((0.9 * 255).round()) : const Color(0xCCF3F3F5);
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed;
+    final borderColor = isDark ? AppColors.darkBorderSecondary : const Color(0xFFE8E8EA);
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: scaffoldBg,
       body: CustomScrollView(
         slivers: [
           // App Bar
           SliverAppBar(
             floating: true,
-            backgroundColor: const Color(0xCCF3F3F5),
+            backgroundColor: appBarBg,
             elevation: 0,
             title: Text(
               'Сервисы',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: textPrimary,
               ),
             ),
           ),
@@ -58,7 +68,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: textPrimary,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -72,11 +82,11 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     },
                     decoration: InputDecoration(
                       hintText: 'Поиск учителей и учеников...',
-                      hintStyle: const TextStyle(color: Color(0xFF999999)),
-                      prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
+                      hintStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999)),
+                      prefixIcon: Icon(Icons.search, color: textSecondary),
                       suffixIcon: _isSearching
                           ? IconButton(
-                              icon: const Icon(Icons.clear, color: AppColors.textSecondary),
+                              icon: Icon(Icons.clear, color: textSecondary),
                               onPressed: () {
                                 _searchController.clear();
                                 setState(() {
@@ -86,18 +96,18 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                             )
                           : null,
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.surface,
+                      fillColor: surfaceColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFFE8E8EA)),
+                        borderSide: BorderSide(color: borderColor),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFFE8E8EA)),
+                        borderSide: BorderSide(color: borderColor),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: AppColors.primaryRed, width: 2),
+                        borderSide: BorderSide(color: primaryColor, width: 2),
                       ),
                     ),
                   ),
@@ -148,7 +158,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: textPrimary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -247,8 +257,13 @@ class _ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: cardColor,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -257,7 +272,8 @@ class _ServiceCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
+            border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+            boxShadow: isDark ? null : const [
               BoxShadow(
                 color: Color(0x08000000),
                 blurRadius: 10,
@@ -272,7 +288,7 @@ class _ServiceCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withAlpha((0.1 * 255).round()),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Icon(
@@ -288,7 +304,7 @@ class _ServiceCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: textPrimary,
                   height: 1.3,
                 ),
               ),
@@ -307,13 +323,20 @@ class _PersonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: cardColor,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDark ? null : const [
           BoxShadow(
             color: Color(0x08000000),
             blurRadius: 8,
@@ -326,7 +349,7 @@ class _PersonCard extends StatelessWidget {
           // Avatar
           CircleAvatar(
             radius: 24,
-            backgroundColor: person.color.withOpacity(0.2),
+            backgroundColor: person.color.withAlpha((0.2 * 255).round()),
             child: Text(
               person.initials,
               style: TextStyle(
@@ -347,16 +370,13 @@ class _PersonCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   person.role,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: textSecondary),
                 ),
               ],
             ),
@@ -365,7 +385,7 @@ class _PersonCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: person.color.withOpacity(0.1),
+              color: person.color.withAlpha((0.1 * 255).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

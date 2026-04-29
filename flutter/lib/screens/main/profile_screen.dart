@@ -2,6 +2,7 @@
 /// Material Design 3 aesthetic with iOS-style grouped lists
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../providers/auth_provider.dart';
@@ -59,14 +60,21 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
     const userName = 'Александр Примаков';
     const userClass = '11 «А» класс';
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final scaffoldBg = isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary;
+    final appBarBg = isDark
+        ? AppColors.darkBackgroundPrimary.withAlpha((0.8 * 255).round())
+        : AppColors.backgroundPrimary.withAlpha((0.8 * 255).round());
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+        backgroundColor: appBarBg,
         elevation: 0,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+            color: appBarBg,
           ),
         ),
         title: Row(
@@ -76,26 +84,26 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
               height: 32,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFFE8E8EA),
+                color: isDark ? AppColors.darkSurfaceContainerHigh : const Color(0xFFE8E8EA),
                 border: Border.all(
-                  color: const Color(0xFFDEC0BB).withOpacity(0.2),
+                  color: AppColors.borderPrimary.withAlpha((0.2 * 255).round()),
                   width: 1,
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.person,
                 size: 18,
-                color: Color(0xFF8C251C),
+                color: isDark ? AppColors.darkPrimary : const Color(0xFF8C251C),
               ),
             ),
             const SizedBox(width: 12),
-            const Text(
+            Text(
               'PrimakovApp',
               style: TextStyle(
                 fontFamily: 'Manrope',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF8C251C),
+                color: isDark ? AppColors.darkPrimary : const Color(0xFF8C251C),
                 letterSpacing: -0.5,
               ),
             ),
@@ -104,7 +112,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
-            color: const Color(0xFF64748B),
+            color: isDark ? AppColors.darkTextSecondary : const Color(0xFF64748B),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Уведомления скоро появятся')),
@@ -160,7 +168,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                   subtitle: 'Последнее изменение: 3 месяца назад',
                   onTap: _showPasswordChangeDialog,
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingToggleRow(
                   icon: Icons.verified_user,
                   title: 'Двухфакторная аутентификация',
@@ -177,7 +185,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                     );
                   },
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingsRow(
                   icon: Icons.devices,
                   title: 'Активные сессии',
@@ -200,9 +208,8 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                   onChanged: (value) {
                     setState(() => _pushNotificationsEnabled = value);
                   },
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingToggleRow(
                   icon: Icons.grade,
                   title: 'Новые оценки',
@@ -211,9 +218,8 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                   onChanged: (value) {
                     setState(() => _gradesNotificationsEnabled = value);
                   },
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingToggleRow(
                   icon: Icons.alternate_email,
                   title: 'Email-рассылка',
@@ -222,7 +228,6 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                   onChanged: (value) {
                     setState(() => _emailNotificationsEnabled = value);
                   },
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
               ],
             ),
@@ -243,22 +248,22 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF6C0C08).withOpacity(0.05),
+                              color: theme.colorScheme.primary.withAlpha((0.08 * 255).round()),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.palette,
-                              color: Color(0xFF6C0C08),
+                              color: theme.colorScheme.primary,
                               size: 20,
                             ),
                           ),
                           const SizedBox(width: 16),
-                          const Text(
+                          Text(
                             'Оформление',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF1A1C1D),
+                              color: theme.colorScheme.onSurface,
                             ),
                           ),
                         ],
@@ -309,9 +314,8 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                       const SnackBar(content: Text('Раздел помощи скоро появится')),
                     );
                   },
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingsRow(
                   icon: Icons.description,
                   title: 'Документы',
@@ -320,14 +324,12 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                       const SnackBar(content: Text('Документы скоро появятся')),
                     );
                   },
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
-                const Divider(height: 1, indent: 66, color: Color(0xFFEEEEF0)),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
                 _SettingsRow(
                   icon: Icons.info,
                   title: 'О приложении',
                   onTap: () => _showAboutDialog(context),
-                  iconColor: const Color(0xFF5F5E5E),
                 ),
               ],
             ),
@@ -342,12 +344,12 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                 onPressed: _showLogoutDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFBA1A1A),
-                  foregroundColor: Theme.of(context).colorScheme.surface,
+                  foregroundColor: AppColors.backgroundSecondary,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  shadowColor: const Color(0xFFBA1A1A).withOpacity(0.05),
+                  shadowColor: const Color(0xFFBA1A1A).withAlpha((0.05 * 255).round()),
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -374,7 +376,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF5F5E5E).withOpacity(0.6),
+                color: theme.colorScheme.onSurface.withAlpha((0.4 * 255).round()),
                 letterSpacing: 1.5,
               ),
             ),
@@ -524,6 +526,11 @@ class _ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final primaryColor = theme.colorScheme.primary;
+
     return Column(
       children: [
         // Avatar with edit button
@@ -534,25 +541,25 @@ class _ProfileHeader extends StatelessWidget {
               height: 128,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: Theme.of(context).colorScheme.surface,
+                color: surfaceColor,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF6C0C08).withOpacity(0.1),
+                    color: primaryColor.withAlpha((0.1 * 255).round()),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
                 ],
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: surfaceColor,
                   width: 4,
                 ),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: const Icon(
+                child: Icon(
                   Icons.person,
                   size: 64,
-                  color: Color(0xFF8C251C),
+                  color: primaryColor,
                 ),
               ),
             ),
@@ -562,11 +569,11 @@ class _ProfileHeader extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6C0C08),
+                  color: primaryColor,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withAlpha((0.2 * 255).round()),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -575,7 +582,7 @@ class _ProfileHeader extends StatelessWidget {
                 child: Icon(
                   Icons.edit,
                   size: 16,
-                  color: Theme.of(context).colorScheme.surface,
+                  color: theme.colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -585,11 +592,11 @@ class _ProfileHeader extends StatelessWidget {
         // Name
         Text(
           userName,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1A1C1D),
+            color: theme.colorScheme.onSurface,
             letterSpacing: -0.5,
           ),
         ),
@@ -597,11 +604,11 @@ class _ProfileHeader extends StatelessWidget {
         // Role badge
         Text(
           _getRoleBadge(userRole, userClass),
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF5F5E5E),
+            color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
             letterSpacing: 2,
           ),
         ),
@@ -635,18 +642,22 @@ class _StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: surfaceColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFFDEC0BB).withOpacity(0.1),
+          color: AppColors.borderPrimary.withAlpha((0.1 * 255).round()),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withAlpha((0.02 * 255).round()),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -657,11 +668,11 @@ class _StatsCard extends StatelessWidget {
         children: [
           Text(
             label.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 10,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF5F5E5E),
+              color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
               letterSpacing: 1.2,
             ),
           ),
@@ -672,7 +683,7 @@ class _StatsCard extends StatelessWidget {
               fontFamily: 'Manrope',
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: isPrimary ? const Color(0xFF6C0C08) : const Color(0xFF1A1C1D),
+              color: isPrimary ? theme.colorScheme.primary : theme.colorScheme.onSurface,
             ),
           ),
         ],
@@ -689,15 +700,19 @@ class _SettingsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F3F5),
+        color: surfaceColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          color: Theme.of(context).colorScheme.surface,
+          color: surfaceColor,
           child: Column(children: children),
         ),
       ),
@@ -723,23 +738,28 @@ class _SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final effectiveIconColor = iconColor ?? theme.colorScheme.primary;
+
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: Theme.of(context).colorScheme.surface,
+        color: surfaceColor,
         child: Row(
           children: [
             Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: (iconColor ?? const Color(0xFF6C0C08)).withOpacity(0.05),
+                color: effectiveIconColor.withAlpha((0.08 * 255).round()),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
-                color: iconColor ?? const Color(0xFF6C0C08),
+                color: effectiveIconColor,
                 size: 20,
               ),
             ),
@@ -750,28 +770,28 @@ class _SettingsRow extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF1A1C1D),
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
                     Text(
                       subtitle!,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: Color(0xFF5F5E5E),
+                        color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
                       ),
                     ),
                   ],
                 ],
               ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Color(0xFFDEC0BB),
+              color: isDark ? AppColors.darkOutline : AppColors.borderPrimary,
               size: 20,
             ),
           ],
@@ -801,21 +821,26 @@ class _SettingToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final effectiveIconColor = iconColor ?? theme.colorScheme.primary;
+
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Theme.of(context).colorScheme.surface,
+      color: surfaceColor,
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: (iconColor ?? const Color(0xFF6C0C08)).withOpacity(0.05),
+              color: effectiveIconColor.withAlpha((0.08 * 255).round()),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color: iconColor ?? const Color(0xFF6C0C08),
+              color: effectiveIconColor,
               size: 20,
             ),
           ),
@@ -826,19 +851,19 @@ class _SettingToggleRow extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1C1D),
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
                 if (subtitle != null) ...[
                   const SizedBox(height: 4),
                   Text(
                     subtitle!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF5F5E5E),
+                      color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
                     ),
                   ),
                 ],
@@ -848,7 +873,7 @@ class _SettingToggleRow extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeTrackColor: const Color(0xFF6C0C08),
+            activeTrackColor: theme.colorScheme.primary,
           ),
         ],
       ),
@@ -874,17 +899,30 @@ class _ThemeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final currentDark = theme.brightness == Brightness.dark;
+    // Card background: for the dark-mode preview card use a dark-tinted bg; for light card use white
+    final cardBg = isDark
+        ? (currentDark ? AppColors.darkSurfaceContainerHigh : const Color(0xFFF3F3F5))
+        : (currentDark ? AppColors.darkSurfaceContainer : Colors.white);
+    final iconBg = isDark
+        ? (currentDark ? AppColors.darkSurfaceContainerLowest : const Color(0xFF1A1C1D))
+        : (currentDark ? AppColors.darkSurfaceContainerLow : const Color(0xFFF9F9FB));
+    final iconColor = isDark
+        ? (currentDark ? AppColors.darkOnSurface : const Color(0xFFF3F3F5))
+        : (currentDark ? AppColors.darkOnSurface : const Color(0xFF1A1C1D));
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFFF3F3F5) : Colors.white,
+          color: cardBg,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected
-              ? const Color(0xFF6C0C08).withOpacity(0.2)
-              : const Color(0xFFDEC0BB).withOpacity(0.1),
+                ? theme.colorScheme.primary.withAlpha((0.4 * 255).round())
+                : AppColors.borderPrimary.withAlpha((0.15 * 255).round()),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -894,11 +932,11 @@ class _ThemeCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1A1C1D) : const Color(0xFFF9F9FB),
+                color: iconBg,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withAlpha((0.05 * 255).round()),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -906,17 +944,17 @@ class _ThemeCard extends StatelessWidget {
               ),
               child: Icon(
                 icon,
-                color: isDark ? const Color(0xFFF3F3F5) : const Color(0xFF1A1C1D),
+                color: iconColor,
                 size: 24,
               ),
             ),
             const SizedBox(height: 12),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1C1D),
+                color: theme.colorScheme.onSurface,
               ),
             ),
           ],
@@ -940,10 +978,15 @@ class _SessionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bgColor = isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary;
+    final innerBg = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: bgColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -951,12 +994,12 @@ class _SessionTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: innerBg,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.phone_iphone,
-              color: Color(0xFF6C0C08),
+              color: theme.colorScheme.primary,
               size: 20,
             ),
           ),
@@ -969,9 +1012,10 @@ class _SessionTile extends StatelessWidget {
                   children: [
                     Text(
                       device,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     if (isCurrentDevice) ...[
@@ -985,11 +1029,11 @@ class _SessionTile extends StatelessWidget {
                           color: const Color(0xFF4CAF50),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Текущее',
                           style: TextStyle(
                             fontSize: 10,
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -1000,9 +1044,9 @@ class _SessionTile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   location,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF5F5E5E),
+                    color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
                   ),
                 ),
               ],

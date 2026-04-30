@@ -54,14 +54,12 @@ class RatingNotifier extends StateNotifier<RatingState> {
 
   Future<void> rateTeacher(
     String teacherId,
-    String studentId,
     double rate,
     String comment,
   ) async {
     try {
       final newRating = await _service.rateTeacher(
         teacherId,
-        studentId,
         rate,
         comment,
       );

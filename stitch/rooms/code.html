@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Аудитории - Primakov School</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#474746",
+                    "inverse-on-surface": "#f0f0f2",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "primary": "#6c0c08",
+                    "on-primary-fixed-variant": "#862118",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-dim": "#d9dadc",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#ffdad5",
+                    "surface-container-low": "#f3f3f5",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#ffa396",
+                    "background": "#f9f9fb",
+                    "inverse-primary": "#ffb4a9",
+                    "on-surface": "#1a1c1d",
+                    "tertiary-container": "#484b4f",
+                    "surface-variant": "#e2e2e4",
+                    "secondary-container": "#e2dfde",
+                    "primary-container": "#8c251c",
+                    "surface-container-high": "#e8e8ea",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#e0e2e7",
+                    "surface-tint": "#a7382d",
+                    "surface-bright": "#f9f9fb",
+                    "outline-variant": "#dec0bb",
+                    "on-tertiary-fixed": "#191c20",
+                    "on-secondary-container": "#636262",
+                    "on-primary-fixed": "#410001",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "tertiary": "#313438",
+                    "surface": "#f9f9fb",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "secondary": "#5f5e5e",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#b9bbc0",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-surface-variant": "#57423e",
+                    "surface-container": "#eeeef0",
+                    "inverse-surface": "#2f3132",
+                    "on-background": "#1a1c1d",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "secondary-fixed": "#e5e2e1",
+                    "outline": "#8b716d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "display": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9fb; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-slate-50/80 backdrop-blur-md sticky top-0 z-50 shadow-sm shadow-red-950/5 flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Student profile photo" class="w-full h-full object-cover" data-alt="Professional portrait of a male student with a confident smile, wearing a dark school uniform, academic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD5MOnoE1ga4R8Pz8Bp977UeXfd7Ji8kavvGIS5jUwXvCgu8Ddx7cQCw1qbwM_Zx4M3GIEfsz15x0pTwizvqMkk5kZ_WU-_Lu87DGrI0oOBSp_Ol_wGuYfWJmNl70LxsmmG5XsFLcDpv_k2M-wUQpxO72GkoM70pkHhMpTTwJW3sr04pRgtUtmKrBO6isrkUOra3GVi9vBFxblneO6BC-o4-qwCvO61tppbODKauQkLN_3F8jijQVdpSp5B5xG1v44Jdwy1fUfsHnB"/>
+</div>
+<span class="font-manrope font-extrabold tracking-widest text-red-900 uppercase text-sm">Primakov School</span>
+</div>
+<button class="hover:bg-slate-100/50 transition-colors p-2 rounded-full active:opacity-80 active:scale-95">
+<span class="material-symbols-outlined text-red-900">notifications</span>
+</button>
+</header>
+<main class="px-6 mt-6 max-w-4xl mx-auto">
+<!-- Title & Search Section -->
+<div class="mb-6">
+<h1 class="font-manrope font-bold text-2xl tracking-tight text-on-surface mb-4">Аудитории</h1>
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-xl">search</span>
+</div>
+<input class="w-full bg-surface-container-low border-none border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-xl py-3 pl-12 pr-4 transition-all font-body text-sm text-on-surface" placeholder="Поиск аудитории..." type="text"/>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-label text-xs font-semibold tracking-wide shrink-0">Все</button>
+<button class="bg-surface-container-lowest text-secondary px-4 py-2 rounded-full font-label text-xs font-semibold tracking-wide hover:bg-surface-container-high transition-colors shrink-0">Корпус A</button>
+<button class="bg-surface-container-lowest text-secondary px-4 py-2 rounded-full font-label text-xs font-semibold tracking-wide hover:bg-surface-container-high transition-colors shrink-0">Корпус B</button>
+<button class="bg-surface-container-lowest text-secondary px-4 py-2 rounded-full font-label text-xs font-semibold tracking-wide hover:bg-surface-container-high transition-colors shrink-0">Корпус C</button>
+</div>
+<!-- Rooms List -->
+<div class="space-y-3">
+<!-- Room Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 flex items-center justify-between shadow-[0_2px_12px_rgba(108,12,8,0.04)] hover:shadow-[0_4px_16px_rgba(108,12,8,0.06)] transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center border-b-2 border-primary-container shrink-0">
+<span class="font-manrope font-extrabold text-lg text-primary">302</span>
+</div>
+<div>
+<h3 class="font-manrope font-bold text-base text-on-surface leading-tight">Лаборатория физики</h3>
+<div class="flex gap-3 mt-0.5">
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">layers</span> Этаж 3
+                            </span>
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">groups</span> 24 чел.
+                            </span>
+</div>
+</div>
+</div>
+<button class="w-9 h-9 bg-red-50 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all active:scale-90 shrink-0">
+<span class="material-symbols-outlined text-xl">map</span>
+</button>
+</div>
+<!-- Room Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 flex items-center justify-between shadow-[0_2px_12px_rgba(108,12,8,0.04)] hover:shadow-[0_4px_16px_rgba(108,12,8,0.06)] transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center border-b-2 border-primary-container shrink-0">
+<span class="font-manrope font-extrabold text-lg text-primary">115</span>
+</div>
+<div>
+<h3 class="font-manrope font-bold text-base text-on-surface leading-tight">Класс ИЗО</h3>
+<div class="flex gap-3 mt-0.5">
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">layers</span> Этаж 1
+                            </span>
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">groups</span> 18 чел.
+                            </span>
+</div>
+</div>
+</div>
+<button class="w-9 h-9 bg-red-50 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all active:scale-90 shrink-0">
+<span class="material-symbols-outlined text-xl">map</span>
+</button>
+</div>
+<!-- Room Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 flex items-center justify-between shadow-[0_2px_12px_rgba(108,12,8,0.04)] hover:shadow-[0_4px_16px_rgba(108,12,8,0.06)] transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center border-b-2 border-primary-container shrink-0">
+<span class="font-manrope font-extrabold text-lg text-primary">408</span>
+</div>
+<div>
+<h3 class="font-manrope font-bold text-base text-on-surface leading-tight">Конференц-зал</h3>
+<div class="flex gap-3 mt-0.5">
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">layers</span> Этаж 4
+                            </span>
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">groups</span> 120 чел.
+                            </span>
+</div>
+</div>
+</div>
+<button class="w-9 h-9 bg-red-50 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all active:scale-90 shrink-0">
+<span class="material-symbols-outlined text-xl">map</span>
+</button>
+</div>
+<!-- Room Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 flex items-center justify-between shadow-[0_2px_12px_rgba(108,12,8,0.04)] hover:shadow-[0_4px_16px_rgba(108,12,8,0.06)] transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center border-b-2 border-primary-container shrink-0">
+<span class="font-manrope font-extrabold text-lg text-primary">221</span>
+</div>
+<div>
+<h3 class="font-manrope font-bold text-base text-on-surface leading-tight">Компьютерный класс</h3>
+<div class="flex gap-3 mt-0.5">
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">layers</span> Этаж 2
+                            </span>
+<span class="font-body text-[11px] text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">groups</span> 30 чел.
+                            </span>
+</div>
+</div>
+</div>
+<button class="w-9 h-9 bg-red-50 text-primary rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all active:scale-90 shrink-0">
+<span class="material-symbols-outlined text-xl">map</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl z-50 rounded-t-[24px] shadow-[0_-4px_20px_rgba(140,37,28,0.08)] flex justify-around items-center px-2 pt-3 pb-8">
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-red-800 transition-colors cursor-pointer group flex-1">
+<span class="material-symbols-outlined group-active:scale-90 duration-150 ease-out">home</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Главная</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-red-800 transition-colors cursor-pointer group flex-1">
+<span class="material-symbols-outlined group-active:scale-90 duration-150 ease-out">calendar_month</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Расписание</span>
+</div>
+<div class="flex flex-col items-center justify-center text-red-900 flex-1">
+<div class="bg-red-50 rounded-xl px-4 py-1.5 flex flex-col items-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">widgets</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Сервисы</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 hover:text-red-800 transition-colors cursor-pointer group flex-1">
+<span class="material-symbols-outlined group-active:scale-90 duration-150 ease-out">person</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Профиль</span>
+</div>
+</nav>
+</body></html>

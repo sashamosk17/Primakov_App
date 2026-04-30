@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#57423e",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "tertiary-container": "#484b4d",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#ffa396",
+                        "primary": "#6c0c08",
+                        "secondary": "#545f73",
+                        "outline-variant": "#dec0bb",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "primary-container": "#8c251c",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-background": "#0b1c30",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#111c2d",
+                        "inverse-primary": "#ffb4a9",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#313536",
+                        "primary-fixed": "#ffdad5",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-primary-fixed-variant": "#862118",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed": "#410001",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#b8bbbd",
+                        "background": "#f8f9ff",
+                        "on-secondary-container": "#586377",
+                        "outline": "#8b716d",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#a7382d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "gutter": "1rem",
+                        "stack-md": "1rem",
+                        "section-gap": "2rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "label-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged male administrator in a tailored dark suit. He is standing in a brightly lit, modern academic hallway with marble accents and soft, high-key lighting. The overall mood is sophisticated, authoritative, and clean, reflecting a prestigious institutional environment with a corporate but welcoming aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHeIT67RILi2iIic19UunJQp8QchP3YXHvOICpZX8ihEh9H4M3Xrv8RRcUX8XWEqt7HdR5Ivwsq1rIGkZb320XDaT9jbszbY-KJljAdmMrZzMaWevjjSKlr03nTJtLaiO02GbCINii5KkBBKT22cPpda8gTnkfmRhDKGYgPgli0wc_EkyH2h87nFMwe76bRYhKh8V55BLOdQYz-iQgXd8wtKOOFqvAG14b4O2ZOulbCilCVMfny8aY4JzCRqQGT2q3blGjGf7xjRtC"/>
+</div>
+<span class="text-lg font-extrabold text-red-900 dark:text-red-100 tracking-tighter">Primakov Admin</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 active:opacity-70 text-red-900 dark:text-red-400">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-20 px-4 max-w-lg mx-auto">
+<!-- Welcome Section -->
+<section class="mb-section-gap">
+<h1 class="font-display-lg text-display-lg text-primary mb-1">Academy Overview</h1>
+<p class="font-body-sm text-body-sm text-secondary">Manage the Primakov ecosystem with precision.</p>
+</section>
+<!-- Stat Cards (2x2 Grid) -->
+<section class="grid grid-cols-2 gap-gutter mb-section-gap">
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+<span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12</span>
+</div>
+<div class="font-display-lg text-title-lg text-on-surface">847</div>
+<div class="font-label-sm text-label-sm text-secondary">Total Students</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="pending_actions">pending_actions</span>
+</div>
+<div class="font-display-lg text-title-lg text-on-surface">23</div>
+<div class="font-label-sm text-label-sm text-secondary">Active Requests</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="campaign">campaign</span>
+</div>
+<div class="font-display-lg text-title-lg text-on-surface">5</div>
+<div class="font-label-sm text-label-sm text-secondary">New Announcements</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+</div>
+<div class="font-display-lg text-title-lg text-on-surface">8</div>
+<div class="font-label-sm text-label-sm text-secondary">Active Stories</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section class="mb-section-gap">
+<h2 class="font-label-lg text-label-lg text-secondary uppercase tracking-widest mb-stack-md">Quick Actions</h2>
+<div class="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
+<button class="flex-shrink-0 flex items-center gap-2 bg-primary text-on-primary px-5 py-3 rounded-xl font-label-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="person_add">person_add</span>
+<span>+ User</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-surface-container-lowest border border-primary text-primary px-5 py-3 rounded-xl font-label-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_alert">add_alert</span>
+<span>+ Announcement</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 bg-surface-container-lowest border border-primary text-primary px-5 py-3 rounded-xl font-label-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="history_edu">history_edu</span>
+<span>+ Story</span>
+</button>
+</div>
+</section>
+<!-- Recent Activity List -->
+<section class="mb-section-gap">
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="font-label-lg text-label-lg text-secondary uppercase tracking-widest">Recent Activity</h2>
+<button class="text-primary font-label-sm">View All</button>
+</div>
+<div class="space-y-stack-md">
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-100 flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="construction">construction</span>
+</div>
+<div>
+<div class="font-label-lg text-on-surface">New IT request in room 305</div>
+<div class="font-body-sm text-secondary text-xs">2 minutes ago • Maintenance</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-100 flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-700 shrink-0">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</div>
+<div>
+<div class="font-label-lg text-on-surface">User Ivan Petrov updated</div>
+<div class="font-body-sm text-secondary text-xs">15 minutes ago • HR Dept</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-100 flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-700 shrink-0">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<div class="font-label-lg text-on-surface">Admissions Goal Reached</div>
+<div class="font-body-sm text-secondary text-xs">1 hour ago • Enrollment</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md rounded-t-lg border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<!-- Dashboard (Active) -->
+<a class="flex flex-col items-center justify-center text-red-900 dark:text-red-400 bg-red-50 dark:bg-red-900/20 rounded-xl px-3 py-1 scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-0.5">Dashboard</span>
+</a>
+<!-- Users -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 hover:text-red-700 dark:hover:text-red-300 scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-0.5">Users</span>
+</a>
+<!-- Content -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 hover:text-red-700 dark:hover:text-red-300 scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-0.5">Content</span>
+</a>
+<!-- Requests -->
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 hover:text-red-700 dark:hover:text-red-300 scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-0.5">Requests</span>
+</a>
+</nav>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

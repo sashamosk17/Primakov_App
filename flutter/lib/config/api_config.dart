@@ -9,7 +9,10 @@ class ApiConfig {
     defaultValue: 'http://localhost:3000/api',
   );
 
-  static Dio createDio() {
+  // Singleton Dio instance
+  static final Dio _dio = _createDio();
+
+  static Dio _createDio() {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -23,7 +26,7 @@ class ApiConfig {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // Token will be added from providers/state
+          // Token is already in headers, set by setToken()
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -40,5 +43,17 @@ class ApiConfig {
     );
 
     return dio;
+  }
+
+  static Dio createDio() {
+    return _dio;
+  }
+
+  static void setToken(String token) {
+    _dio.options.headers['Authorization'] = 'Bearer $token';
+  }
+
+  static void clearToken() {
+    _dio.options.headers.remove('Authorization');
   }
 }

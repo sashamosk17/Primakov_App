@@ -24,20 +24,21 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   @override
   Widget build(BuildContext context) {
     final canteenState = ref.watch(canteenProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Меню столовой',
           style: TextStyle(
-            color: AppColors.textPrimary,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -48,7 +49,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
         children: [
           // Meal Type Tabs
           Container(
-            color: Colors.white,
+            color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,11 +71,18 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline, size: 64, color: Colors.grey.shade400),
+                            Icon(
+                              Icons.error_outline,
+                              size: 64,
+                              color: isDark ? AppColors.darkIconGray : Colors.grey.shade400,
+                            ),
                             const SizedBox(height: 16),
                             Text(
                               'Ошибка загрузки меню',
-                              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: isDark ? AppColors.darkTextSecondary : Colors.grey.shade600,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             TextButton(
@@ -93,6 +101,8 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
 
   Widget _buildMealTypeChip(String type, String label, IconData icon) {
     final isSelected = _selectedMealType == type;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -101,7 +111,9 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primaryRed : AppColors.lightGray,
+            color: isSelected
+                ? (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed)
+                : (isDark ? AppColors.darkLightGray : AppColors.lightGray),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
@@ -109,7 +121,9 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: isSelected ? Colors.white : AppColors.textPrimary,
+              color: isSelected
+                  ? Colors.white
+                  : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
             ),
           ),
         ),
@@ -118,16 +132,25 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   }
 
   Widget _buildMenuList(CanteenMenu? menu) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (menu == null) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.restaurant_menu, size: 64, color: Colors.grey.shade300),
+            Icon(
+              Icons.restaurant_menu,
+              size: 64,
+              color: isDark ? AppColors.darkIconGray : Colors.grey.shade300,
+            ),
             const SizedBox(height: 16),
             Text(
               'Меню не найдено',
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+              style: TextStyle(
+                fontSize: 16,
+                color: isDark ? AppColors.darkTextSecondary : Colors.grey.shade600,
+              ),
             ),
           ],
         ),
@@ -141,11 +164,18 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.no_meals, size: 64, color: Colors.grey.shade300),
+            Icon(
+              Icons.no_meals,
+              size: 64,
+              color: isDark ? AppColors.darkIconGray : Colors.grey.shade300,
+            ),
             const SizedBox(height: 16),
             Text(
               'Нет блюд в этой категории',
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+              style: TextStyle(
+                fontSize: 16,
+                color: isDark ? AppColors.darkTextSecondary : Colors.grey.shade600,
+              ),
             ),
           ],
         ),
@@ -163,12 +193,15 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   }
 
   Widget _buildMenuItem(CanteenMenuItem item) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDark ? null : [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
@@ -186,7 +219,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.lightGray,
+                color: isDark ? AppColors.darkLightGray : AppColors.lightGray,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: item.imageUrl != null
@@ -195,17 +228,17 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                       child: Image.network(
                         item.imageUrl!,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => const Icon(
+                        errorBuilder: (context, error, stackTrace) => Icon(
                           Icons.restaurant,
                           size: 32,
-                          color: AppColors.iconGray,
+                          color: isDark ? AppColors.darkIconGray : AppColors.iconGray,
                         ),
                       ),
                     )
-                  : const Icon(
+                  : Icon(
                       Icons.restaurant,
                       size: 32,
-                      color: AppColors.iconGray,
+                      color: isDark ? AppColors.darkIconGray : AppColors.iconGray,
                     ),
             ),
             const SizedBox(width: 12),
@@ -219,16 +252,18 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                       Expanded(
                         child: Text(
                           item.name,
-                          style: const TextStyle(color: AppColors.textPrimary),
+                          style: TextStyle(
+                            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                          ),
                         ),
                       ),
                       if (item.price != null)
                         Text(
                           '${item.price!.toStringAsFixed(0)} ₽',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primaryRed,
+                            color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                           ),
                         ),
                     ],
@@ -237,7 +272,9 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
                     const SizedBox(height: 4),
                     Text(
                       item.description!,
-                      style: const TextStyle(color: AppColors.textSecondary),
+                      style: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -270,21 +307,27 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   }
 
   Widget _buildNutritionBadge(String text, IconData icon) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.lightGray,
+        color: isDark ? AppColors.darkLightGray : AppColors.lightGray,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.textPrimary),
+          Icon(
+            icon,
+            size: 14,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+          ),
           const SizedBox(width: 4),
           Text(
             text,
-            style: const TextStyle(
-              color: AppColors.textSecondary,
+            style: TextStyle(
+              color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
               fontWeight: FontWeight.w500,
             ),
           ),

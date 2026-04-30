@@ -33,6 +33,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
   @override
   Widget build(BuildContext context) {
     final roomState = ref.watch(roomProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     var filteredRooms = roomState.rooms;
     if (_searchQuery.isNotEmpty) {
@@ -54,18 +55,18 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
     buildings.sort();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Карта школы',
           style: TextStyle(
-            color: AppColors.textPrimary,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -75,18 +76,18 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
       body: Column(
         children: [
           Container(
-            color: Colors.white,
+            color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: TextField(
               controller: _searchController,
               onChanged: (value) => setState(() => _searchQuery = value),
               decoration: InputDecoration(
                 hintText: 'Поиск по номеру или названию',
-                hintStyle: const TextStyle(color: AppColors.textSecondary),
-                prefixIcon: const Icon(Icons.search, color: AppColors.iconGray),
+                hintStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                prefixIcon: Icon(Icons.search, color: isDark ? AppColors.darkIconGray : AppColors.iconGray),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear, color: AppColors.iconGray),
+                        icon: Icon(Icons.clear, color: isDark ? AppColors.darkIconGray : AppColors.iconGray),
                         onPressed: () {
                           _searchController.clear();
                           setState(() => _searchQuery = '');
@@ -94,7 +95,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                       )
                     : null,
                 filled: true,
-                fillColor: AppColors.lightGray,
+                fillColor: isDark ? AppColors.darkLightGray : AppColors.lightGray,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -105,7 +106,7 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
           ),
           if (buildings.isNotEmpty)
             Container(
-              color: Colors.white,
+              color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
               padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, bottom: AppSpacing.md),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -135,11 +136,18 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline, size: 64, color: Colors.grey.shade400),
+                            Icon(
+                              Icons.error_outline,
+                              size: 64,
+                              color: isDark ? AppColors.darkIconGray : Colors.grey.shade400,
+                            ),
                             const SizedBox(height: 16),
                             Text(
                               'Ошибка загрузки аудиторий',
-                              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: isDark ? AppColors.darkTextSecondary : Colors.grey.shade600,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             TextButton(
@@ -154,11 +162,18 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.search_off, size: 64, color: Colors.grey.shade300),
+                                Icon(
+                                  Icons.search_off,
+                                  size: 64,
+                                  color: isDark ? AppColors.darkIconGray : Colors.grey.shade300,
+                                ),
                                 const SizedBox(height: 16),
                                 Text(
                                   'Аудитории не найдены',
-                                  style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: isDark ? AppColors.darkTextSecondary : Colors.grey.shade600,
+                                  ),
                                 ),
                               ],
                             ),
@@ -178,12 +193,16 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
   }
 
   Widget _buildFilterChip(String label, bool isSelected, VoidCallback onTap) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryRed : AppColors.lightGray,
+          color: isSelected
+              ? (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed)
+              : (isDark ? AppColors.darkLightGray : AppColors.lightGray),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -191,7 +210,9 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.textPrimary,
+            color: isSelected
+                ? Colors.white
+                : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
           ),
         ),
       ),
@@ -199,10 +220,16 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
   }
 
   Widget _buildRoomCard(Room room) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 2,
+      color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: isDark ? BorderSide(color: AppColors.darkBorderPrimary) : BorderSide.none,
+      ),
+      elevation: isDark ? 0 : 2,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -211,12 +238,12 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: AppColors.storyBackground,
+                color: isDark ? AppColors.darkStoryBackground : AppColors.storyBackground,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.meeting_room,
-                color: AppColors.primaryRed,
+                color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                 size: 28,
               ),
             ),
@@ -230,22 +257,24 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                       Text(
                         room.number,
                         style: AppTypography.heading3.copyWith(
-                          color: AppColors.textPrimary,
+                          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(width: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.primaryRed.withOpacity(0.1),
+                          color: isDark
+                              ? AppColors.darkPrimaryRed.withOpacity(0.2)
+                              : AppColors.primaryRed.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           'Корпус ${room.building}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.primaryRed,
+                            color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                           ),
                         ),
                       ),
@@ -256,26 +285,40 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
                     Text(
                       room.name!,
                       style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                       ),
                     ),
                   ],
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.layers, size: 14, color: Colors.grey),
+                      Icon(
+                        Icons.layers,
+                        size: 14,
+                        color: isDark ? AppColors.darkIconGray : Colors.grey,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         '${room.floor} этаж',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDark ? AppColors.darkIconGray : Colors.grey,
+                        ),
                       ),
                       if (room.capacity != null) ...[
                         const SizedBox(width: 12),
-                        const Icon(Icons.people, size: 14, color: Colors.grey),
+                        Icon(
+                          Icons.people,
+                          size: 14,
+                          color: isDark ? AppColors.darkIconGray : Colors.grey,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           '${room.capacity} мест',
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: isDark ? AppColors.darkIconGray : Colors.grey,
+                          ),
                         ),
                       ],
                     ],
@@ -285,7 +328,10 @@ class _RoomsListScreenState extends ConsumerState<RoomsListScreen> {
             ),
             if (room.latitude != null && room.longitude != null)
               IconButton(
-                icon: const Icon(Icons.map, color: AppColors.primaryRed),
+                icon: Icon(
+                  Icons.map,
+                  color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
+                ),
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

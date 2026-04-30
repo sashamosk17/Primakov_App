@@ -39,20 +39,21 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
   Widget build(BuildContext context) {
     final roomState = ref.watch(roomProvider);
     final requestState = ref.watch(requestProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: isDark ? AppColors.darkBackgroundPrimary : AppColors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Новая заявка',
           style: TextStyle(
-            color: AppColors.textPrimary,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -65,12 +66,12 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             // Request Type
-            const Text(
+            Text(
               'Тип заявки',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
@@ -107,25 +108,36 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
             const SizedBox(height: AppSpacing.xl),
 
             // Title
-            const Text(
+            Text(
               'Заголовок',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _titleController,
+              style: TextStyle(color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
               decoration: InputDecoration(
                 hintText: 'Краткое описание проблемы',
-                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                hintStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                  borderSide: isDark ? BorderSide(color: AppColors.darkBorderPrimary) : BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: isDark ? BorderSide(color: AppColors.darkBorderPrimary) : BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
+                  ),
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
@@ -139,26 +151,37 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
             const SizedBox(height: AppSpacing.xl),
 
             // Description
-            const Text(
+            Text(
               'Описание',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _descriptionController,
               maxLines: 5,
+              style: TextStyle(color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
               decoration: InputDecoration(
                 hintText: 'Подробное описание проблемы',
-                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                hintStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                  borderSide: isDark ? BorderSide(color: AppColors.darkBorderPrimary) : BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: isDark ? BorderSide(color: AppColors.darkBorderPrimary) : BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
+                  ),
                 ),
                 contentPadding: const EdgeInsets.all(16),
               ),
@@ -172,12 +195,12 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
             const SizedBox(height: AppSpacing.xl),
 
             // Priority
-            const Text(
+            Text(
               'Приоритет',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
@@ -203,25 +226,28 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
             const SizedBox(height: AppSpacing.xl),
 
             // Room
-            const Text(
+            Text(
               'Аудитория (опционально)',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
                 borderRadius: BorderRadius.circular(12),
+                border: isDark ? Border.all(color: AppColors.darkBorderPrimary) : null,
               ),
               child: DropdownButtonFormField<String>(
                 initialValue: _selectedRoomId,
+                dropdownColor: isDark ? AppColors.darkBackgroundSecondary : Colors.white,
+                style: TextStyle(color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
                 decoration: InputDecoration(
                   hintText: 'Выберите аудиторию',
-                  hintStyle: const TextStyle(color: AppColors.textSecondary),
+                  hintStyle: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -229,9 +255,12 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 ),
                 items: [
-                  const DropdownMenuItem<String>(
+                  DropdownMenuItem<String>(
                     value: null,
-                    child: Text('Не выбрано'),
+                    child: Text(
+                      'Не выбрано',
+                      style: TextStyle(color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                    ),
                   ),
                   ...roomState.rooms.map((room) {
                     return DropdownMenuItem<String>(
@@ -253,7 +282,7 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
               child: ElevatedButton(
                 onPressed: requestState.isLoading ? null : _submitRequest,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryRed,
+                  backgroundColor: isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -286,15 +315,17 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
 
   Widget _buildTypeCard(RequestType type, String label, IconData icon, Color color) {
     final isSelected = _selectedType == type;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () => setState(() => _selectedType = type),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: isSelected ? color : Colors.white,
+          color: isSelected ? color : (isDark ? AppColors.darkBackgroundSecondary : Colors.white),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? color : Colors.grey.shade300,
+            color: isSelected ? color : (isDark ? AppColors.darkBorderPrimary : Colors.grey.shade300),
             width: 2,
           ),
         ),
@@ -311,7 +342,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: isSelected ? Colors.white : AppColors.textPrimary,
+                color: isSelected
+                    ? Colors.white
+                    : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
               ),
             ),
           ],
@@ -322,15 +355,17 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
 
   Widget _buildPriorityChip(RequestPriority priority, String label, Color color) {
     final isSelected = _selectedPriority == priority;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () => setState(() => _selectedPriority = priority),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? color : Colors.white,
+          color: isSelected ? color : (isDark ? AppColors.darkBackgroundSecondary : Colors.white),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: isSelected ? color : Colors.grey.shade300,
+            color: isSelected ? color : (isDark ? AppColors.darkBorderPrimary : Colors.grey.shade300),
             width: 2,
           ),
         ),
@@ -340,7 +375,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.textPrimary,
+            color: isSelected
+                ? Colors.white
+                : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
           ),
         ),
       ),

@@ -41,6 +41,30 @@ class User {
     'isActive': isActive,
     'vkId': vkId,
   };
+
+  // ДОБАВИТЬ: метод copyWith для иммутабельных обновлений в Riverpod
+  User copyWith({
+    String? id,
+    String? email,
+    String? firstName,
+    String? lastName,
+    UserRole? role,
+    bool? isActive,
+    String? vkId,
+  }) {
+    return User(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      role: role ?? this.role,
+      isActive: isActive ?? this.isActive,
+      vkId: vkId ?? this.vkId,
+    );
+  }
+
+  // ДОБАВИТЬ: вычисляемое свойство для полного имени
+  String get fullName => '$firstName $lastName'.trim();
 }
 
 enum UserRole { STUDENT, TEACHER, ADMIN }
@@ -235,7 +259,7 @@ class Story {
 class Rating {
   final String id;
   final String teacherId;
-  final String studentId;
+  final String? studentId;
   final double rate;
   final String comment;
   final String createdAt;
@@ -243,7 +267,7 @@ class Rating {
   Rating({
     required this.id,
     required this.teacherId,
-    required this.studentId,
+    this.studentId,
     required this.rate,
     required this.comment,
     required this.createdAt,
@@ -253,9 +277,9 @@ class Rating {
     return Rating(
       id: json['id'] as String,
       teacherId: json['teacherId'] as String,
-      studentId: json['studentId'] as String,
+      studentId: json['studentId'] as String?,
       rate: (json['rate'] as num).toDouble(),
-      comment: json['comment'] as String,
+      comment: json['comment'] as String? ?? '',
       createdAt: json['createdAt'] as String,
     );
   }
@@ -679,5 +703,50 @@ class CanteenMenu {
     'mealType': mealType.name,
     'items': items.map((e) => e.toJson()).toList(),
     'createdAt': createdAt,
+  };
+}
+
+/// Notification Settings Model
+class NotificationSettings {
+  final bool pushEnabled;
+  final bool deadlineNotifications;
+  final bool scheduleNotifications;
+  final bool announcementNotifications;
+
+  const NotificationSettings({
+    this.pushEnabled = true,
+    this.deadlineNotifications = true,
+    this.scheduleNotifications = true,
+    this.announcementNotifications = true,
+  });
+
+  NotificationSettings copyWith({
+    bool? pushEnabled,
+    bool? deadlineNotifications,
+    bool? scheduleNotifications,
+    bool? announcementNotifications,
+  }) {
+    return NotificationSettings(
+      pushEnabled: pushEnabled ?? this.pushEnabled,
+      deadlineNotifications: deadlineNotifications ?? this.deadlineNotifications,
+      scheduleNotifications: scheduleNotifications ?? this.scheduleNotifications,
+      announcementNotifications: announcementNotifications ?? this.announcementNotifications,
+    );
+  }
+
+  factory NotificationSettings.fromJson(Map<String, dynamic> json) {
+    return NotificationSettings(
+      pushEnabled: json['pushEnabled'] as bool? ?? true,
+      deadlineNotifications: json['deadlineNotifications'] as bool? ?? true,
+      scheduleNotifications: json['scheduleNotifications'] as bool? ?? true,
+      announcementNotifications: json['announcementNotifications'] as bool? ?? true,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'pushEnabled': pushEnabled,
+    'deadlineNotifications': deadlineNotifications,
+    'scheduleNotifications': scheduleNotifications,
+    'announcementNotifications': announcementNotifications,
   };
 }

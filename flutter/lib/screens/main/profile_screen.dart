@@ -7,7 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/ui_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../models/api_models.dart';
+import 'edit_profile_screen.dart';
+import 'change_password_screen.dart';
+import 'settings_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -50,15 +54,261 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
     }
   }
 
+  Widget _buildNotificationButton(BuildContext context, WidgetRef ref) {
+    final notificationSettings = ref.watch(notificationSettingsProvider);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    return IconButton(
+      icon: Icon(
+        notificationSettings.pushEnabled 
+            ? Icons.notifications_active 
+            : Icons.notifications_outlined,
+      ),
+      color: notificationSettings.pushEnabled
+          ? (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed)
+          : (isDark ? AppColors.darkTextSecondary : const Color(0xFF64748B)),
+      onPressed: () {
+        _showNotificationQuickSettings(context, ref, notificationSettings);
+      },
+    );
+  }
+
+  void _showNotificationQuickSettings(BuildContext context, WidgetRef ref, NotificationSettings notificationSettings) {
+    final theme = Theme.of(context);
+    
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Handle bar
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(top: 8),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.onSurface.withAlpha((0.3 * 255).round()),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            
+            // Header
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.notifications,
+                    color: theme.colorScheme.primary,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Быстрые настройки уведомлений',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Main toggle
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SwitchListTile(
+                value: notificationSettings.pushEnabled,
+                onChanged: (value) async {
+                  Navigator.of(context).pop();
+                  await ref.read(uiProvider.notifier).togglePushNotifications();
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          value ? 'Уведомления включены' : 'Уведомления выключены',
+                        ),
+                      ),
+                    );
+                  }
+                },
+                title: Text(
+                  'Push-уведомления',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                subtitle: Text(
+                  'Получать уведомления о дедлайнах и расписании',
+                  style: TextStyle(
+                    color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                  ),
+                ),
+                activeColor: theme.colorScheme.primary,
+              ),
+            ),
+            
+            // Detailed settings (only if push is enabled)
+            if (notificationSettings.pushEnabled) ...[
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SwitchListTile(
+                  value: notificationSettings.deadlineNotifications,
+                  onChanged: (value) async {
+                    await ref.read(uiProvider.notifier).toggleDeadlineNotifications();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            value ? 'Уведомления о дедлайнах включены' : 'Уведомления о дедлайнах выключены',
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  title: Text(
+                    'Дедлайны',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Напоминания о приближающихся дедлайнах',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                    ),
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SwitchListTile(
+                  value: notificationSettings.scheduleNotifications,
+                  onChanged: (value) async {
+                    await ref.read(uiProvider.notifier).toggleScheduleNotifications();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            value ? 'Уведомления о расписании включены' : 'Уведомления о расписании выключены',
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  title: Text(
+                    'Расписание',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Изменения в расписании занятий',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                    ),
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: SwitchListTile(
+                  value: notificationSettings.announcementNotifications,
+                  onChanged: (value) async {
+                    await ref.read(uiProvider.notifier).toggleAnnouncementNotifications();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            value ? 'Объявления включены' : 'Объявления выключены',
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  title: Text(
+                    'Объявления',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Важные объявления и новости',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                    ),
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+              ),
+            ],
+            
+            // Open full settings button
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SettingsScreen(),
+                      ),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    side: BorderSide(color: theme.colorScheme.primary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    'Все настройки',
+                    style: TextStyle(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
+    final currentUser = ref.watch(currentUserProvider);
     final isDarkMode = ref.watch(isDarkModeProvider);
     final userRole = authState.userRole ?? UserRole.STUDENT;
 
-    // Mock user data (TODO: Get from API)
-    const userName = 'Александр Примаков';
-    const userClass = '11 «А» класс';
+    // Real user data from API
+    final userName = currentUser?.fullName ?? 'Загрузка...';
+    final userClass = userRole == UserRole.STUDENT ? '11 «А» класс' : 'Преподаватель';
 
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
@@ -110,15 +360,7 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
           ],
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            color: isDark ? AppColors.darkTextSecondary : const Color(0xFF64748B),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Уведомления скоро появятся')),
-              );
-            },
-          ),
+          _buildNotificationButton(context, ref),
         ],
       ),
       body: SingleChildScrollView(
@@ -191,6 +433,39 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
                   title: 'Активные сессии',
                   subtitle: '2 устройства в сети',
                   onTap: _showActiveSessionsSheet,
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            // Profile Management Group
+            _SettingsGroup(
+              children: [
+                _SettingNavigationRow(
+                  icon: Icons.edit,
+                  title: 'Редактировать профиль',
+                  subtitle: 'Изменить имя и фамилию',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const EditProfileScreen(),
+                      ),
+                    );
+                  },
+                ),
+                Divider(height: 1, indent: 66, color: isDark ? AppColors.darkBorderSecondary : const Color(0xFFEEEEF0)),
+                _SettingNavigationRow(
+                  icon: Icons.lock_outline,
+                  title: 'Сменить пароль',
+                  subtitle: 'Обновить пароль доступа',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePasswordScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -881,6 +1156,86 @@ class _SettingToggleRow extends StatelessWidget {
   }
 }
 
+class _SettingNavigationRow extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback onTap;
+  final Color? iconColor;
+
+  const _SettingNavigationRow({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    required this.onTap,
+    this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+    final effectiveIconColor = iconColor ?? theme.colorScheme.primary;
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        color: surfaceColor,
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: effectiveIconColor.withAlpha((0.08 * 255).round()),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: effectiveIconColor,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle!,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).round()),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: theme.colorScheme.onSurface.withAlpha((0.4 * 255).round()),
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // Theme Card Widget
 class _ThemeCard extends StatelessWidget {
   final IconData icon;
@@ -1056,6 +1411,7 @@ class _SessionTile extends StatelessWidget {
       ),
     );
   }
-}
+
+  }
 
 

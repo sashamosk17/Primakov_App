@@ -45,7 +45,6 @@ class RatingService {
 
   Future<Rating> rateTeacher(
     String teacherId,
-    String studentId,
     double rate,
     String comment,
   ) async {
@@ -54,7 +53,6 @@ class RatingService {
         '/ratings',
         data: {
           'teacherId': teacherId,
-          'studentId': studentId,
           'rate': rate,
           'comment': comment,
         },

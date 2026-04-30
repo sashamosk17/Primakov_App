@@ -11,10 +11,10 @@ export class MockRatingRepository implements IRatingRepository {
 
   private initializeTestData(): void {
     const teacher1Ratings = [
-      { userId: "user-1", value: 5 },
-      { userId: "user-2", value: 4 },
-      { userId: "user-3", value: 5 },
-      { userId: "user-1", value: 4 },
+      { userId: "user-1", value: 5, comment: "Отличный преподаватель!" },
+      { userId: "user-2", value: 4, comment: "Хорошо объясняет материал" },
+      { userId: "user-3", value: 5, comment: "Очень интересные уроки" },
+      { userId: "user-1", value: 4, comment: "Понятно и доступно" },
     ];
 
     teacher1Ratings.forEach((rating, index) => {
@@ -25,17 +25,16 @@ export class MockRatingRepository implements IRatingRepository {
           rating.userId,
           rating.value,
           new Date(Date.now() - (10 - index) * 24 * 60 * 60 * 1000),
-          undefined,
-          0
+          rating.comment
         )
       );
     });
 
     const teacher2Ratings = [
-      { userId: "user-1", value: 3 },
-      { userId: "user-2", value: 4 },
-      { userId: "user-3", value: 4 },
-      { userId: "user-2", value: 5 },
+      { userId: "user-1", value: 3, comment: "Нормально" },
+      { userId: "user-2", value: 4, comment: "Хороший учитель" },
+      { userId: "user-3", value: 4, comment: "Интересно" },
+      { userId: "user-2", value: 5, comment: "Отлично!" },
     ];
 
     teacher2Ratings.forEach((rating, index) => {
@@ -46,8 +45,7 @@ export class MockRatingRepository implements IRatingRepository {
           rating.userId,
           rating.value,
           new Date(Date.now() - (12 - index) * 24 * 60 * 60 * 1000),
-          undefined,
-          0
+          rating.comment
         )
       );
     });

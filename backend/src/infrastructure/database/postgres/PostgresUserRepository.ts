@@ -62,6 +62,26 @@ export class PostgresUserRepository implements IUserRepository {
     }
   }
 
+  async findByRole(role: Role): Promise<Result<User[]>> {
+    try {
+      const query = `
+        SELECT id, email, password_hash, first_name, last_name, role,
+               is_active, vk_id, created_at, updated_at
+        FROM users
+        WHERE role = $1 AND is_active = true AND deleted_at IS NULL
+        ORDER BY last_name, first_name
+      `;
+
+      const result = await this.pool.query(query, [role]);
+      const users = result.rows.map(row => this.mapRowToUser(row));
+
+      return Result.ok(users);
+    } catch (error) {
+      console.error("Error finding users by role:", error);
+      return Result.fail("Failed to find users by role");
+    }
+  }
+
   async save(user: User): Promise<Result<void>> {
     try {
       // Check if user exists

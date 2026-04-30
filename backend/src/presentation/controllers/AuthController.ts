@@ -11,9 +11,7 @@ export class AuthController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      console.log("Login attempt:", { email, password });
       const result = await this.loginUseCase.execute(email, password);
-      console.log("Login result:", { isFailure: result.isFailure, error: result.error });
       if (result.isFailure) {
         return res.status(401).json({ status: "error", error: { message: result.error } });
       }

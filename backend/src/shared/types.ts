@@ -7,6 +7,7 @@ export type Permission =
   | "deadline:update:own"
   | "rating:create"
   | "rating:update:own"
+  | "rating:read:all"
   | "review:read"
   | "review:read:own"
   | "rating:read:own"

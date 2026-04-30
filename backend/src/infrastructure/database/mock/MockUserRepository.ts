@@ -133,6 +133,11 @@ export class MockUserRepository implements IUserRepository {
     return Result.ok(user || null);
   }
 
+  async findByRole(role: Role): Promise<Result<User[]>> {
+    const users = this.users.filter((u) => u.role === role && u.isActive);
+    return Result.ok(users);
+  }
+
   async save(user: User): Promise<Result<void>> {
     const existingIndex = this.users.findIndex((u) => u.id === user.id);
     if (existingIndex >= 0) {

@@ -29,6 +29,16 @@ export class Deadline {
     return Result.ok();
   }
 
+  public uncomplete(): Result<void> {
+    if (this.status === DeadlineStatus.PENDING) {
+      return Result.fail("Deadline is not completed");
+    }
+    this.status = DeadlineStatus.PENDING;
+    this.completedAt = undefined;
+    this.updatedAt = new Date();
+    return Result.ok();
+  }
+
   public isOverdue(): boolean {
     return this.status !== DeadlineStatus.COMPLETED && new Date() > this.dueDate;
   }

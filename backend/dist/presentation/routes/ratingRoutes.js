@@ -12,7 +12,7 @@ const ratingRoutes = (repository) => {
     const router = (0, express_1.Router)();
     const service = new RatingService_1.RatingService(repository || new MockRatingRepository_1.MockRatingRepository());
     const controller = new RatingController_1.RatingController(new RateTeacherUseCase_1.RateTeacherUseCase(service), new GetTeacherRatingsUseCase_1.GetTeacherRatingsUseCase(service));
-    router.get("/:teacherId", authMiddleware_1.authMiddleware, controller.getRatings);
+    router.get("/", authMiddleware_1.authMiddleware, controller.getRatings);
     router.post("/", authMiddleware_1.authMiddleware, controller.rateTeacher);
     return router;
 };

@@ -1,6 +1,14 @@
+// Load environment variables FIRST, before any other imports
+import dotenv from "dotenv";
+import path from "path";
+
+// Load .env from the project root (dist/main.js runs from backend/ directory)
+const envPath = path.join(__dirname, '..', '.env');
+dotenv.config({ path: envPath });
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import helmet from "helmet";
 import { authRoutes } from "./presentation/routes/authRoutes";
 import { scheduleRoutes } from "./presentation/routes/scheduleRoutes";
 import { deadlineRoutes } from "./presentation/routes/deadlineRoutes";
@@ -10,9 +18,14 @@ import { announcementRoutes } from "./presentation/routes/announcementRoutes";
 import { roomRoutes } from "./presentation/routes/roomRoutes";
 import { requestRoutes } from "./presentation/routes/requestRoutes";
 import { canteenRoutes } from "./presentation/routes/canteenRoutes";
+import { userRoutes } from "./presentation/routes/userRoutes";
 import { errorHandlerMiddleware } from "./presentation/middleware/errorHandlerMiddleware";
+import { sanitizeInput } from "./presentation/middleware/sanitizationMiddleware";
 import { createDatabasePool, closeDatabasePool } from "./infrastructure/config/database";
 import { runMigrations } from "./infrastructure/database/migrations/migrationRunner";
+import { validateEnvironment } from "./infrastructure/config/validateEnv";
+import { corsConfig } from "./infrastructure/config/cors";
+import { generalRateLimiter } from "./infrastructure/config/rateLimiter";
 import {
   PostgresUserRepository,
   PostgresScheduleRepository,
@@ -25,10 +38,11 @@ import {
   PostgresCanteenMenuRepository,
 } from "./infrastructure/database/postgres";
 
-dotenv.config();
-
 async function startServer() {
   try {
+    console.log("Validating environment configuration...");
+    validateEnvironment();
+
     console.log("Initializing database connection...");
     const pool = await createDatabasePool();
 
@@ -48,15 +62,22 @@ async function startServer() {
 
     const app = express();
 
-    // CORS configuration for web development
-    app.use(cors({
-      origin: '*',
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-      credentials: true,
+    // Security headers
+    app.use(helmet({
+      contentSecurityPolicy: false, // Disable for API-only backend
+      crossOriginEmbedderPolicy: false,
     }));
 
+    // CORS configuration
+    app.use(cors(corsConfig));
+
+    // General rate limiting
+    app.use(generalRateLimiter);
+
     app.use(express.json());
+
+    // Input sanitization
+    app.use(sanitizeInput);
 
     // Logging middleware
     app.use((req, res, next) => {
@@ -66,6 +87,7 @@ async function startServer() {
 
     // Routes - using PostgreSQL repositories
     app.use("/api/auth", authRoutes(userRepository));
+    app.use("/api/users", userRoutes(userRepository));
     app.use("/api/schedule", scheduleRoutes(scheduleRepository));
     app.use("/api/deadlines", deadlineRoutes(deadlineRepository));
     app.use("/api/ratings", ratingRoutes(ratingRepository));

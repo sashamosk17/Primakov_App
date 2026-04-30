@@ -1,4 +1,5 @@
 import { Response, NextFunction } from "express";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { verifyToken } from "../../shared/utils/jwt";
 import { AuthenticationError } from "../../shared/errors/AuthenticationError";
 import { AuthenticatedRequest } from "../types";
@@ -16,6 +17,12 @@ export const authMiddleware = (req: AuthenticatedRequest, _res: Response, next: 
     req.user = verifyToken(token);
     return next();
   } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      return next(new AuthenticationError("Token expired"));
+    }
+    if (error instanceof JsonWebTokenError) {
+      return next(new AuthenticationError("Invalid token"));
+    }
     return next(error);
   }
 };

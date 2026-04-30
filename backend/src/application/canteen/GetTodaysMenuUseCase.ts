@@ -8,7 +8,7 @@ export class GetTodaysMenuUseCase {
     const result = await this.canteenMenuRepository.getTodaysMenu();
 
     if (result.isFailure) {
-      return Result.fail(result.error);
+      return Result.fail(result.error || "Unknown error");
     }
 
     const menus = result.value;

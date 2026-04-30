@@ -40,6 +40,10 @@ class MockUserRepository {
         const user = this.users.find((u) => u.email.value === email.toLowerCase()) || null;
         return Result_1.Result.ok(user);
     }
+    async findByRole(role) {
+        const users = this.users.filter((u) => u.role === role && u.isActive);
+        return Result_1.Result.ok(users);
+    }
     async save(user) {
         const existingIndex = this.users.findIndex((u) => u.id === user.id);
         if (existingIndex >= 0) {

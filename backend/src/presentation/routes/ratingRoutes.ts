@@ -15,7 +15,7 @@ export const ratingRoutes = (repository?: IRatingRepository) => {
     new GetTeacherRatingsUseCase(service)
   );
 
-  router.get("/:teacherId", authMiddleware, controller.getRatings);
+  router.get("/", authMiddleware, controller.getRatings);
   router.post("/", authMiddleware, controller.rateTeacher);
 
   return router;

@@ -3,6 +3,7 @@ import { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { Result } from "../../../shared/Result";
 import { Email } from "../../../domain/value-objects/Email";
 import { Password } from "../../../domain/value-objects/Password";
+import { Role } from "../../../shared/types";
 
 export class MockUserRepository implements IUserRepository {
   private users: User[] = [];
@@ -125,6 +126,11 @@ export class MockUserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<Result<User | null>> {
     const user = this.users.find((u) => u.email.value === email.toLowerCase()) || null;
     return Result.ok(user);
+  }
+
+  async findByRole(role: Role): Promise<Result<User[]>> {
+    const users = this.users.filter((u) => u.role === role && u.isActive);
+    return Result.ok(users);
   }
 
   async save(user: User): Promise<Result<void>> {

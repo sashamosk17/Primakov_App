@@ -88,6 +88,11 @@ export class PostgresScheduleRepository implements IScheduleRepository {
     }
   }
 
+  async getScheduleByUserId(userId: string, date: Date): Promise<Result<Schedule | null>> {
+    // In PostgreSQL implementation groupId column stores userId, so this is equivalent
+    return this.getScheduleByDate(userId, date);
+  }
+
   async save(schedule: Schedule): Promise<Result<void>> {
     const client = await this.pool.connect();
 

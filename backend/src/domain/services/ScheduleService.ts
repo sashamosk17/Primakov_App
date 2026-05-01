@@ -12,4 +12,8 @@ export class ScheduleService {
   public async getScheduleByDate(groupId: string, date: Date): Promise<Result<Schedule | null>> {
     return this.scheduleRepository.getScheduleByDate(groupId, date);
   }
+
+  public async getScheduleByUserId(userId: string, date: Date): Promise<Result<Schedule | null>> {
+    return this.scheduleRepository.getScheduleByUserId(userId, date);
+  }
 }

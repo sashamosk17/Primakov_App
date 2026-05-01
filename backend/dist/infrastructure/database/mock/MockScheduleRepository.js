@@ -159,6 +159,10 @@ class MockScheduleRepository {
         }
         return Result_1.Result.ok(schedule || null);
     }
+    async getScheduleByUserId(userId, date) {
+        // In this mock, groupId = userId, so this is equivalent to getScheduleByDate
+        return this.getScheduleByDate(userId, date);
+    }
     async save(schedule) {
         const existingIndex = this.schedules.findIndex((s) => s.id === schedule.id);
         if (existingIndex >= 0) {

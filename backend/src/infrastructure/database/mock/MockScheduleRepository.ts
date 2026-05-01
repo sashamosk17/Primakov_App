@@ -196,6 +196,11 @@ export class MockScheduleRepository implements IScheduleRepository {
   return Result.ok(schedule || null);
 }
 
+  async getScheduleByUserId(userId: string, date: Date): Promise<Result<Schedule | null>> {
+    // In this mock, groupId = userId, so this is equivalent to getScheduleByDate
+    return this.getScheduleByDate(userId, date);
+  }
+
   async save(schedule: Schedule): Promise<Result<void>> {
     const existingIndex = this.schedules.findIndex((s) => s.id === schedule.id);
     if (existingIndex >= 0) {

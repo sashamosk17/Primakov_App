@@ -11,5 +11,8 @@ class ScheduleService {
     async getScheduleByDate(groupId, date) {
         return this.scheduleRepository.getScheduleByDate(groupId, date);
     }
+    async getScheduleByUserId(userId, date) {
+        return this.scheduleRepository.getScheduleByUserId(userId, date);
+    }
 }
 exports.ScheduleService = ScheduleService;

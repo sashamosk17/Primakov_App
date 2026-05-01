@@ -229,10 +229,9 @@ class _LessonCompactCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: AppSpacing.xs),
-                const Row(
+                Row(
                   children: [
-                    AppColors.textSecondary,
-                    ),
+                    Icon(Icons.location_on, size: 14, color: AppColors.textSecondary),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Кабинет ${lesson.room}',
@@ -246,7 +245,7 @@ class _LessonCompactCard extends StatelessWidget {
             ),
           ),
           // Next indicator
-          if (isNext) {
+          if (isNext)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
@@ -260,11 +259,10 @@ class _LessonCompactCard extends StatelessWidget {
                   color: AppColors.backgroundSecondary,
                 ),
               ),
-            )
-          },
+            ),
         ],
       ),
-    )
+    );
   }
 }
 

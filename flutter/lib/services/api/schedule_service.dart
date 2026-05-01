@@ -13,7 +13,7 @@ class ScheduleService {
   try {
     print('🔄 Getting schedule for group: $groupId, date: $date');
     
-    final response = await _dio.get('/schedule/$groupId/$date');
+    final response = await _dio.get('/schedule/user/$groupId/$date');
 
     print('✅ Schedule response status: ${response.statusCode}');
     print('📦 Schedule response data: ${response.data}');

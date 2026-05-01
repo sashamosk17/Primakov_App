@@ -63,6 +63,10 @@ class PostgresScheduleRepository {
             return Result_1.Result.fail("Failed to get schedule");
         }
     }
+    async getScheduleByUserId(userId, date) {
+        // In PostgreSQL implementation groupId column stores userId, so this is equivalent
+        return this.getScheduleByDate(userId, date);
+    }
     async save(schedule) {
         const client = await this.pool.connect();
         try {

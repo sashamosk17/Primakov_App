@@ -159,7 +159,7 @@ export class PostgresScheduleRepository implements IScheduleRepository {
   private async getLessonsByScheduleId(scheduleId: string): Promise<Lesson[]> {
     const query = `
       SELECT id, schedule_id, subject, teacher_id, start_time, end_time,
-             room_number, room_building, room_floor, has_homework, created_at
+             room_number, room_building, floor, has_homework, created_at
       FROM lessons
       WHERE schedule_id = $1
       ORDER BY start_time
@@ -175,7 +175,7 @@ export class PostgresScheduleRepository implements IScheduleRepository {
   private async saveLesson(client: any, lesson: Lesson, scheduleId: string): Promise<void> {
     const query = `
       INSERT INTO lessons (id, schedule_id, subject, teacher_id, start_time, end_time,
-                          room_number, room_building, room_floor, has_homework, created_at)
+                          room_number, room_building, floor, has_homework, created_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
     `;
 
@@ -203,7 +203,9 @@ export class PostgresScheduleRepository implements IScheduleRepository {
       throw new Error(`Invalid time slot in database: ${row.start_time} - ${row.end_time}`);
     }
 
-    const roomResult = Room.create(row.room_number, row.room_building, row.room_floor);
+    const roomBuilding = row.room_building || 'A';
+    const roomFloor = row.floor ?? 1;
+    const roomResult = Room.create(row.room_number || '0', roomBuilding, roomFloor);
     if (roomResult.isFailure) {
       throw new Error(`Invalid room in database: ${row.room_number}`);
     }
@@ -214,7 +216,7 @@ export class PostgresScheduleRepository implements IScheduleRepository {
       row.teacher_id,
       timeSlotResult.value,
       roomResult.value,
-      row.room_floor,
+      roomFloor,
       row.has_homework
     );
   }

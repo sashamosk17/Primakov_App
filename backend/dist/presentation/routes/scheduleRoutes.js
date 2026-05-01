@@ -7,10 +7,10 @@ const GetScheduleUseCase_1 = require("../../application/schedule/GetScheduleUseC
 const GetScheduleByDateUseCase_1 = require("../../application/schedule/GetScheduleByDateUseCase");
 const GetScheduleByUserIdUseCase_1 = require("../../application/schedule/GetScheduleByUserIdUseCase");
 const ScheduleService_1 = require("../../domain/services/ScheduleService");
-const scheduleRoutes = (repository) => {
+const scheduleRoutes = (repository, userRepository) => {
     const router = (0, express_1.Router)();
     const service = new ScheduleService_1.ScheduleService(repository);
-    const controller = new ScheduleController_1.ScheduleController(new GetScheduleUseCase_1.GetScheduleUseCase(service), new GetScheduleByDateUseCase_1.GetScheduleByDateUseCase(service), new GetScheduleByUserIdUseCase_1.GetScheduleByUserIdUseCase(service));
+    const controller = new ScheduleController_1.ScheduleController(new GetScheduleUseCase_1.GetScheduleUseCase(service), new GetScheduleByDateUseCase_1.GetScheduleByDateUseCase(service), new GetScheduleByUserIdUseCase_1.GetScheduleByUserIdUseCase(service), userRepository);
     router.get("/user/:userId/:date", controller.getScheduleByUserId);
     router.get("/:groupId", controller.getSchedule);
     router.get("/:groupId/:date", controller.getScheduleByDate);

@@ -9,7 +9,8 @@ export class Lesson {
     public timeSlot: TimeSlot,
     public room: Room,
     public floor: number,
-    public hasHomework = false
+    public hasHomework = false,
+    public homeworkDescription?: string
   ) {}
 
   public isNow(): boolean {

@@ -73,28 +73,32 @@ class Lesson {
   final String id;
   final String subject;
   final String teacherId;
+  final String? teacherName;
   final String startTime;
   final String endTime;
   final String room;
   final int floor;
   final bool hasHomework;
+  final String? homeworkDescription;
 
   Lesson({
     required this.id,
     required this.subject,
     required this.teacherId,
+    this.teacherName,
     required this.startTime,
     required this.endTime,
     required this.room,
     required this.floor,
     required this.hasHomework,
+    this.homeworkDescription,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
     // Адаптер для формата бэкенда
     String startTime;
     String endTime;
-    
+
     if (json['timeSlot'] != null) {
       startTime = json['timeSlot']['_startTime'] as String? ?? '';
       endTime = json['timeSlot']['_endTime'] as String? ?? '';
@@ -102,23 +106,25 @@ class Lesson {
       startTime = json['startTime'] as String? ?? '';
       endTime = json['endTime'] as String? ?? '';
     }
-    
+
     String room;
     if (json['room'] != null && json['room'] is Map) {
       room = json['room']['_number'] as String? ?? '';
     } else {
       room = json['room'] as String? ?? '';
     }
-    
+
     return Lesson(
       id: json['id'] as String,
       subject: json['subject'] as String,
       teacherId: json['teacherId'] as String,
+      teacherName: json['teacherName'] as String?,
       startTime: startTime,
       endTime: endTime,
       room: room,
       floor: json['floor'] as int? ?? 3,
       hasHomework: json['hasHomework'] as bool? ?? false,
+      homeworkDescription: json['homeworkDescription'] as String?,
     );
   }
 
@@ -126,11 +132,13 @@ class Lesson {
     'id': id,
     'subject': subject,
     'teacherId': teacherId,
+    'teacherName': teacherName,
     'startTime': startTime,
     'endTime': endTime,
     'room': room,
     'floor': floor,
     'hasHomework': hasHomework,
+    'homeworkDescription': homeworkDescription,
   };
 }
 

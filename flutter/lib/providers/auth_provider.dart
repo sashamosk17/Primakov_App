@@ -2,6 +2,7 @@
 /// Converted from Redux authSlice.ts using Riverpod/Provider
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/api_models.dart';
 import '../services/api/auth_service.dart';
 import '../config/api_config.dart';
@@ -51,8 +52,51 @@ class AuthState {
 /// Auth Notifier
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _authService;
+  static const String _tokenKey = 'auth_token';
+  static const String _userIdKey = 'user_id';
+  static const String _userRoleKey = 'user_role';
 
-  AuthNotifier(this._authService) : super(const AuthState());
+  AuthNotifier(this._authService) : super(const AuthState()) {
+    _loadSavedAuth();
+  }
+
+  Future<void> _loadSavedAuth() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_tokenKey);
+      final userId = prefs.getString(_userIdKey);
+      final roleString = prefs.getString(_userRoleKey);
+
+      if (token != null && userId != null && roleString != null) {
+        ApiConfig.setToken(token);
+        final role = UserRole.values.firstWhere(
+          (e) => e.name == roleString,
+          orElse: () => UserRole.STUDENT,
+        );
+        state = state.copyWith(
+          userId: userId,
+          token: token,
+          userRole: role,
+        );
+      }
+    } catch (e) {
+      // Ignore errors during load
+    }
+  }
+
+  Future<void> _saveAuth(String token, String userId, UserRole role) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_tokenKey, token);
+    await prefs.setString(_userIdKey, userId);
+    await prefs.setString(_userRoleKey, role.name);
+  }
+
+  Future<void> _clearAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_tokenKey);
+    await prefs.remove(_userIdKey);
+    await prefs.remove(_userRoleKey);
+  }
 
   Future<void> login(String email, String password) async {
     state = state.copyWith(isLoading: true, clearError: true);
@@ -60,11 +104,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _authService.login(email, password);
       // Set token in global Dio instance
       ApiConfig.setToken(response.token);
+      // Save to persistent storage
+      await _saveAuth(response.token, response.user.id, response.user.role);
       state = state.copyWith(
         userId: response.user.id,
         token: response.token,
         userRole: response.user.role,
-        currentUser: response.user,   // ← ДОБАВИТЬ
+        currentUser: response.user,
         isLoading: false,
       );
     } catch (e) {
@@ -79,11 +125,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _authService.register(email, password);
       // Set token in global Dio instance
       ApiConfig.setToken(response.token);
+      // Save to persistent storage
+      await _saveAuth(response.token, response.user.id, response.user.role);
       state = state.copyWith(
         userId: response.user.id,
         token: response.token,
         userRole: response.user.role,
-        currentUser: response.user,   // ← ДОБАВИТЬ
+        currentUser: response.user,
         isLoading: false,
       );
     } catch (e) {
@@ -97,9 +145,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = state.copyWith(currentUser: updatedUser);
   }
 
-  void logout() {
+  Future<void> logout() async {
     // Clear token from global Dio instance
     ApiConfig.clearToken();
+    // Clear from persistent storage
+    await _clearAuth();
     state = const AuthState();
   }
 

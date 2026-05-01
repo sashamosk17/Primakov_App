@@ -221,14 +221,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             ),
           ),
+          Container( //пока так
+                          child: Center(
+                            child: Opacity(
+                              opacity: 0.8,
+                              child: Image.asset(
+                                'assets/images/primakov_logo.png',
+                                width: 24,
+                                height: 24,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          )
           // Search Button
-          IconButton(
-            icon: const Icon(Icons.search, size: 28),
-            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-            onPressed: () {
-              // TODO: Implement search
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.search, size: 28),
+          //   color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+          //   onPressed: () {
+          //     // TODO: Implement search
+          //   },
+          // ),
         ],
       ),
     );
@@ -525,6 +538,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             )
           else if (nextLesson != null)
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.darkLightGray : AppColors.lightGray,

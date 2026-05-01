@@ -1,10 +1,11 @@
 /// Lesson Detail Screen
-import '../../config/app_colors.dart';
 /// Shows detailed information about a specific lesson
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/api_models.dart';
+import '../../config/app_colors.dart';
+import '../teacher_ratings_screen.dart';
 
 class LessonDetailScreen extends ConsumerWidget {
   final Lesson lesson;
@@ -16,20 +17,37 @@ class LessonDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    final scaffoldBg = isDarkMode
+        ? AppColors.darkBackgroundPrimary
+        : theme.scaffoldBackgroundColor;
+    final textPrimary = isDarkMode
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final primaryColor = isDarkMode
+        ? AppColors.darkPrimaryRed
+        : AppColors.primaryRed;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryRed,
+        backgroundColor: isDarkMode
+            ? AppColors.darkOnPrimaryFixed
+            : primaryColor,
         elevation: 0,
         leading: IconButton(
-          // Убрал const, так как цвет зависит от Theme
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.surface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: isDarkMode ? textPrimary : Colors.white,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           'Детали урока',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.surface,
+            color: isDarkMode ? textPrimary : Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -43,9 +61,11 @@ class LessonDetailScreen extends ConsumerWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
-              decoration: const BoxDecoration(
-                color: AppColors.primaryRed,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isDarkMode
+                    ? AppColors.darkOnPrimaryFixed
+                    : primaryColor,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -58,7 +78,7 @@ class LessonDetailScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.surface,
+                      color: isDarkMode ? textPrimary : Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -66,7 +86,9 @@ class LessonDetailScreen extends ConsumerWidget {
                     children: [
                       Icon(
                         Icons.access_time,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        color: isDarkMode
+                            ? textPrimary.withOpacity(0.7)
+                            : Colors.white70,
                         size: 18,
                       ),
                       const SizedBox(width: 6),
@@ -74,7 +96,9 @@ class LessonDetailScreen extends ConsumerWidget {
                         '${lesson.startTime} - ${lesson.endTime}',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: isDarkMode
+                              ? textPrimary.withOpacity(0.7)
+                              : Colors.white70,
                         ),
                       ),
                     ],
@@ -109,8 +133,8 @@ class LessonDetailScreen extends ConsumerWidget {
               title: 'Преподаватель',
               children: [
                 _InfoRow(
-                  label: 'ID',
-                  value: lesson.teacherId,
+                  label: 'Имя',
+                  value: lesson.teacherName ?? 'Не указан',
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
@@ -118,18 +142,21 @@ class LessonDetailScreen extends ConsumerWidget {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        // TODO: Navigate to teacher rating
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Рейтинг учителей скоро появится'),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const TeacherRatingsScreen(),
                           ),
                         );
                       },
                       icon: const Icon(Icons.star, size: 18),
                       label: const Text('Оценить учителя'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryRed,
-                        foregroundColor: Theme.of(context).colorScheme.surface,
+                        backgroundColor: isDarkMode
+                            ? AppColors.darkSurfaceContainerLow
+                            : primaryColor,
+                        foregroundColor: isDarkMode
+                            ? textPrimary
+                            : Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -152,34 +179,58 @@ class LessonDetailScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: lesson.hasHomework
-                        ? const Color(0xFFFFEBEE)
-                        : const Color(0xFFE8F5E9),
+                        ? (isDarkMode ? const Color(0xFF3D1F1F) : const Color(0xFFFFEBEE))
+                        : (isDarkMode ? const Color(0xFF1F3D1F) : const Color(0xFFE8F5E9)),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        lesson.hasHomework ? Icons.warning : Icons.check_circle,
-                        color: lesson.hasHomework
-                            ? const Color(0xFFD32F2F)
-                            : const Color(0xFF4CAF50),
-                        size: 24,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          lesson.hasHomework
-                              ? 'Есть домашнее задание'
-                              : 'Домашнего задания нет',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
+                      Row(
+                        children: [
+                          Icon(
+                            lesson.hasHomework ? Icons.warning : Icons.check_circle,
                             color: lesson.hasHomework
                                 ? const Color(0xFFD32F2F)
                                 : const Color(0xFF4CAF50),
+                            size: 24,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              lesson.hasHomework
+                                  ? 'Есть домашнее задание'
+                                  : 'Домашнего задания нет',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: lesson.hasHomework
+                                    ? const Color(0xFFD32F2F)
+                                    : const Color(0xFF4CAF50),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (lesson.hasHomework && lesson.homeworkDescription != null) ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: isDarkMode
+                                ? AppColors.darkSurfaceContainerLow
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            lesson.homeworkDescription!,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: textPrimary,
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
@@ -199,7 +250,7 @@ class LessonDetailScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: textPrimary,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -247,13 +298,30 @@ class _InfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    final surfaceColor = isDarkMode
+        ? AppColors.darkBackgroundSecondary
+        : theme.colorScheme.surface;
+    final textPrimary = isDarkMode
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final iconBgColor = isDarkMode
+        ? AppColors.darkSurfaceContainerLow
+        : const Color(0xFFFFEBEE);
+    final primaryColor = isDarkMode
+        ? AppColors.darkPrimaryRed
+        : AppColors.primaryRed;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: surfaceColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
+        border: isDarkMode ? Border.all(color: AppColors.darkBorderPrimary) : null,
+        boxShadow: isDarkMode ? null : const [
           BoxShadow(
             color: Color(0x08000000),
             blurRadius: 10,
@@ -269,12 +337,12 @@ class _InfoSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFEBEE),
+                  color: iconBgColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   icon,
-                  color: AppColors.primaryRed,
+                  color: primaryColor,
                   size: 20,
                 ),
               ),
@@ -284,7 +352,7 @@ class _InfoSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: textPrimary,
                 ),
               ),
             ],
@@ -308,6 +376,16 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    final textSecondary = isDarkMode
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final textPrimary = isDarkMode
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -315,14 +393,14 @@ class _InfoRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(color: AppColors.textSecondary),
+            style: TextStyle(color: textSecondary),
           ),
           Text(
             value,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: textPrimary,
             ),
           ),
         ],
@@ -344,8 +422,24 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    final surfaceColor = isDarkMode
+        ? AppColors.darkBackgroundSecondary
+        : AppColors.backgroundSecondary;
+    final borderColor = isDarkMode
+        ? AppColors.darkBorderPrimary
+        : const Color(0xFFE8E8EA);
+    final textPrimary = isDarkMode
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final primaryColor = isDarkMode
+        ? AppColors.darkPrimaryRed
+        : AppColors.primaryRed;
+
     return Material(
-      color: AppColors.backgroundSecondary,
+      color: surfaceColor,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -354,26 +448,26 @@ class _ActionButton extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE8E8EA)),
+            border: Border.all(color: borderColor),
           ),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.primaryRed, size: 22),
+              Icon(icon, color: primaryColor, size: 22),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: textPrimary,
                   ),
                 ),
               ),
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: AppColors.textPrimary.withAlpha((0.4 * 255).round()),
+                color: textPrimary.withOpacity(0.4),
               ),
             ],
           ),

@@ -41,13 +41,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = ref.watch(isDarkModeProvider);
-    final notificationSettings = ref.watch(notificationSettingsProvider);
     final theme = Theme.of(context);
-
-    // Ensure notification settings are loaded
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(uiProvider.notifier).getNotificationSettings();
-    });
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -70,120 +64,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          // Notifications Section
-          const _SectionHeader(title: 'Уведомления'),
-          const SizedBox(height: 12),
-          _SettingsTile(
-            icon: Icons.notifications,
-            title: 'Push-уведомления',
-            subtitle: 'Получать уведомления о дедлайнах и расписании',
-            trailing: Switch(
-              value: notificationSettings.pushEnabled,
-              onChanged: (value) async {
-                try {
-                  await ref.read(uiProvider.notifier).togglePushNotifications();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          value
-                              ? 'Уведомления включены'
-                              : 'Уведомления выключены',
-                        ),
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
-                  }
-                } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Ошибка при сохранении настроек'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                }
-              },
-              activeTrackColor: theme.colorScheme.primary,
-            ),
-          ),
-          if (notificationSettings.pushEnabled) ...[
-            const SizedBox(height: 8),
-            _SettingsTile(
-              icon: Icons.assignment,
-              title: 'Уведомления о дедлайнах',
-              subtitle: 'Напоминания о приближающихся дедлайнах',
-              trailing: Switch(
-                value: notificationSettings.deadlineNotifications,
-                onChanged: (value) async {
-                  await ref.read(uiProvider.notifier).toggleDeadlineNotifications();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          value
-                              ? 'Уведомления о дедлайнах включены'
-                              : 'Уведомления о дедлайнах выключены',
-                        ),
-                      ),
-                    );
-                  }
-                },
-                activeTrackColor: theme.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            _SettingsTile(
-              icon: Icons.schedule,
-              title: 'Уведомления о расписании',
-              subtitle: 'Изменения в расписании занятий',
-              trailing: Switch(
-                value: notificationSettings.scheduleNotifications,
-                onChanged: (value) async {
-                  await ref.read(uiProvider.notifier).toggleScheduleNotifications();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          value
-                              ? 'Уведомления о расписании включены'
-                              : 'Уведомления о расписании выключены',
-                        ),
-                      ),
-                    );
-                  }
-                },
-                activeTrackColor: theme.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            _SettingsTile(
-              icon: Icons.campaign,
-              title: 'Объявления',
-              subtitle: 'Важные объявления и новости',
-              trailing: Switch(
-                value: notificationSettings.announcementNotifications,
-                onChanged: (value) async {
-                  await ref.read(uiProvider.notifier).toggleAnnouncementNotifications();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          value
-                              ? 'Объявления включены'
-                              : 'Объявления выключены',
-                        ),
-                      ),
-                    );
-                  }
-                },
-                activeTrackColor: theme.colorScheme.primary,
-              ),
-            ),
-          ],
-
-          const SizedBox(height: 24),
+          
 
           // Appearance Section
           const _SectionHeader(title: 'Внешний вид'),

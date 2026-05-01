@@ -127,7 +127,7 @@ class PostgresScheduleRepository {
     async getLessonsByScheduleId(scheduleId) {
         const query = `
       SELECT id, schedule_id, subject, teacher_id, start_time, end_time,
-             room_number, room_building, floor, has_homework, created_at
+             room_number, room_building, floor, has_homework, homework_description, created_at
       FROM lessons
       WHERE schedule_id = $1
       ORDER BY start_time
@@ -141,8 +141,8 @@ class PostgresScheduleRepository {
     async saveLesson(client, lesson, scheduleId) {
         const query = `
       INSERT INTO lessons (id, schedule_id, subject, teacher_id, start_time, end_time,
-                          room_number, room_building, floor, has_homework, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
+                          room_number, room_building, floor, has_homework, homework_description, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
     `;
         await client.query(query, [
             lesson.id,
@@ -155,6 +155,7 @@ class PostgresScheduleRepository {
             lesson.room.building,
             lesson.room.floor,
             lesson.hasHomework,
+            lesson.homeworkDescription || null,
         ]);
     }
     /**
@@ -172,7 +173,7 @@ class PostgresScheduleRepository {
         if (roomResult.isFailure) {
             throw new Error(`Invalid room in database: ${row.room_number}`);
         }
-        return new Lesson_1.Lesson(row.id, row.subject, row.teacher_id, timeSlotResult.value, roomResult.value, roomFloor, row.has_homework);
+        return new Lesson_1.Lesson(row.id, row.subject, row.teacher_id, timeSlotResult.value, roomResult.value, roomFloor, row.has_homework, row.homework_description || undefined);
     }
 }
 exports.PostgresScheduleRepository = PostgresScheduleRepository;

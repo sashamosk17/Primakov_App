@@ -111,12 +111,6 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
                     ),
                   ],
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.search, color: textSecondary),
-                    onPressed: () {},
-                  ),
-                ],
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(48),
                   child: Container(
@@ -207,11 +201,7 @@ class _DeadlineScreenState extends ConsumerState<DeadlineScreen> with SingleTick
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddDeadlineScreen(),
-                ),
-              );
+              showAddDeadlineModal(context);
             },
             child: const Icon(
               Icons.add,

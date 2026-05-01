@@ -69,7 +69,7 @@ async function startServer() {
         // Routes - using PostgreSQL repositories
         app.use("/api/auth", (0, authRoutes_1.authRoutes)(userRepository));
         app.use("/api/users", (0, userRoutes_1.userRoutes)(userRepository));
-        app.use("/api/schedule", (0, scheduleRoutes_1.scheduleRoutes)(scheduleRepository));
+        app.use("/api/schedule", (0, scheduleRoutes_1.scheduleRoutes)(scheduleRepository, userRepository));
         app.use("/api/deadlines", (0, deadlineRoutes_1.deadlineRoutes)(deadlineRepository));
         app.use("/api/ratings", (0, ratingRoutes_1.ratingRoutes)(ratingRepository));
         app.use("/api/stories", (0, storyRoutes_1.storyRoutes)(storyRepository));

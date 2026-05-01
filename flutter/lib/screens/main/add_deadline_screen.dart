@@ -1,11 +1,10 @@
 import 'dart:ui';
-import '../../config/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import '../../config/app_colors.dart';
 import '../../config/app_typography.dart';
-import '../../widgets/glassmorphic_app_bar.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_dropdown.dart';
 import '../../widgets/custom_button.dart';
@@ -13,6 +12,16 @@ import '../../widgets/priority_toggle.dart';
 import '../../providers/deadline_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../models/api_models.dart';
+
+/// Shows the add deadline modal bottom sheet
+void showAddDeadlineModal(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => const AddDeadlineScreen(),
+  );
+}
 
 class AddDeadlineScreen extends ConsumerStatefulWidget {
   const AddDeadlineScreen({super.key});
@@ -61,10 +70,10 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
+            colorScheme: ColorScheme.light(
               primary: AppColors.primaryRed,
               onPrimary: Colors.white,
-              surface: AppColors.backgroundSecondary,
+              surface: Theme.of(context).colorScheme.surface,
             ),
           ),
           child: child!,
@@ -139,192 +148,222 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
-      body: Stack(
-        children: [
-          // Modal Backdrop
-          Container(
-            color: AppColors.modalBackdrop,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-              child: Container(
-                color: Colors.transparent,
-              ),
-            ),
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bgColor = isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary;
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      minChildSize: 0.5,
+      maxChildSize: 0.95,
+      builder: (context, scrollController) {
+        return Container(
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            boxShadow: AppColors.cardShadow,
           ),
-          // Main Content
-          Center(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 576,
-                maxHeight: MediaQuery.of(context).size.height * 0.95,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
-                boxShadow: AppColors.cardShadow,
-              ),
-              child: Stack(
-                children: [
-                  // Sketch Background Watermark
-                  Positioned(
-                    top: -38.79,
-                    right: -12.37,
-                    child: Transform.rotate(
-                      angle: 0.2094, // 12 degrees in radians
-                      child: Opacity(
-                        opacity: 0.03,
-                        child: Image.asset(
-                          'assets/images/sketch_bg.png',
-                          width: 390,
-                          height: 160,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+          child: Stack(
+            children: [
+              // Sketch Background Watermark
+              Positioned(
+                top: -38.79,
+                right: -12.37,
+                child: Transform.rotate(
+                  angle: 0.2094,
+                  child: Opacity(
+                    opacity: 0.03,
+                    child: Image.asset(
+                      'assets/images/sketch_bg.png',
+                      width: 390,
+                      height: 160,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  // Content
-                  Column(
-                    children: [
-                      // Header
-                      GlassmorphicAppBar(
-                        title: 'Новый дедлайн',
-                        onBackPressed: () => Navigator.of(context).pop(),
-                        trailing: Container(
+                ),
+              ),
+              // Content
+              Column(
+                children: [
+                  // Drag Handle
+                  Container(
+                    margin: const EdgeInsets.only(top: 12),
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? AppColors.darkBorderPrimary
+                          : AppColors.borderPrimary,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  // Header
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: isDark
+                                ? AppColors.darkTextPrimary
+                                : AppColors.textPrimary,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Новый дедлайн',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: isDark
+                                ? AppColors.darkTextPrimary
+                                : AppColors.textPrimary,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
                           width: 40,
                           height: 40,
-                          decoration: const BoxDecoration(
-                            color: AppColors.backgroundSecondary,
+                          decoration: BoxDecoration(
+                            color: isDark
+                                ? AppColors.darkSurfaceContainerHigh
+                                : AppColors.backgroundSecondary,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Opacity(
                               opacity: 0.8,
                               child: Image.asset(
-                                'assets/images/school_crest.png',
+                                'assets/images/primakov_logo.png',
                                 width: 24,
                                 height: 24,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      // Form Area
-                      Expanded(
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                // Task Title Field
-                                CustomTextField(
-                                  label: 'Название задачи',
-                                  placeholder: 'Например: Курсовая работа',
-                                  controller: _titleController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Введите название';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 32),
-                                // Subject Selection
-                                CustomDropdown<String>(
-                                  label: 'Предмет',
-                                  placeholder: 'Выберите предмет',
-                                  value: _selectedSubject,
-                                  items: _subjects
-                                      .map((subject) => DropdownMenuItem(
-                                            value: subject,
-                                            child: Text(subject),
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedSubject = value;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(height: 32),
-                                // Date Picker Field
-                                CustomTextField(
-                                  label: 'Дата сдачи',
-                                  placeholder: _selectedDate == null
-                                      ? 'mm/dd/yyyy'
-                                      : DateFormat('MM/dd/yyyy')
-                                          .format(_selectedDate!),
-                                  readOnly: true,
-                                  onTap: _selectDate,
-                                  suffixIcon: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/calendar_icon.svg',
-                                      width: 18,
-                                      height: 20,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 32),
-                                // Description Multi-line
-                                CustomTextField(
-                                  label: 'Описание',
-                                  placeholder:
-                                      'Добавьте детали задачи, ссылки или\nтребования...',
-                                  controller: _descriptionController,
-                                  maxLines: 4,
-                                ),
-                                const SizedBox(height: 32),
-                                // Priority Toggle
-                                PriorityToggle(
-                                  isHighPriority: _isHighPriority,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _isHighPriority = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Footer Action
-                      Container(
-                        color: AppColors.backgroundSecondary,
-                        padding: const EdgeInsets.all(24),
+                      ],
+                    ),
+                  ),
+                  // Form Area
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+                      child: Form(
+                        key: _formKey,
                         child: Column(
                           children: [
-                            CustomButton(
-                              text: 'Сохранить',
-                              onPressed: _saveDeadline,
-                              isLoading: _isLoading,
-                              icon: SvgPicture.asset(
-                                'assets/icons/checkmark_icon.svg',
-                                width: 9.5,
-                                height: 7,
+                            // Task Title Field
+                            CustomTextField(
+                              label: 'Название задачи',
+                              placeholder: 'Например: Курсовая работа',
+                              controller: _titleController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Введите название';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 32),
+                            // Subject Selection
+                            CustomDropdown<String>(
+                              label: 'Предмет',
+                              placeholder: 'Выберите предмет',
+                              value: _selectedSubject,
+                              items: _subjects
+                                  .map((subject) => DropdownMenuItem(
+                                        value: subject,
+                                        child: Text(subject),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedSubject = value;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 32),
+                            // Date Picker Field
+                            CustomTextField(
+                              label: 'Дата сдачи',
+                              placeholder: _selectedDate == null
+                                  ? 'mm/dd/yyyy'
+                                  : DateFormat('MM/dd/yyyy')
+                                      .format(_selectedDate!),
+                              readOnly: true,
+                              onTap: _selectDate,
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SvgPicture.asset(
+                                  'assets/icons/calendar_icon.svg',
+                                  width: 18,
+                                  height: 20,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            const Text(
-                              'ACADEMIC CURATOR SYSTEM V2.4',
-                              style: AppTypography.labelSmall,
-                              textAlign: TextAlign.center,
+                            const SizedBox(height: 32),
+                            // Description Multi-line
+                            CustomTextField(
+                              label: 'Описание',
+                              placeholder:
+                                  'Добавьте детали задачи, ссылки или\nтребования...',
+                              controller: _descriptionController,
+                              maxLines: 4,
+                            ),
+                            const SizedBox(height: 32),
+                            // Priority Toggle
+                            PriorityToggle(
+                              isHighPriority: _isHighPriority,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isHighPriority = value;
+                                });
+                              },
                             ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  // Footer Action
+                  Container(
+                    color: bgColor,
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
+                        CustomButton(
+                          text: 'Сохранить',
+                          onPressed: _saveDeadline,
+                          isLoading: _isLoading,
+                          icon: SvgPicture.asset(
+                            'assets/icons/checkmark_icon.svg',
+                            width: 9.5,
+                            height: 7,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'ACADEMIC CURATOR SYSTEM V2.4',
+                          style: AppTypography.labelSmall.copyWith(
+                            color: isDark
+                                ? AppColors.darkTextSecondary
+                                : AppColors.textSecondary,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
-
-

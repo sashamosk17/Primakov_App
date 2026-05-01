@@ -65,26 +65,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 // Logo/Icon
                 Container(
                   width: 100,
                   height: 100,
-                  decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: (isDark ? AppColors.darkPrimary : AppColors.primaryRed).withOpacity(0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.school,
-                    size: 50,
-                    color: Colors.white,
-                  ),
+                   child: Center(
+                            child: Opacity(
+                              opacity: 0.8,
+                              child: Image.asset(
+                                'assets/images/primakov_logo.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                 ),
                 const SizedBox(height: 32),
 

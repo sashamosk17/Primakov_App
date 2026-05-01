@@ -21,7 +21,7 @@ class LessonCard extends StatelessWidget {
     final startTime = lesson.startTime.isNotEmpty ? lesson.startTime : '--:--';
     final endTime = lesson.endTime.isNotEmpty ? lesson.endTime : '--:--';
     final subject = lesson.subject.isNotEmpty ? lesson.subject : 'Без названия';
-    final teacherId = lesson.teacherId.isNotEmpty ? lesson.teacherId : 'Не указан';
+    final teacherName = lesson.teacherName ?? 'Преподаватель не указан';
     final room = lesson.room.isNotEmpty ? lesson.room : '?';
     final floor = lesson.floor;
 
@@ -72,9 +72,9 @@ class LessonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          // Teacher ID
+          // Teacher Name
           Text(
-            '👨‍🏫 ID: $teacherId',
+            '👨‍🏫 $teacherName',
             style: AppTypography.bodyMedium.copyWith(
               color: AppColors.textPrimary,
             ),

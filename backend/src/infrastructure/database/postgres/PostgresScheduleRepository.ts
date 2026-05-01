@@ -159,7 +159,7 @@ export class PostgresScheduleRepository implements IScheduleRepository {
   private async getLessonsByScheduleId(scheduleId: string): Promise<Lesson[]> {
     const query = `
       SELECT id, schedule_id, subject, teacher_id, start_time, end_time,
-             room_number, room_building, floor, has_homework, created_at
+             room_number, room_building, floor, has_homework, homework_description, created_at
       FROM lessons
       WHERE schedule_id = $1
       ORDER BY start_time
@@ -175,8 +175,8 @@ export class PostgresScheduleRepository implements IScheduleRepository {
   private async saveLesson(client: any, lesson: Lesson, scheduleId: string): Promise<void> {
     const query = `
       INSERT INTO lessons (id, schedule_id, subject, teacher_id, start_time, end_time,
-                          room_number, room_building, floor, has_homework, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
+                          room_number, room_building, floor, has_homework, homework_description, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
     `;
 
     await client.query(query, [
@@ -190,6 +190,7 @@ export class PostgresScheduleRepository implements IScheduleRepository {
       lesson.room.building,
       lesson.room.floor,
       lesson.hasHomework,
+      lesson.homeworkDescription || null,
     ]);
   }
 
@@ -217,7 +218,8 @@ export class PostgresScheduleRepository implements IScheduleRepository {
       timeSlotResult.value,
       roomResult.value,
       roomFloor,
-      row.has_homework
+      row.has_homework,
+      row.homework_description || undefined
     );
   }
 }

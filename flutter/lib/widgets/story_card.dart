@@ -50,15 +50,7 @@ class StoryCard extends StatelessWidget {
               ),
               child: ClipOval(
                 child: hasImage
-                    ? Image.network(
-                        story.imageUrl!,
-                        fit: BoxFit.cover,
-                        width: 70,
-                        height: 70,
-                        errorBuilder: (context, error, stackTrace) {
-                          return _buildPlaceholder(displayType, isDarkMode);
-                        },
-                      )
+                    ? _buildImage(story.imageUrl!, displayType, isDarkMode)
                     : _buildPlaceholder(displayType, isDarkMode),
               ),
             ),
@@ -103,6 +95,29 @@ class StoryCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildImage(String imageUrl, String displayType, bool isDarkMode) {
+    if (imageUrl.startsWith('assets/')) {
+      return Image.asset(
+        imageUrl,
+        fit: BoxFit.cover,
+        width: 70,
+        height: 70,
+        errorBuilder: (context, error, stackTrace) {
+          return _buildPlaceholder(displayType, isDarkMode);
+        },
+      );
+    }
+    return Image.network(
+      imageUrl,
+      fit: BoxFit.cover,
+      width: 70,
+      height: 70,
+      errorBuilder: (context, error, stackTrace) {
+        return _buildPlaceholder(displayType, isDarkMode);
+      },
     );
   }
 

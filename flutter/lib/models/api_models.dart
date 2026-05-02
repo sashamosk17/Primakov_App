@@ -233,6 +233,8 @@ class Story {
   final String? imageUrl;
   final String? videoUrl;
   final List<String> viewedBy;
+  final String? linkUrl;
+  final String? linkText;
 
   Story({
     required this.id,
@@ -241,6 +243,8 @@ class Story {
     this.imageUrl,
     this.videoUrl,
     required this.viewedBy,
+    this.linkUrl,
+    this.linkText,
   });
 
   factory Story.fromJson(Map<String, dynamic> json) {
@@ -251,6 +255,8 @@ class Story {
       imageUrl: json['imageUrl'] as String?,
       videoUrl: json['videoUrl'] as String?,
       viewedBy: List<String>.from(json['viewedBy'] as List<dynamic>? ?? []),
+      linkUrl: json['linkUrl'] as String?,
+      linkText: json['linkText'] as String?,
     );
   }
 
@@ -261,6 +267,8 @@ class Story {
     'imageUrl': imageUrl,
     'videoUrl': videoUrl,
     'viewedBy': viewedBy,
+    'linkUrl': linkUrl,
+    'linkText': linkText,
   };
 }
 

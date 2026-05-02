@@ -113,10 +113,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authProvider);
-    // TODO: Get actual user name from API
-    const userName = 'Иванов Алексей';
-    const userRole = 'Ученик';
+    final currentUser = ref.watch(currentUserProvider);
+    final userName = currentUser != null
+        ? '${currentUser.lastName} ${currentUser.firstName}'
+        : '';
+    final userRole = currentUser != null ? _roleLabel(currentUser.role) : '';
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -127,7 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           slivers: [
             // Top App Bar
             SliverToBoxAdapter(
-              child: _buildTopAppBar(userName, userRole),
+              child: _buildTopAppBar(userName, userRole, currentUser),
             ),
 
             // Stories Section
@@ -176,9 +177,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildTopAppBar(String userName, String userRole) {
+  String _roleLabel(UserRole role) {
+    switch (role) {
+      case UserRole.STUDENT:
+        return 'Ученик';
+      case UserRole.TEACHER:
+        return 'Учитель';
+      case UserRole.ADMIN:
+        return 'Администратор';
+    }
+  }
+
+  String _initials(String? firstName, String? lastName) {
+    final f = (firstName?.isNotEmpty == true) ? firstName![0].toUpperCase() : '';
+    final l = (lastName?.isNotEmpty == true) ? lastName![0].toUpperCase() : '';
+    return '$l$f';
+  }
+
+  Widget _buildTopAppBar(String userName, String userRole, User? currentUser) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+    final initials = _initials(currentUser?.firstName, currentUser?.lastName);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg - 4, vertical: AppSpacing.md),
       child: Row(
@@ -193,7 +212,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             child: Center(
               child: Text(
-                'ИА',
+                initials,
                 style: AppTypography.heading2.copyWith(
                   color: isDark ? AppColors.darkBackgroundSecondary : AppColors.backgroundSecondary,
                 ),
@@ -392,20 +411,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   width: 3,
                 ),
               ),
-              child: Container(
-                margin: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isViewed 
-                      ? (isDark ? AppColors.darkSurfaceVariant : Colors.grey.shade200) 
-                      : (isDark ? AppColors.darkStoryBackground : AppColors.storyBackground),
-                ),
-                child: Icon(
-                  _getStoryIcon(story.title),
-                  color: isViewed 
-                      ? (isDark ? AppColors.darkIconGray : Colors.grey.shade400) 
-                      : (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
-                  size: 28,
+              child: ClipOval(
+                child: Container(
+                  width: 58,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isViewed 
+                        ? (isDark ? AppColors.darkSurfaceVariant : Colors.grey.shade200) 
+                        : (isDark ? AppColors.darkStoryBackground : AppColors.storyBackground),
+                  ),
+                  child: story.imageUrl != null && story.imageUrl!.isNotEmpty
+                      ? Image.asset(
+                          story.imageUrl!,
+                          width: 58,
+                          height: 58,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              _getStoryIcon(story.title),
+                              color: isViewed 
+                                  ? (isDark ? AppColors.darkIconGray : Colors.grey.shade400) 
+                                  : (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
+                              size: 28,
+                            );
+                          },
+                        )
+                      : Icon(
+                          _getStoryIcon(story.title),
+                          color: isViewed 
+                              ? (isDark ? AppColors.darkIconGray : Colors.grey.shade400) 
+                              : (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed),
+                          size: 28,
+                        ),
                 ),
               ),
             ),

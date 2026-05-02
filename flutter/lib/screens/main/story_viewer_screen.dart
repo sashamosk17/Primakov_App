@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/api_models.dart';
 import '../../providers/story_provider.dart';
 import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoryViewerScreen extends ConsumerStatefulWidget {
   final List<Story> stories;
@@ -51,24 +52,39 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
     _progressTimer?.cancel();
 
     _progressTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
       if (!_isPaused) {
         setState(() {
           _progress += 0.05 / _storyDuration;
-          if (_progress >= 1.0) {
-            _nextStory();
-          }
         });
+
+        if (_progress >= 1.0) {
+          timer.cancel();
+          // Отложенный вызов навигации после завершения текущего фрейма
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              _nextStory();
+            }
+          });
+        }
       }
     });
   }
 
   void _nextStory() {
+    if (!mounted) return;
+
     if (_currentIndex < widget.stories.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
+      _progressTimer?.cancel();
       Navigator.of(context).pop();
     }
   }
@@ -248,20 +264,57 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Icon
-              Container(
-                width: 120,
-                height: 120,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primaryRed,
+              const Spacer(flex: 1),
+              // Image or Icon
+              if (story.imageUrl != null)
+                Container(
+                  width: 280,
+                  height: 280,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha((0.3 * 255).round()),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      story.imageUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primaryRed,
+                          ),
+                          child: Icon(
+                            _getStoryIcon(story.title),
+                            color: AppColors.backgroundSecondary,
+                            size: 60,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                )
+              else
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primaryRed,
+                  ),
+                  child: Icon(
+                    _getStoryIcon(story.title),
+                    color: AppColors.backgroundSecondary,
+                    size: 60,
+                  ),
                 ),
-                child: Icon(
-                  _getStoryIcon(story.title),
-                  color: AppColors.backgroundSecondary,
-                  size: 60,
-                ),
-              ),
               const SizedBox(height: 32),
 
               // Title
@@ -269,7 +322,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                 story.title,
                 style: const TextStyle(
                   color: AppColors.backgroundSecondary,
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -286,11 +339,68 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
+
+              // Link button
+              if (story.linkUrl != null && story.linkText != null) ...[
+                const SizedBox(height: 24),
+                GestureDetector(
+                  onTap: () => _launchURL(story.linkUrl!),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryRed,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryRed.withAlpha((0.3 * 255).round()),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Подробнее',
+                          style: const TextStyle(
+                            color: AppColors.backgroundSecondary,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.arrow_forward,
+                          color: AppColors.backgroundSecondary,
+                          size: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Не удалось открыть ссылку'),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+    }
   }
 
   IconData _getStoryIcon(String title) {

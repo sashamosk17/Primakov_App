@@ -557,7 +557,8 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
 
             // Footer
             Text(
-              'ВЕРСИЯ $_appVersion (PRIMAKOV-CURATOR)',
+              'ВЕРСИЯ $_appVersion'
+              '\nhttps://primakov.school/',
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,

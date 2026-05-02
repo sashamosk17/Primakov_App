@@ -8,4 +8,6 @@ export interface Story {
   expiresAt: Date;
   viewedBy: string[];
   author: string;
+  linkUrl?: string;
+  linkText?: string;
 }

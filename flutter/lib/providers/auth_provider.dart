@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/api_models.dart';
 import '../services/api/auth_service.dart';
+import '../services/api/user_service.dart';
 import '../config/api_config.dart';
 
 /// Auth State — добавляем currentUser
@@ -52,11 +53,12 @@ class AuthState {
 /// Auth Notifier
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _authService;
+  final UserService _userService;
   static const String _tokenKey = 'auth_token';
   static const String _userIdKey = 'user_id';
   static const String _userRoleKey = 'user_role';
 
-  AuthNotifier(this._authService) : super(const AuthState()) {
+  AuthNotifier(this._authService, this._userService) : super(const AuthState()) {
     _loadSavedAuth();
   }
 
@@ -78,6 +80,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
           token: token,
           userRole: role,
         );
+        // Load user profile from API
+        try {
+          final user = await _userService.getCurrentUser();
+          state = state.copyWith(currentUser: user);
+        } catch (_) {
+          // Non-critical: profile will be available after next login
+        }
       }
     } catch (e) {
       // Ignore errors during load
@@ -165,10 +174,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
 /// Auth Service Provider
 final authServiceProvider = Provider((ref) => AuthService());
 
+/// User Service Provider
+final userServiceProvider = Provider((ref) => UserService());
+
 /// Auth State Provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final authService = ref.watch(authServiceProvider);
-  return AuthNotifier(authService);
+  final userService = ref.watch(userServiceProvider);
+  return AuthNotifier(authService, userService);
 });
 
 /// Auth selectors

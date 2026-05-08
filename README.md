@@ -44,18 +44,48 @@ PrimakovApp/
 | Документ | Описание |
 |----------|----------|
 | [.claude/docs/README.md](.claude/docs/README.md) | Навигация по всей документации |
-| [.claude/docs/general/architecture.md](.claude/docs/general/architecture.md) | Архитектура системы |
-| [.claude/docs/backend/backend.md](.claude/docs/backend/backend.md) | Backend структура и слои |
-| [.claude/docs/backend/api.md](.claude/docs/backend/api.md) | API Reference |
-| [.claude/docs/backend/database.md](.claude/docs/backend/database.md) | Схема PostgreSQL БД |
-| [.claude/docs/frontend/frontend.md](.claude/docs/frontend/frontend.md) | Flutter приложение |
-| [.claude/docs/frontend/design-system.md](.claude/docs/frontend/design-system.md) | Дизайн-система |
+| **Backend** | |
+| [.claude/docs/backend/architecture.md](.claude/docs/backend/architecture.md) | Clean Architecture, C4 диаграммы, слои |
+| [.claude/docs/backend/api.md](.claude/docs/backend/api.md) | API Reference (10 модулей, 30+ endpoints) |
+| [.claude/docs/backend/database.md](.claude/docs/backend/database.md) | PostgreSQL схема (11 таблиц, ER-диаграмма) |
+| [.claude/docs/backend/dependencies.md](.claude/docs/backend/dependencies.md) | NPM зависимости и граф зависимостей |
+| [.claude/docs/backend/deployment.md](.claude/docs/backend/deployment.md) | Production deployment (Docker, PM2, nginx) |
+| [.claude/docs/backend/testing.md](.claude/docs/backend/testing.md) | Тестирование (Unit, Integration, API) |
+| **Frontend** | |
+| [.claude/docs/frontend/README.md](.claude/docs/frontend/README.md) | Flutter документация (навигация) |
+| [.claude/docs/frontend/architecture.md](.claude/docs/frontend/architecture.md) | Riverpod архитектура, слои, паттерны |
+| [.claude/docs/frontend/navigation.md](.claude/docs/frontend/navigation.md) | Навигация (21 экран, flow диаграммы) |
+| [.claude/docs/frontend/state-management.md](.claude/docs/frontend/state-management.md) | State Management (11 providers, StateNotifier) |
+| [.claude/docs/frontend/api-integration.md](.claude/docs/frontend/api-integration.md) | API интеграция (10 сервисов, 100% покрытие) |
+| **Общее** | |
 | [ROADMAP.md](ROADMAP.md) | План развития и текущий статус |
 | [CHANGELOG.md](CHANGELOG.md) | История изменений |
 | [PROJECT_VISION.md](PROJECT_VISION.md) | Цели и концепция проекта |
 | [DATABASE_DESIGN.md](DATABASE_DESIGN.md) | Подробная схема БД v3 |
 
-## Что нового (v0.2.0)
+## Что нового (v0.2.4)
+
+### 📚 Полная документация проекта
+
+**Добавлено 4 мая 2026 года**
+
+- 📖 **Документация бэкенда**: 8 файлов, 12,000+ строк
+  - Clean Architecture с C4 диаграммами
+  - API Reference (10 модулей, 30+ endpoints)
+  - PostgreSQL схема с ER-диаграммой
+  - Deployment, Testing, Dependencies
+  
+- 📱 **Документация фронтенда**: 5 файлов, 10,000+ строк
+  - Riverpod архитектура с диаграммами
+  - Навигация (21 экран, flow диаграммы)
+  - State Management (11 providers)
+  - API интеграция (100% покрытие бэкенда)
+  
+- 🎨 **Диаграммы**: 15+ Mermaid диаграмм
+  - C4 (Context, Container, Component)
+  - ER-диаграмма базы данных
+  - Navigation flow, State management
+  - Sequence diagrams, Class diagrams
 
 ### 🎉 Stories Enhancement: Фотографии и гиперссылки
 

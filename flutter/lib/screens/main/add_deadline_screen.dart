@@ -62,6 +62,8 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
   }
 
   Future<void> _selectDate() async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
@@ -70,10 +72,27 @@ class _AddDeadlineScreenState extends ConsumerState<AddDeadlineScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: AppColors.primaryRed,
-              onPrimary: Colors.white,
-              surface: Theme.of(context).colorScheme.surface,
+            colorScheme: isDark
+                ? ColorScheme.dark(
+                    primary: AppColors.primaryRed,
+                    onPrimary: Colors.white,
+                    surface: AppColors.darkSurfaceContainerHigh,
+                    onSurface: AppColors.darkTextPrimary,
+                    surfaceContainerHighest: AppColors.darkBackgroundSecondary,
+                  )
+                : ColorScheme.light(
+                    primary: AppColors.primaryRed,
+                    onPrimary: Colors.white,
+                    surface: Colors.white,
+                    onSurface: AppColors.textPrimary,
+                  ),
+            dialogBackgroundColor: isDark
+                ? AppColors.darkSurfaceContainerHigh
+                : Colors.white,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.primaryRed,
+              ),
             ),
           ),
           child: child!,

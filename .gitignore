@@ -1,14 +1,6 @@
-# Игнорировать ВСЕ node_modules в любых поддиректориях
+# Dependencies
 node_modules/
 **/node_modules/
-
-# Игнорировать ВСЕ .md файлы в любых поддиректориях, кроме файлов с README в названии
-*.md
-**/*.md
-!README.md
-!**/README.md
-!README*.md
-!**/README*.md
 
 # Node.js
 npm-debug.log*
@@ -39,12 +31,23 @@ ios/build/
 ios/Pods/
 ios/*.xcworkspace
 
+# Flutter
+flutter/.dart_tool/
+flutter/.flutter-plugins
+flutter/.flutter-plugins-dependencies
+flutter/.packages
+flutter/build/
+flutter/ios/Flutter/Generated.xcconfig
+flutter/ios/Flutter/flutter_export_environment.sh
+flutter/macos/Flutter/GeneratedPluginRegistrant.swift
+
 # Environment variables
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+**/.env
 
 # IDE
 .vscode/
@@ -59,12 +62,22 @@ Thumbs.db
 # Logs
 *.log
 
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+
 # Claude Code
 .claude/
-CLAUDE.md
-QUICK_START.md
-PROJECT_STRUCTURE.md
-CLEAN_ARCHITECTURE.md
 
 # GitHub Copilot
 .github/copilot/

@@ -11,12 +11,12 @@ class AnnouncementService {
 
   Future<List<Announcement>> getAnnouncements() async {
     try {
-      print('🔄 Getting announcements');
-      
+      print('🔄 Getting announcements from: ${_dio.options.baseUrl}/announcements');
+
       final response = await _dio.get('/announcements');
 
       print('✅ Announcements response status: ${response.statusCode}');
-      print('📦 Announcements response data: ${response.data}');
+      print('📦 Announcements response type: ${response.data.runtimeType}');
 
       if (response.data == null) {
         print('⚠️ Response data is null');
@@ -24,9 +24,12 @@ class AnnouncementService {
       }
 
       final responseData = response.data as Map<String, dynamic>;
-      
+      print('📊 Response status field: ${responseData['status']}');
+
       if (responseData['status'] == 'error') {
-        throw Exception(responseData['error']?['message'] ?? 'Server error');
+        final errorMsg = responseData['error']?['message'] ?? 'Server error';
+        print('❌ Server returned error: $errorMsg');
+        throw Exception(errorMsg);
       }
 
       final dataField = responseData['data'];
@@ -35,20 +38,38 @@ class AnnouncementService {
         return [];
       }
 
+      print('📋 Data field type: ${dataField.runtimeType}');
+      print('📋 Data field length: ${dataField is List ? dataField.length : 'not a list'}');
+
       if (dataField is List) {
+        print('🔄 Parsing ${dataField.length} announcements...');
         final announcements = dataField
-            .map((e) => Announcement.fromJson(e as Map<String, dynamic>))
+            .map((e) {
+              try {
+                return Announcement.fromJson(e as Map<String, dynamic>);
+              } catch (parseError) {
+                print('❌ Error parsing announcement: $parseError');
+                print('📄 Problematic data: $e');
+                return null;
+              }
+            })
+            .whereType<Announcement>()
             .toList();
-        print('✅ Loaded ${announcements.length} announcements');
+        print('✅ Successfully loaded ${announcements.length} announcements');
         return announcements;
       } else {
         print('⚠️ Data field is not a list: ${dataField.runtimeType}');
         return [];
       }
-      
+
     } on DioException catch (e) {
-      print('❌ Announcements error: ${e.message}');
+      print('❌ DioException: ${e.type}');
+      print('❌ Error message: ${e.message}');
+      print('❌ Error response: ${e.response?.data}');
       throw Exception('Announcements service error: ${e.message}');
+    } catch (e) {
+      print('❌ Unexpected error: $e');
+      throw Exception('Unexpected error: $e');
     }
   }
 

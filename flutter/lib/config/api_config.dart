@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 class ApiConfig {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:3000/api',
+     defaultValue: 'http://185.221.198.242:3000/api',  
   );
 
   // Singleton Dio instance
@@ -16,8 +16,8 @@ class ApiConfig {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
         contentType: 'application/json',
       ),
     );
@@ -26,13 +26,19 @@ class ApiConfig {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // Token is already in headers, set by setToken()
+          print('🌐 Request: ${options.method} ${options.uri}');
+          print('🔑 Headers: ${options.headers}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
+          print('✅ Response: ${response.statusCode} from ${response.requestOptions.uri}');
           return handler.next(response);
         },
         onError: (DioException error, handler) {
+          print('❌ DioError type: ${error.type}');
+          print('❌ DioError message: ${error.message}');
+          print('❌ DioError response: ${error.response}');
+
           // Handle 401 and logout
           if (error.response?.statusCode == 401) {
             // Handle logout in providers

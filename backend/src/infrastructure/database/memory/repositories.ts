@@ -1,4 +1,4 @@
-import { MockScheduleRepository } from "../mock/MockScheduleRepository";
+import { MockScheduleRepository } from "./MockScheduleRepository";
 import { MockDeadlineRepository } from "./MockDeadlineRepository";
 import { MockAnnouncementRepository } from "./MockAnnouncementRepository";
 import { MockStoryRepository } from "./MockStoryRepository";

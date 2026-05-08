@@ -15,8 +15,10 @@ class AnnouncementService {
 
       final response = await _dio.get('/announcements');
 
-      print('✅ Announcements response status: ${response.statusCode}');
-      print('📦 Announcements response type: ${response.data.runtimeType}');
+      print('✅ Response received!');
+      print('📊 Status code: ${response.statusCode}');
+      print('📦 Response data type: ${response.data?.runtimeType}');
+      print('📏 Response data length: ${response.data?.toString().length ?? 0}');
 
       if (response.data == null) {
         print('⚠️ Response data is null');
@@ -43,18 +45,20 @@ class AnnouncementService {
 
       if (dataField is List) {
         print('🔄 Parsing ${dataField.length} announcements...');
-        final announcements = dataField
-            .map((e) {
-              try {
-                return Announcement.fromJson(e as Map<String, dynamic>);
-              } catch (parseError) {
-                print('❌ Error parsing announcement: $parseError');
-                print('📄 Problematic data: $e');
-                return null;
-              }
-            })
-            .whereType<Announcement>()
-            .toList();
+        final announcements = <Announcement>[];
+
+        for (int i = 0; i < dataField.length; i++) {
+          try {
+            final item = dataField[i] as Map<String, dynamic>;
+            print('  Parsing announcement $i: ${item['title']}');
+            final announcement = Announcement.fromJson(item);
+            announcements.add(announcement);
+          } catch (parseError) {
+            print('❌ Error parsing announcement $i: $parseError');
+            print('📄 Problematic data: ${dataField[i]}');
+          }
+        }
+
         print('✅ Successfully loaded ${announcements.length} announcements');
         return announcements;
       } else {
@@ -63,12 +67,15 @@ class AnnouncementService {
       }
 
     } on DioException catch (e) {
-      print('❌ DioException: ${e.type}');
-      print('❌ Error message: ${e.message}');
-      print('❌ Error response: ${e.response?.data}');
+      print('❌ DioException caught!');
+      print('❌ Type: ${e.type}');
+      print('❌ Message: ${e.message}');
+      print('❌ Response: ${e.response?.data}');
+      print('❌ Status code: ${e.response?.statusCode}');
       throw Exception('Announcements service error: ${e.message}');
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('❌ Unexpected error: $e');
+      print('❌ Stack trace: $stackTrace');
       throw Exception('Unexpected error: $e');
     }
   }

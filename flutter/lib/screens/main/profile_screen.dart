@@ -67,14 +67,14 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
           ? (isDark ? AppColors.darkPrimaryRed : AppColors.primaryRed)
           : (isDark ? AppColors.darkTextSecondary : const Color(0xFF64748B)),
       onPressed: () {
-        _showNotificationQuickSettings(context, ref, notificationSettings);
+        _showNotificationQuickSettings(context, ref);
       },
     );
   }
 
- void _showNotificationQuickSettings(BuildContext context, WidgetRef ref, NotificationSettings notificationSettings) {
+ void _showNotificationQuickSettings(BuildContext context, WidgetRef ref) {
   final theme = Theme.of(context);
-  
+
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
@@ -84,170 +84,9 @@ class _ProfileScreenContentState extends ConsumerState<_ProfileScreenContent> {
       minChildSize: 0.4,
       maxChildSize: 0.9,
       expand: false,
-      builder: (context, scrollController) => Container(
-        decoration: BoxDecoration(
-          color: theme.scaffoldBackgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Column(
-          children: [
-            // Handle bar
-            Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.only(top: 8),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onSurface.withAlpha((0.3 * 255).round()),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            
-            // Scrollable content
-            Expanded(
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Header
-                    Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.notifications,
-                            color: theme.colorScheme.primary,
-                            size: 24,
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            'Быстрые настройки уведомлений',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.onSurface,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-                    // Main toggle
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: SwitchListTile(
-                        value: notificationSettings.pushEnabled,
-                        onChanged: (value) async {
-                          Navigator.of(context).pop();
-                          await ref.read(uiProvider.notifier).togglePushNotifications();
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  value ? 'Уведомления включены' : 'Уведомления выключены',
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        title: Text(
-                          'Push-уведомления',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Получать уведомления о дедлайнах и расписании',
-                          style: TextStyle(
-                            color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-                          ),
-                        ),
-                        activeColor: theme.colorScheme.primary,
-                      ),
-                    ),
-                    
-                    // Detailed settings (only if push is enabled)
-                    if (notificationSettings.pushEnabled) ...[
-                      const Divider(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: SwitchListTile(
-                          value: notificationSettings.deadlineNotifications,
-                          onChanged: (value) async {
-                            await ref.read(uiProvider.notifier).toggleDeadlineNotifications();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    value ? 'Уведомления о дедлайнах включены' : 'Уведомления о дедлайнах выключены',
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          title: const Text('Дедлайны'),
-                          subtitle: const Text('Напоминания о приближающихся дедлайнах'),
-                          activeColor: theme.colorScheme.primary,
-                        ),
-                      ),
-                      
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: SwitchListTile(
-                          value: notificationSettings.scheduleNotifications,
-                          onChanged: (value) async {
-                            await ref.read(uiProvider.notifier).toggleScheduleNotifications();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    value ? 'Уведомления о расписании включены' : 'Уведомления о расписании выключены',
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          title: const Text('Расписание'),
-                          subtitle: const Text('Изменения в расписании занятий'),
-                          activeColor: theme.colorScheme.primary,
-                        ),
-                      ),
-                      
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: SwitchListTile(
-                          value: notificationSettings.announcementNotifications,
-                          onChanged: (value) async {
-                            await ref.read(uiProvider.notifier).toggleAnnouncementNotifications();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    value ? 'Объявления включены' : 'Объявления выключены',
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          title: const Text('Объявления'),
-                          subtitle: const Text('Важные объявления и новости'),
-                          activeColor: theme.colorScheme.primary,
-                        ),
-                      ),
-                      
-                      const SizedBox(height: 24),
-                    ],
-                    
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+      builder: (context, scrollController) => _NotificationSettingsContent(
+        scrollController: scrollController,
+        theme: theme,
       ),
     ),
   );
@@ -1322,7 +1161,187 @@ class _SessionTile extends StatelessWidget {
       ),
     );
   }
+}
 
+class _NotificationSettingsContent extends ConsumerWidget {
+  final ScrollController scrollController;
+  final ThemeData theme;
+
+  const _NotificationSettingsContent({
+    required this.scrollController,
+    required this.theme,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notificationSettings = ref.watch(notificationSettingsProvider);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        children: [
+          // Handle bar
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(top: 8),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurface.withAlpha((0.3 * 255).round()),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+
+          // Scrollable content
+          Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Header
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.notifications,
+                          color: theme.colorScheme.primary,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Быстрые настройки уведомлений',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Main toggle
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: SwitchListTile(
+                      value: notificationSettings.pushEnabled,
+                      onChanged: (value) async {
+                        Navigator.of(context).pop();
+                        await ref.read(uiProvider.notifier).togglePushNotifications();
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                value ? 'Уведомления включены' : 'Уведомления выключены',
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      title: Text(
+                        'Push-уведомления',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Получать уведомления о дедлайнах и расписании',
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                        ),
+                      ),
+                      activeColor: theme.colorScheme.primary,
+                    ),
+                  ),
+
+                  // Detailed settings (only if push is enabled)
+                  if (notificationSettings.pushEnabled) ...[
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: SwitchListTile(
+                        value: notificationSettings.deadlineNotifications,
+                        onChanged: (value) async {
+                          await ref.read(uiProvider.notifier).toggleDeadlineNotifications();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  value ? 'Уведомления о дедлайнах включены' : 'Уведомления о дедлайнах выключены',
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        title: const Text('Дедлайны'),
+                        subtitle: const Text('Напоминания о приближающихся дедлайнах'),
+                        activeColor: theme.colorScheme.primary,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: SwitchListTile(
+                        value: notificationSettings.scheduleNotifications,
+                        onChanged: (value) async {
+                          await ref.read(uiProvider.notifier).toggleScheduleNotifications();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  value ? 'Уведомления о расписании включены' : 'Уведомления о расписании выключены',
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        title: const Text('Расписание'),
+                        subtitle: const Text('Изменения в расписании занятий'),
+                        activeColor: theme.colorScheme.primary,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: SwitchListTile(
+                        value: notificationSettings.announcementNotifications,
+                        onChanged: (value) async {
+                          await ref.read(uiProvider.notifier).toggleAnnouncementNotifications();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  value ? 'Объявления включены' : 'Объявления выключены',
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        title: const Text('Объявления'),
+                        subtitle: const Text('Важные объявления и новости'),
+                        activeColor: theme.colorScheme.primary,
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+                  ],
+
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
+}
 
 

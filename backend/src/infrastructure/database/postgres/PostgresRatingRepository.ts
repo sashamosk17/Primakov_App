@@ -16,7 +16,7 @@ export class PostgresRatingRepository implements IRatingRepository {
   async getByTeacher(teacherId: string): Promise<Result<Rating[]>> {
     try {
       const query = `
-        SELECT id, teacher_id, user_id, value, version, ip_hash, created_at, updated_at
+        SELECT id, teacher_id, user_id, value, comment, version, ip_hash, created_at, updated_at
         FROM ratings
         WHERE teacher_id = $1
         ORDER BY created_at DESC
@@ -35,9 +35,13 @@ export class PostgresRatingRepository implements IRatingRepository {
   async save(rating: Rating): Promise<Result<void>> {
     try {
       const query = `
-        INSERT INTO ratings (id, teacher_id, user_id, value, version, ip_hash, created_at, updated_at)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        ON CONFLICT (user_id, teacher_id) DO NOTHING
+        INSERT INTO ratings (id, teacher_id, user_id, value, comment, version, ip_hash, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        ON CONFLICT (user_id, teacher_id) DO UPDATE
+          SET value = EXCLUDED.value,
+              comment = EXCLUDED.comment,
+              version = ratings.version + 1,
+              updated_at = EXCLUDED.updated_at
       `;
 
       const result = await this.pool.query(query, [
@@ -45,16 +49,12 @@ export class PostgresRatingRepository implements IRatingRepository {
         rating.teacherId,
         rating.userId,
         rating.value,
+        rating.comment,
         rating.version,
         rating.ipHash || null,
         rating.createdAt,
         rating.updatedAt,
       ]);
-
-      // Check if insert was successful (not a duplicate)
-      if (result.rowCount === 0) {
-        return Result.fail("Rating already exists for this user-teacher pair");
-      }
 
       return Result.ok();
     } catch (error) {
@@ -69,15 +69,17 @@ export class PostgresRatingRepository implements IRatingRepository {
       const query = `
         UPDATE ratings
         SET value = $2,
+            comment = $3,
             version = version + 1,
-            ip_hash = $3,
+            ip_hash = $4,
             updated_at = NOW()
-        WHERE id = $1 AND version = $4
+        WHERE id = $1 AND version = $5
       `;
 
       const result = await this.pool.query(query, [
         rating.id,
         rating.value,
+        rating.comment,
         rating.ipHash || null,
         rating.version,
       ]);
@@ -104,6 +106,7 @@ export class PostgresRatingRepository implements IRatingRepository {
       row.user_id,
       row.value,
       new Date(row.created_at),
+      row.comment || '',
       new Date(row.updated_at),
       row.version,
       row.ip_hash

@@ -9,6 +9,7 @@ export class Rating {
     public userId: string,
     public value: number,
     public createdAt: Date,
+    public comment: string = '',
     updatedAt?: Date,
     public version = 0,
     public ipHash?: string

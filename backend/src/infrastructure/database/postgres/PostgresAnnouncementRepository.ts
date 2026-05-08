@@ -136,12 +136,12 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
     return {
       id: row.id,
       title: row.title,
+      content: row.content || row.description || '', // Use content if available, fallback to description
+      createdAt: new Date(row.created_at),
       description: row.description,
-      content: row.content,
       imageUrl: row.image_url,
       date: new Date(row.date),
       category: row.category as "EVENT" | "NEWS" | "MAINTENANCE" | "IMPORTANT",
-      createdAt: new Date(row.created_at),
       authorId: row.author_id,
     };
   }

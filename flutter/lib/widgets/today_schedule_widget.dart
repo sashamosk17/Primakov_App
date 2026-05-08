@@ -2,12 +2,12 @@
 /// Shows today's schedule with next lesson highlighted
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/api_models.dart';
 import '../providers/schedule_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/main/schedule_screen.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -55,7 +55,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
         margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         padding: AppSpacing.paddingLG,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: AppColors.backgroundSecondary,
           borderRadius: AppSpacing.borderRadiusLG,
           boxShadow: AppColors.toggleShadow,
         ),
@@ -63,7 +63,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
           child: Text(
             'Сегодня нет уроков',
             style: AppTypography.heading3.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
           ),
         ),
@@ -133,7 +133,7 @@ class _TodayScheduleWidgetState extends ConsumerState<TodayScheduleWidget> {
                 child: Text(
                   'Еще ${schedule.lessons.length - 3} уроков',
                   style: AppTypography.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ),
@@ -202,7 +202,7 @@ class _LessonCompactCard extends StatelessWidget {
               Text(
                 lesson.endTime,
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -231,16 +231,12 @@ class _LessonCompactCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.room,
-                      size: 14,
-                      color: AppColors.textSecondary,
-                    ),
+                    Icon(Icons.location_on, size: 14, color: AppColors.textSecondary),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Кабинет ${lesson.room}',
                       style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -260,7 +256,7 @@ class _LessonCompactCard extends StatelessWidget {
                 'Следующий',
                 style: AppTypography.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.surface,
+                  color: AppColors.backgroundSecondary,
                 ),
               ),
             ),

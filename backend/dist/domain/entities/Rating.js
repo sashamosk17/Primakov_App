@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rating = void 0;
 const Result_1 = require("../../shared/Result");
 class Rating {
-    constructor(id, teacherId, userId, value, createdAt, updatedAt, version = 0, ipHash) {
+    constructor(id, teacherId, userId, value, createdAt, comment = '', updatedAt, version = 0, ipHash) {
         this.id = id;
         this.teacherId = teacherId;
         this.userId = userId;
         this.value = value;
         this.createdAt = createdAt;
+        this.comment = comment;
         this.version = version;
         this.ipHash = ipHash;
         this.updatedAt = updatedAt ?? createdAt;

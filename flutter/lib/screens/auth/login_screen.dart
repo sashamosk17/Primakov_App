@@ -54,9 +54,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authLoadingProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.backgroundPrimary,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -64,46 +65,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 // Logo/Icon
                 Container(
                   width: 100,
                   height: 100,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryRed,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryRed.withOpacity(0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.school,
-                    size: 50,
-                    color: Colors.white,
-                  ),
+                   child: Center(
+                            child: Opacity(
+                              opacity: 0.8,
+                              child: Image.asset(
+                                'assets/images/primakov_logo.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                 ),
                 const SizedBox(height: 32),
 
                 // Title
-                const Text(
+                Text(
                   'PrimakovApp',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
 
                 // Subtitle
-                const Text(
+                Text(
                   'Добро пожаловать!',
                   style: TextStyle(
                     fontSize: 16,
-                    color: AppColors.textSecondary,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -111,9 +106,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Email Field
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? AppColors.darkSurfaceContainer : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
+                    boxShadow: isDark ? [] : const [
                       BoxShadow(
                         color: Color(0x08000000),
                         blurRadius: 10,
@@ -125,19 +120,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     controller: _emailController,
                     enabled: !isLoading,
                     keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Email',
-                      hintStyle: const TextStyle(color: Color(0xFF999999)),
-                      prefixIcon: const Icon(
+                      hintStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999),
+                      ),
+                      prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: AppColors.primaryRed,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: isDark ? AppColors.darkSurfaceContainer : Colors.white,
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -147,9 +147,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 // Password Field
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? AppColors.darkSurfaceContainer : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
+                    boxShadow: isDark ? [] : const [
                       BoxShadow(
                         color: Color(0x08000000),
                         blurRadius: 10,
@@ -161,19 +161,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     controller: _passwordController,
                     enabled: !isLoading,
                     obscureText: _obscurePassword,
+                    style: TextStyle(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Пароль',
-                      hintStyle: const TextStyle(color: Color(0xFF999999)),
-                      prefixIcon: const Icon(
+                      hintStyle: TextStyle(
+                        color: isDark ? AppColors.darkTextSecondary : const Color(0xFF999999),
+                      ),
+                      prefixIcon: Icon(
                         Icons.lock_outlined,
-                        color: AppColors.primaryRed,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
-                          color: AppColors.textSecondary,
+                          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                         ),
                         onPressed: () {
                           setState(() {
@@ -186,7 +191,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: isDark ? AppColors.darkSurfaceContainer : Colors.white,
                       contentPadding: const EdgeInsets.all(16),
                     ),
                   ),
@@ -203,10 +208,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       'Забыли пароль?',
                       style: TextStyle(
-                        color: AppColors.primaryRed,
+                        color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -218,23 +223,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFEBEE),
+                      color: isDark ? AppColors.darkErrorContainer : const Color(0xFFFFEBEE),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFFD32F2F)),
+                      border: Border.all(
+                        color: isDark ? AppColors.darkError : const Color(0xFFD32F2F),
+                      ),
                     ),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.error_outline,
-                          color: Color(0xFFD32F2F),
+                          color: isDark ? AppColors.darkError : const Color(0xFFD32F2F),
                           size: 20,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             _error!,
-                            style: const TextStyle(
-                              color: Color(0xFFD32F2F),
+                            style: TextStyle(
+                              color: isDark ? AppColors.darkOnErrorContainer : const Color(0xFFD32F2F),
                               fontSize: 13,
                             ),
                           ),
@@ -252,7 +259,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: isLoading ? null : _handleLogin,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryRed,
+                      backgroundColor: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -284,10 +291,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Нет аккаунта? ',
                       style: TextStyle(
-                        color: AppColors.textSecondary,
+                        color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                       ),
                     ),
                     TextButton(
@@ -298,10 +305,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         'Зарегистрироваться',
                         style: TextStyle(
-                          color: AppColors.primaryRed,
+                          color: isDark ? AppColors.darkPrimary : AppColors.primaryRed,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -316,7 +323,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   'ACADEMIC CURATOR SYSTEM V2.4',
                   style: TextStyle(
                     fontSize: 11,
-                    color: AppColors.textSecondary.withOpacity(0.6),
+                    color: (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary).withOpacity(0.6),
                     letterSpacing: 1.2,
                   ),
                 ),

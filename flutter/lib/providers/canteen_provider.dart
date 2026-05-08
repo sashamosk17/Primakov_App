@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'auth_provider.dart';
 
 class CanteenState {
-  final CanteenMenu? todayMenu;
+  final List<CanteenMenu>? todayMenu;
   final bool isLoading;
   final String? error;
 
@@ -17,7 +17,7 @@ class CanteenState {
   });
 
   CanteenState copyWith({
-    CanteenMenu? todayMenu,
+    List<CanteenMenu>? todayMenu,
     bool? isLoading,
     String? error,
   }) {
@@ -37,8 +37,8 @@ class CanteenNotifier extends StateNotifier<CanteenState> {
   Future<void> fetchTodayMenu() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final menu = await _canteenService.getTodaysMenu();
-      state = state.copyWith(todayMenu: menu, isLoading: false);
+      final menus = await _canteenService.getTodaysMenuList();
+      state = CanteenState(todayMenu: menus, isLoading: false, error: null);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }

@@ -2,8 +2,8 @@
 /// Converted from React Native LessonCard component
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import '../models/api_models.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -21,7 +21,7 @@ class LessonCard extends StatelessWidget {
     final startTime = lesson.startTime.isNotEmpty ? lesson.startTime : '--:--';
     final endTime = lesson.endTime.isNotEmpty ? lesson.endTime : '--:--';
     final subject = lesson.subject.isNotEmpty ? lesson.subject : 'Без названия';
-    final teacherId = lesson.teacherId.isNotEmpty ? lesson.teacherId : 'Не указан';
+    final teacherName = lesson.teacherName ?? 'Преподаватель не указан';
     final room = lesson.room.isNotEmpty ? lesson.room : '?';
     final floor = lesson.floor;
 
@@ -52,14 +52,14 @@ class LessonCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundTertiary,
+              color: isDarkMode ? AppColors.darkBackgroundTertiary : AppColors.backgroundSecondary,
               borderRadius: BorderRadius.circular(AppSpacing.xs),
             ),
             child: Text(
               '$startTime - $endTime',
               style: AppTypography.bodySmall.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                color: AppColors.textPrimary,
               ),
             ),
           ),
@@ -72,11 +72,11 @@ class LessonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          // Teacher ID
+          // Teacher Name
           Text(
-            '👨‍🏫 ID: $teacherId',
+            '👨‍🏫 $teacherName',
             style: AppTypography.bodyMedium.copyWith(
-              color: isDarkMode ? AppColors.darkTextSecondary : AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -84,7 +84,7 @@ class LessonCard extends StatelessWidget {
           Text(
             '🚪 Каб. $room, этаж $floor',
             style: AppTypography.bodySmall.copyWith(
-              color: isDarkMode ? AppColors.darkTextTertiary : AppColors.textTertiary,
+              color: AppColors.textTertiary,
             ),
           ),
           // Homework indicator

@@ -6,9 +6,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "deadline:create",
     "deadline:read",
     "deadline:update:own",
-    "rating:create",
-    "rating:update:own",
-    "review:read"
+    "rating:create"
   ],
   TEACHER: ["schedule:read", "review:read:own", "rating:read:own"],
   ADMIN: [
@@ -17,7 +15,8 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "users:read:all",
     "users:update",
     "users:delete",
-    "analytics:read"
+    "analytics:read",
+    "rating:read:all"
   ],
   SUPERADMIN: [
     "schedule:read",
@@ -25,6 +24,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "users:read:all",
     "users:update",
     "users:delete",
-    "analytics:read"
+    "analytics:read",
+    "rating:read:all"
   ]
 };

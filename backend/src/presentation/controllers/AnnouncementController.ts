@@ -18,7 +18,16 @@ export class AnnouncementController {
       if (result.isFailure) {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }
-      return res.json({ status: "success", data: result.value });
+
+      // Map to Flutter-compatible format
+      const announcements = result.value?.map(a => ({
+        id: a.id,
+        title: a.title,
+        content: a.content || a.description,
+        createdAt: a.createdAt.toISOString(),
+      })) || [];
+
+      return res.json({ status: "success", data: announcements });
     } catch (error) {
       return next(error);
     }
@@ -38,7 +47,16 @@ export class AnnouncementController {
       if (result.isFailure) {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }
-      return res.json({ status: "success", data: result.value });
+
+      // Map to Flutter-compatible format
+      const announcements = result.value?.map(a => ({
+        id: a.id,
+        title: a.title,
+        content: a.content || a.description,
+        createdAt: a.createdAt.toISOString(),
+      })) || [];
+
+      return res.json({ status: "success", data: announcements });
     } catch (error) {
       return next(error);
     }

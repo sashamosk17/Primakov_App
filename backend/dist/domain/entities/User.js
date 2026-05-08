@@ -33,6 +33,25 @@ class User {
     updateLastLogin() {
         this.updatedAt = new Date();
     }
+    /**
+     * Updates user profile fields.
+     * Only updates provided fields (partial update).
+     */
+    updateProfile(firstName, lastName) {
+        if (firstName !== undefined)
+            this.firstName = firstName;
+        if (lastName !== undefined)
+            this.lastName = lastName;
+        this.updatedAt = new Date();
+    }
+    /**
+     * Replaces current password with a new one.
+     * Caller is responsible for verifying old password before calling this.
+     */
+    changePassword(newPassword) {
+        this.password = newPassword;
+        this.updatedAt = new Date();
+    }
     toJSON() {
         return {
             id: this.id,

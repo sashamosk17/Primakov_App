@@ -7,13 +7,16 @@ const CreateDeadlineUseCase_1 = require("../../application/deadline/CreateDeadli
 const GetUserDeadlinesUseCase_1 = require("../../application/deadline/GetUserDeadlinesUseCase");
 const CompleteDeadlineUseCase_1 = require("../../application/deadline/CompleteDeadlineUseCase");
 const DeadlineService_1 = require("../../domain/services/DeadlineService");
+const rateLimiter_1 = require("../../infrastructure/config/rateLimiter");
+const validationMiddleware_1 = require("../middleware/validationMiddleware");
+const deadlineSchemas_1 = require("../../domain/validation/deadlineSchemas");
 const deadlineRoutes = (repository) => {
     const router = (0, express_1.Router)();
     const service = new DeadlineService_1.DeadlineService(repository);
     const controller = new DeadlineController_1.DeadlineController(new CreateDeadlineUseCase_1.CreateDeadlineUseCase(service), new GetUserDeadlinesUseCase_1.GetUserDeadlinesUseCase(service), new CompleteDeadlineUseCase_1.CompleteDeadlineUseCase(service), repository);
     router.get("/", controller.getDeadlines);
-    router.post("/", controller.createDeadline);
-    router.patch("/:deadlineId/complete", controller.completeDeadline);
+    router.post("/", rateLimiter_1.writeRateLimiter, (0, validationMiddleware_1.validate)(deadlineSchemas_1.createDeadlineSchema), controller.createDeadline);
+    router.patch("/:deadlineId/complete", rateLimiter_1.writeRateLimiter, controller.completeDeadline);
     return router;
 };
 exports.deadlineRoutes = deadlineRoutes;

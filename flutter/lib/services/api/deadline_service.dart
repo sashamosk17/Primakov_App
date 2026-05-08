@@ -3,11 +3,7 @@ import '../../models/api_models.dart';
 import '../../config/api_config.dart';
 
 class DeadlineService {
-  late final Dio _dio;
-
-  DeadlineService() {
-    _dio = ApiConfig.createDio();
-  }
+  final Dio _dio = ApiConfig.createDio();
 
   Future<List<Deadline>> getDeadlines(String userId, {String? status}) async {
     try {

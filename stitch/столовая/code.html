@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#474746",
+                    "inverse-on-surface": "#f0f0f2",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "primary": "#6c0c08",
+                    "on-primary-fixed-variant": "#862118",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-dim": "#d9dadc",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#ffdad5",
+                    "surface-container-low": "#f3f3f5",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#ffa396",
+                    "background": "#f9f9fb",
+                    "inverse-primary": "#ffb4a9",
+                    "on-surface": "#1a1c1d",
+                    "tertiary-container": "#484b4f",
+                    "surface-variant": "#e2e2e4",
+                    "secondary-container": "#e2dfde",
+                    "primary-container": "#8c251c",
+                    "surface-container-high": "#e8e8ea",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#e0e2e7",
+                    "surface-tint": "#a7382d",
+                    "surface-bright": "#f9f9fb",
+                    "outline-variant": "#dec0bb",
+                    "on-tertiary-fixed": "#191c20",
+                    "on-secondary-container": "#636262",
+                    "on-primary-fixed": "#410001",
+                    "tertiary-fixed-dim": "#c4c6cb",
+                    "tertiary": "#313438",
+                    "surface": "#f9f9fb",
+                    "on-tertiary-fixed-variant": "#44474b",
+                    "secondary": "#5f5e5e",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#b9bbc0",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-surface-variant": "#57423e",
+                    "surface-container": "#eeeef0",
+                    "inverse-surface": "#2f3132",
+                    "on-background": "#1a1c1d",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "secondary-fixed": "#e5e2e1",
+                    "outline": "#8b716d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "display": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .pencil-sketch-bg {
+        background-image: linear-gradient(to bottom, rgba(249, 249, 251, 0.8), rgba(249, 249, 251, 1)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuBattJcDT5k8hbBQJjXJrd1viLbihI2ZBFevQVYs-TOsA7tqHzmCyHAxSZjAehUZ9xsLhooq6uZbkzX3PaMNdw4zbonMVfKSgA1oFyF8yDR1_ig6zd91Q0bdZc8WxvKaeMcCwZgXMk4aTyNlo9Ef_xYEgYfcT6GBXsIqaz4ZOUDNvZ6LWAxQZ8cHnsG23BVeFlPWIPECkEQvY1crWkypLLyskE0_gM5SsY-iEGGDweNvI4lZ-IQBUbR_sKiLAU9bkQabRMAZ-XsC5rD);
+        background-size: cover;
+        background-blend-mode: overlay;
+      }
+      body {
+        min-height: max(884px, 100dvh);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-slate-50/80 dark:bg-gray-950/80 backdrop-blur-md sticky top-0 z-50 shadow-sm shadow-red-950/5">
+<div class="flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Student Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOBXJVhNUgNi6tClPRQiETdPtHSz8zJQA1MtogBzQj4HXEhm7sVt98plptVFFLATNYPW60NaIIwbXBE4q-S8tHmSMku601xIhYwCTegsRtrFE4arhbwFkKYUxURJwvoy1-p4jb0dPMfORQNIk9rGkuHJ7K62kcSWXSQVHz5UBVIk1vQmlW1d6kB-2DPBhSQGjQNmO59l4K4BVwtVgT185H8E9IsmopErvKApbOyMSIIdfEozBWJ3mCNP2E6RV64k0pJQx8_NVE2k4"/>
+</div>
+<h1 class="font-manrope font-extrabold tracking-widest text-red-900 uppercase text-sm">Primakov School</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100/50 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-100/50 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-8">
+<!-- Hero Section -->
+<div class="mb-10">
+<h2 class="font-headline text-4xl font-extrabold text-on-surface tracking-tight mb-2">Меню столовой</h2>
+<p class="text-secondary font-medium italic">Balanced nutrition for academic excellence</p>
+</div>
+<!-- Sticky TabBar & Filter Row -->
+<div class="flex items-center gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex p-1 bg-surface-container-low rounded-2xl">
+<button class="px-6 py-2.5 rounded-xl text-sm font-bold bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all">Breakfast</button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-semibold text-secondary hover:text-primary transition-all">Lunch</button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-semibold text-secondary hover:text-primary transition-all">Dinner</button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-semibold text-secondary hover:text-primary transition-all">Snack</button>
+</div>
+<button class="ml-auto flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest text-primary text-sm font-bold shadow-sm shadow-red-950/5 border border-outline-variant/10 whitespace-nowrap">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                Allergens
+            </button>
+</div>
+<!-- Compact Food List -->
+<div class="flex flex-col gap-3">
+<!-- Featured Card (Chef's Choice) -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm shadow-red-950/5 border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2">
+<span class="bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Chef's Choice</span>
+</div>
+<div class="flex justify-between items-start mb-2 pr-16">
+<h3 class="font-headline text-lg font-bold text-on-surface leading-tight">Poached Eggs &amp; Avocado Tartine</h3>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-green-600 text-lg" data-icon="eco">eco</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-xs mb-4 line-clamp-1">Whole grain sourdough, smashed Hass avocado, organic poached eggs.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="font-manrope font-bold text-primary text-xl">₽450</span>
+<span class="text-[11px] font-semibold text-secondary px-2 py-0.5 bg-surface-container-low rounded-md">420 kcal</span>
+</div>
+<button class="p-2 rounded-full bg-primary/5 text-primary">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<!-- Standard Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm shadow-red-950/5 border border-outline-variant/10 group">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline text-base font-bold">Classic Berry Oatmeal</h4>
+<span class="material-symbols-outlined text-green-600 text-lg" data-icon="egg_alt">egg_alt</span>
+</div>
+<div class="flex gap-2 mb-4">
+<span class="text-[9px] font-bold uppercase tracking-tighter text-secondary-fixed-dim bg-secondary-container px-1.5 py-0.5 rounded">Vegan</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter text-secondary-fixed-dim bg-secondary-container px-1.5 py-0.5 rounded">Nut-free</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="font-manrope font-bold text-primary text-lg">₽280</span>
+<span class="text-[11px] font-semibold text-secondary">310 kcal</span>
+</div>
+<button class="p-2 rounded-full bg-surface-container-low text-secondary">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<!-- Standard Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm shadow-red-950/5 border border-outline-variant/10 group">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline text-base font-bold">Fluffy Fruit Pancakes</h4>
+<span class="material-symbols-outlined text-orange-600 text-lg" data-icon="bakery_dining">bakery_dining</span>
+</div>
+<div class="flex gap-2 mb-4">
+<span class="text-[9px] font-bold uppercase tracking-tighter text-secondary-fixed-dim bg-secondary-container px-1.5 py-0.5 rounded">Vegetarian</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="font-manrope font-bold text-primary text-lg">₽320</span>
+<span class="text-[11px] font-semibold text-secondary">450 kcal</span>
+</div>
+<button class="p-2 rounded-full bg-surface-container-low text-secondary">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<!-- Standard Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm shadow-red-950/5 border border-outline-variant/10 group">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline text-base font-bold">Farm Fresh Scramble</h4>
+<span class="material-symbols-outlined text-green-600 text-lg" data-icon="pets">pets</span>
+</div>
+<div class="flex gap-2 mb-4">
+<span class="text-[9px] font-bold uppercase tracking-tighter text-secondary-fixed-dim bg-secondary-container px-1.5 py-0.5 rounded">Keto</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="font-manrope font-bold text-primary text-lg">₽390</span>
+<span class="text-[11px] font-semibold text-secondary">280 kcal</span>
+</div>
+<button class="p-2 rounded-full bg-surface-container-low text-secondary">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<!-- Side Card (Action) -->
+<div class="bg-primary/5 p-5 rounded-2xl flex justify-between items-center border border-primary/10">
+<div>
+<h4 class="font-headline text-base font-bold text-primary">Custom Omelet</h4>
+<p class="text-xs text-secondary">Build your own with seasonal ingredients</p>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Weekly Specials Banner -->
+<div class="mt-10 p-6 rounded-[24px] bg-primary-container text-on-primary-container shadow-xl shadow-primary/10">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] mb-2 block text-on-primary-container/70">Academic Exclusive</span>
+<h3 class="font-headline text-2xl font-extrabold mb-3">Green Monday Special</h3>
+<p class="text-on-primary-container/80 text-xs mb-6 leading-relaxed">Starting next week, enjoy our locally sourced plant-based menu every Monday. Better for you, better for the planet.</p>
+<button class="bg-surface-container-lowest text-primary px-6 py-2.5 rounded-xl text-xs font-bold shadow-md">Read more</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl fixed bottom-0 left-0 w-full flex justify-around items-center px-2 pt-3 pb-8 z-50 rounded-t-[24px] shadow-[0_-4px_20px_rgba(140,37,28,0.08)] border-t border-outline-variant/10">
+<a class="flex flex-col items-center justify-center text-red-900 dark:text-red-500 bg-red-50 dark:bg-red-950/30 rounded-xl px-4 py-2 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Главная</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-gray-500 hover:text-red-800 transition-all px-4 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Расписание</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-gray-500 hover:text-red-800 transition-all px-4 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="widgets">widgets</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Сервисы</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-gray-500 hover:text-red-800 transition-all px-4 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[9px] font-bold uppercase tracking-wider mt-1">Профиль</span>
+</a>
+</nav>
+</body></html>

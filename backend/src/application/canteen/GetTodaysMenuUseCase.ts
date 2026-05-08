@@ -4,32 +4,20 @@ import { CanteenMenu, PostgresCanteenMenuRepository } from "../../infrastructure
 export class GetTodaysMenuUseCase {
   constructor(private canteenMenuRepository: PostgresCanteenMenuRepository) {}
 
-  async execute(): Promise<Result<CanteenMenu>> {
+  async execute(): Promise<Result<CanteenMenu[]>> {
     const result = await this.canteenMenuRepository.getTodaysMenu();
 
     if (result.isFailure) {
-      return Result.fail(result.error);
+      return Result.fail(result.error || "Unknown error");
     }
 
     const menus = result.value;
 
+    // Return empty array if no menu available - this is a valid state
     if (menus.length === 0) {
-      return Result.fail("No menu available for today");
+      return Result.ok([]);
     }
 
-    // Combine all menus into a single menu with all items
-    const allItems = menus.flatMap(menu => menu.items);
-
-    const combinedMenu: CanteenMenu = {
-      id: menus[0].id,
-      date: menus[0].date,
-      mealType: 'LUNCH', // Default, not used by Flutter
-      isActive: true,
-      items: allItems,
-      createdAt: menus[0].createdAt,
-      updatedAt: new Date(),
-    };
-
-    return Result.ok(combinedMenu);
+    return Result.ok(menus);
   }
 }

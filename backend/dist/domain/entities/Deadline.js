@@ -25,6 +25,15 @@ class Deadline {
         this.updatedAt = new Date();
         return Result_1.Result.ok();
     }
+    uncomplete() {
+        if (this.status === DeadlineStatus_1.DeadlineStatus.PENDING) {
+            return Result_1.Result.fail("Deadline is not completed");
+        }
+        this.status = DeadlineStatus_1.DeadlineStatus.PENDING;
+        this.completedAt = undefined;
+        this.updatedAt = new Date();
+        return Result_1.Result.ok();
+    }
     isOverdue() {
         return this.status !== DeadlineStatus_1.DeadlineStatus.COMPLETED && new Date() > this.dueDate;
     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../config/app_colors.dart';
 import '../config/app_typography.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
@@ -21,26 +21,36 @@ class CustomDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final bgColor = isDark ? AppColors.darkSurfaceContainerHigh : AppColors.backgroundSecondary;
+    final borderColor = isDark ? AppColors.darkBorderPrimary : AppColors.borderPrimary;
+    final textColor = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final hintColor = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Label
         Text(
           label.toUpperCase(),
-          style: AppTypography.labelLarge,
+          style: AppTypography.labelLarge.copyWith(
+            color: textColor,
+          ),
         ),
         const SizedBox(height: 8),
         // Dropdown
         Container(
-          decoration: const BoxDecoration(
-            color: AppColors.backgroundTertiary,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
             border: Border(
               bottom: BorderSide(
-                color: AppColors.borderPrimary,
+                color: borderColor,
                 width: 2,
               ),
             ),
@@ -51,18 +61,26 @@ class CustomDropdown<T> extends StatelessWidget {
               value: value,
               hint: Text(
                 placeholder,
-                style: AppTypography.bodyLarge,
+                style: AppTypography.bodyLarge.copyWith(
+                  color: hintColor,
+                ),
               ),
               isExpanded: true,
               icon: SvgPicture.asset(
                 'assets/icons/dropdown_chevron.svg',
                 width: 12,
                 height: 7.4,
+                colorFilter: ColorFilter.mode(
+                  textColor,
+                  BlendMode.srcIn,
+                ),
               ),
               items: items,
               onChanged: onChanged,
-              style: AppTypography.bodyLarge,
-              dropdownColor: Theme.of(context).colorScheme.surface,
+              style: AppTypography.bodyLarge.copyWith(
+                color: textColor,
+              ),
+              dropdownColor: bgColor,
             ),
           ),
         ),

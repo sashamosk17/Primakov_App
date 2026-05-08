@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#57423e",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "tertiary-container": "#484b4d",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#ffa396",
+                        "primary": "#6c0c08",
+                        "secondary": "#545f73",
+                        "outline-variant": "#dec0bb",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "primary-container": "#8c251c",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-background": "#0b1c30",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#111c2d",
+                        "inverse-primary": "#ffb4a9",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#313536",
+                        "primary-fixed": "#ffdad5",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-primary-fixed-variant": "#862118",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed": "#410001",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#b8bbbd",
+                        "background": "#f8f9ff",
+                        "on-secondary-container": "#586377",
+                        "outline": "#8b716d",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#a7382d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "gutter": "1rem",
+                        "stack-md": "1rem",
+                        "section-gap": "2rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "label-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant">
+<img alt="Admin" data-alt="A professional close-up headshot of a distinguished academic administrator in a clean, modern educational setting. The lighting is bright and high-key, emphasizing a light-mode aesthetic with a palette of soft whites and deep burgundy accents. The composition is clean and focused, reflecting a high-end corporate administrative identity for the Primakov School." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEEhJ7x01O2SvEu2sCZ2qkSugFhjil0Du4eK925eJmPi2dzIcZw_YOAb7ApQq0HEL_KaFXuEy3DGfL9r9Q9OK4ENj2pCNN0z9GWvFlfHwxRnyiC1IvWF_BrxEEdRvFbGH06T_Bu1qGzF6GMng5Iuxf7c2iDxbs8ZX-RFxoL899Bg7yGQ9BVLW6NcpOkq7Hkljw1X0GMFHrVgS07pJ6NNiTDYVVrnsiEdBIemJFcphY5kqjerFJLIXLscaNnVxnLpRDXtlihySkUmqF"/>
+</div>
+<h1 class="text-lg font-extrabold text-red-900 dark:text-red-100 tracking-tighter">Primakov Admin</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-red-900 dark:text-red-400 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="pt-20 px-4">
+<!-- Search and Filter Section -->
+<div class="mb-6 space-y-4">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-secondary" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 pl-12 pr-4 text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" placeholder="Search by name, email or ID" type="text"/>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-primary text-on-primary font-label-lg shadow-sm">All</button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-surface-container-low text-secondary font-label-lg border border-outline-variant hover:bg-surface-container transition-colors">Students</button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-surface-container-low text-secondary font-label-lg border border-outline-variant hover:bg-surface-container transition-colors">Teachers</button>
+<button class="whitespace-nowrap px-5 py-2 rounded-full bg-surface-container-low text-secondary font-label-lg border border-outline-variant hover:bg-surface-container transition-colors">Admins</button>
+</div>
+</div>
+<!-- User Count Heading -->
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-title-lg font-bold text-on-surface">Users <span class="text-secondary font-normal text-body-sm">(1,248)</span></h2>
+<button class="text-primary text-label-lg flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                Refine
+            </button>
+</div>
+<!-- High-Density User List -->
+<div class="space-y-3">
+<!-- User Card 1 (Admin) -->
+<div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Elena Belova" data-alt="A portrait of a middle-aged woman with a professional, welcoming expression, wearing a refined charcoal blazer. The background is a soft-focus architectural view of a modern library with warm mahogany wood and bright marble accents. The image follows a high-contrast corporate aesthetic with subtle red highlights in the lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5wZ52XRKKuDySmaVWi8eDKK2hbafQxr-zyELYFMihgNAM64PCRYm2HyT86utWB2W9IFiKELrnoNDEe7W1hc_hVr3_ezbUYHCHVmQlLzdU_cq9P0_N46bNYNR2fGQ2-1qy3kCEkfmWbMQFZV022gZT3pnxqHxhZkxeokx3f658GvRmmHubXWrhRa7TMg83_eDloiAneKVmWwS1pVhJ4iYGWgsgLsl-25jhqZ6TD6ID0QiXIzwa1xbYzHGU89R3PjaGfFnTcJlPZAkD"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface font-body-md">Elena Belova</span>
+<span class="bg-primary/10 text-primary text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-tighter">Admin</span>
+</div>
+<span class="text-secondary text-body-sm">e.belova@primakov.edu</span>
+</div>
+</div>
+<button class="text-slate-400 p-1 rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- User Card 2 (Student) -->
+<div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Artem Makarov" data-alt="A portrait of a young male student in a white academic polo shirt, smiling confidently. The environment is a brightly lit, modern classroom with minimalist glass walls and clean white surfaces. The color palette is dominated by light blues and pristine whites, maintaining a premium academic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzWHQbo5T55H3xWLkivkR2DeBIOoAdrtl_Crkli6l9SUVLYCScWMR1nSHIat7pEIfSMWZq05NltSMPDgDtgA49nnHs1De-v06Sq-zWm5yCV3Pbou2x1YOrXVEaIjyan4AXPJ77LXnaCANwXdvO5Tbf6meUW3AQRj_D0HkcR95_16I0FK_VJB3aPFA6yKslokFwlTlm00JEHm49NJoTyAuUFHsoGrdOkz319BdKEu59wco8PRvW3Di7vMexGxUi1wW1Ex9d8oyFfCmA"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface font-body-md">Artem Makarov</span>
+<span class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-tighter">Student</span>
+</div>
+<span class="text-secondary text-body-sm">a.makarov@primakov.edu</span>
+</div>
+</div>
+<button class="text-slate-400 p-1 rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- User Card 3 (Teacher) -->
+<div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Svetlana Kuznetsova" data-alt="A professional portrait of an educator in a bright office filled with books and high-end digital displays. She has a thoughtful expression, dressed in a professional navy blouse. The scene is illuminated with soft, natural light coming from large windows, reflecting a sophisticated, high-end administrative design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs1uJFBY4KFFctJEcVXvhPrFmqr1SKqm2kohHUhpxmSLPKeQr0PUqIqbm9Q2ETkupluPPBjbni1zHYkisVIDLH40VgJi03XiLiguSBwEGLN8UO1aUKfSsDXMePg_6slwUmqgQmSsYKyPUm6hUCAYuD01NiYdETxZ3qYtbuaYQS6sZeAqWn7iIimouDxp0eePg_23zReJ9XxPL5eJ1xyiydfJtzHYqzGotcBwFBmxu3552zQaVbLOITezIj_mxxKP_h9T3h9HSno70P"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-slate-300 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface font-body-md">Svetlana Kuznetsova</span>
+<span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-tighter">Teacher</span>
+</div>
+<span class="text-secondary text-body-sm">s.kuznetsova@primakov.edu</span>
+</div>
+</div>
+<button class="text-slate-400 p-1 rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- User Card 4 (Student) -->
+<div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Dmitry Ivanov" data-alt="A focused portrait of a young man wearing glasses and a formal white shirt. He is sitting in a modern study area with high-end furniture and minimalist decor. The lighting is crisp and cool, emphasizing a light-mode palette of pristine whites and deep corporate reds, conveying academic rigor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlRkleBjnWso0J0mIUPFJgRx-NafSCsKXB7BUv0yPEDwNarItOZe2ligZv8aves_8g2-ePtnPSOcnqtAJ9BFuG9sdPnNd9339hDFg163x-xVWWwXxNpioPDeCBUlAc9AS_Ydae9gj4d0JxO4vPdHlzqSoQZXESq2jyrLSKTfM0p7Ss4DnJOmb-_ZE5WCV9mWPDSgBMADPUxiv0qdPz-TngSm_FtL0rP6YiN1T4TYgDAVV_oQMJ94y61NP1uYveYFGx7UTEOwt58Aer"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface font-body-md">Dmitry Ivanov</span>
+<span class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-tighter">Student</span>
+</div>
+<span class="text-secondary text-body-sm">d.ivanov@primakov.edu</span>
+</div>
+</div>
+<button class="text-slate-400 p-1 rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- User Card 5 (Teacher) -->
+<div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Oleg Petrov" data-alt="A portrait of a senior male professor in a scholarly setting, with dark wood bookshelves and a large window in the background. He is wearing a tailored grey suit. The lighting is sophisticated and directional, creating a sense of authority and prestige in a clean, modern academic context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVzXIP7e3Vx3cTkARtKPoasVTDzz9Fhh4CB89vO6-NQuRJr5t9myEc4krtSq3ZQHUJGisJYE0o2znSQy08-N_PXQXg9Eg0_GZwUzL0J0Ok7hRwA5OxZi_bARs1yeT2eoORD7JGxCKdsD1FCCGKmJd61_sgZCYxpuNiewsmLr64qBtmv6EYVRwkNpOv8pVC30G1sj8JRF4D0C9LUQeHVS9VBcAslsNcEscvKhHGP60oXvykV8bhqSj34Jy3OG8KBCUtkrZw9wRjYNrc"/>
+</div>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-slate-300 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-on-surface font-body-md">Oleg Petrov</span>
+<span class="bg-emerald-100 text-emerald-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-tighter">Teacher</span>
+</div>
+<span class="text-secondary text-body-sm">o.petrov@primakov.edu</span>
+</div>
+</div>
+<button class="text-slate-400 p-1 rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center transition-transform active:scale-90 z-40">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 scale-95 active:scale-90 transition-transform duration-150 group">
+<span class="material-symbols-outlined text-[24px]" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-red-900 dark:text-red-400 bg-red-50 dark:bg-red-900/20 rounded-xl px-3 py-1 scale-95 active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-[24px]" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Users</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 scale-95 active:scale-90 transition-transform duration-150 group">
+<span class="material-symbols-outlined text-[24px]" data-icon="campaign">campaign</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Content</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-500 scale-95 active:scale-90 transition-transform duration-150 group relative">
+<span class="material-symbols-outlined text-[24px]" data-icon="pending_actions">pending_actions</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Requests</span>
+<div class="absolute top-0 right-2 w-2 h-2 bg-primary rounded-full"></div>
+</button>
+</nav>
+</body></html>

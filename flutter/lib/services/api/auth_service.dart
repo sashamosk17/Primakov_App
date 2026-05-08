@@ -87,12 +87,4 @@ class AuthService {
   Future<void> logout() async {
     // Logout is handled by state management in Flutter
   }
-
-  void setToken(String token) {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
-  }
-
-  void clearToken() {
-    _dio.options.headers.remove('Authorization');
-  }
 }

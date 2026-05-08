@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#410001",
+                    "surface-bright": "#f8f9ff",
+                    "outline-variant": "#dec0bb",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "tertiary-container": "#484b4d",
+                    "primary-fixed": "#ffdad5",
+                    "surface": "#f8f9ff",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "on-background": "#0b1c30",
+                    "inverse-surface": "#213145",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-surface": "#0b1c30",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#a7382d",
+                    "secondary": "#545f73",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#57423e",
+                    "on-primary-container": "#ffa396",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#111c2d",
+                    "inverse-primary": "#ffb4a9",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "outline": "#8b716d",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-container": "#586377",
+                    "primary-container": "#8c251c",
+                    "secondary-container": "#d5e0f8",
+                    "tertiary-fixed": "#e0e3e5",
+                    "primary": "#6c0c08",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-container": "#e5eeff",
+                    "tertiary": "#313536",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-high": "#dce9ff",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#b8bbbd",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#862118"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-gap": "2rem",
+                    "gutter": "1rem",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "stack-lg": "1.5rem",
+                    "margin-mobile": "1rem"
+            },
+            "fontFamily": {
+                    "title-lg": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "body-sm": ["Manrope"],
+                    "label-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "body-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-white border-b border-slate-200 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a senior educational administrator in a bright, modern office setting. The person is wearing a dark academic-style suit. The lighting is soft and natural, emphasizing a high-end corporate school environment with white marble surfaces and warm wooden accents in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfllFIWuJYLPhh3VfcnNohQYqboDbKq1aya2ST_bT8Jj5hJjaoDuui3UDHTvVYnP7MbVjk7wKOVT7KUND2rpBpk2OOW7kaopbtYNUMPblz4oA7JoxLLQfTRR_R_KyAgM_ikkvURq26AudUXyNMXqy0gADvFMvPCb_7PAaulEkM1jZlOwoqXDz9t1tOtDWqcpEAdUDEsHnx5sUzCsbVBagzqL08j9Bqe9aamf7a22-_Z2m9Ap1bUp5Pl2n9cgZWZ4fkUQ7H47essXBj"/>
+</div>
+<h1 class="font-['Manrope'] font-semibold text-lg text-red-900">Primakov Admin</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-20 px-4 max-w-2xl mx-auto">
+<!-- Search & Filter Section -->
+<section class="mt-4 mb-6 space-y-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body-md text-body-md shadow-sm" placeholder="Search users, emails, or IDs..." type="text"/>
+</div>
+<!-- Chips for Role Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-lg whitespace-nowrap shadow-md">All Users</button>
+<button class="px-5 py-2 rounded-full bg-white border border-slate-200 text-secondary font-label-lg whitespace-nowrap hover:bg-slate-50 transition-colors">Students</button>
+<button class="px-5 py-2 rounded-full bg-white border border-slate-200 text-secondary font-label-lg whitespace-nowrap hover:bg-slate-50 transition-colors">Teachers</button>
+<button class="px-5 py-2 rounded-full bg-white border border-slate-200 text-secondary font-label-lg whitespace-nowrap hover:bg-slate-50 transition-colors">Admins</button>
+</div>
+</section>
+<!-- User List Content -->
+<div class="space-y-3">
+<!-- User Card 1 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-slate-50" data-alt="A close-up portrait of a young student with a focused expression, set in a brightly lit academic library. Soft, out-of-focus bookshelves create a scholarly atmosphere. The lighting is clean and professional, matching the premium educational branding of the school." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIJD2kcc0eznDSEPEOSrNtU2SAygxfhGovu6D4Ea_87SCD3zUojTfqZT_lQuvwY7GB6ko8_pUcHWMSVRMRpnhf1H16O2yGpmk9hhXw265yAyYjCd3DMA6EvCSKVvZphYslF9QbsLMljBxJ8QsQdgHEiXlWJm9j97ntVE3M07b4jFGC_Sm9F2WFbOX1CM5S3J19_3BEWe8Nxehqfg3JL0q0hrQLEhk0fCbW-kpV2rATrqiUYM9sBW0GrO5X4A8qy7pFFVkaNuRJXcdD"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-on-background truncate">Julian Dashwood</h3>
+<span class="px-2 py-0.5 rounded bg-red-50 text-red-900 text-[10px] font-bold uppercase tracking-wider border border-red-100">Student</span>
+</div>
+<p class="text-body-sm text-slate-500 truncate">j.dashwood@primakov.edu</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- User Card 2 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-slate-50" data-alt="A portrait of a middle-aged female educator with a warm, authoritative smile. She is in a high-tech modern classroom with subtle glass reflections and a minimalist architectural background. The color palette is composed of sophisticated navies and soft grays with premium burgundy accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJao-in4u4D-dSSTbGhZaABbzFCLa6_p_-CMIlzu-7_jKUo9wxZBNGlj6LxzwSGScKJbav1fjPLNaWJuPnCkc_AWE35wlNNaM1bGYNXXI6X3XxBlIE-5FSMBSs-7P2uopMwjvNoJDgkwPvxtnKqYYEyCZeyonWfxIz7KUt4FMOMB_RN2yzkSTaOT5GkAmjkCnlu0dm6Nv4z1-m8QzuuS0jOtIaJp471YZUsU3-g5IyixbuZMWl8p5G4aO4Nafy5yMIsFRjZcUaQN5Y"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-on-background truncate">Elena Morozova</h3>
+<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 text-[10px] font-bold uppercase tracking-wider border border-blue-100">Teacher</span>
+</div>
+<p class="text-body-sm text-slate-500 truncate">e.morozova@primakov.edu</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- User Card 3 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group opacity-80">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-slate-50" data-alt="A professional headshot of a male administrative officer wearing a tailored charcoal suit. The setting is a minimalist, high-end corporate office with soft, diffused daylight. The background features blurred architectural lines of a prestigious school building." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkJHC_dFlyVea4RHsZ4tbMZjZ6PF8cjco9bWoQ--O9bmeaiGKwsUuh8wUpEcL-dpGevqWY078dV4gqjB9P2tH6RKYzxaTRnTMhxD1UlI75koGybcvqrV6H9EAJ97NlKUFQ8YPaXehSNX-si2bKQzEK1IYCYCQNjUIlVayY3SN_Sq6drLkZzFso4kkd7-wU2NfKmPrMHFw6rbnXq6T_ej6dvDuJVDEL55nBnYs8Y-Rvj7Weyk2eGPnk1DBSyoSYc9mgUlEo6jj2QZFW"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-slate-300 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-on-background truncate">Alexander Knight</h3>
+<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-900 text-[10px] font-bold uppercase tracking-wider border border-slate-200">Admin</span>
+</div>
+<p class="text-body-sm text-slate-500 truncate">a.knight@primakov.edu</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- User Card 4 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-slate-50" data-alt="A portrait of a bright-eyed young student in a modern school corridor. The aesthetic is clean and contemporary, with glass and light wood materials. The lighting is optimistic and bright, reflecting a luxury academic environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRnp7jxCSMkmOOK2gESgi17YtR4WvoPG6oNmWO5x2jKk5-B5tl8DwuaOSjw-qjBiQu8Hnau8jtbTx18GUDCKMHgfsrGzy9ckol3kOefk6EVDUtO6_Awj7m54Xvdvp2v08w_IIxOiCmD9jIHPTGpeGqg22kBjkncgNOMzbbiIZNatT5Ipt2g94JJiWHZnwbyU9kMj7lfqJPK7juOomPvNLzGV64UX7LTyjYzgENuV0gJaBapyW--Pe35_5P-joEsEgt_n6_qhrj_INp"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-on-background truncate">Sophia Chen</h3>
+<span class="px-2 py-0.5 rounded bg-red-50 text-red-900 text-[10px] font-bold uppercase tracking-wider border border-red-100">Student</span>
+</div>
+<p class="text-body-sm text-slate-500 truncate">s.chen@primakov.edu</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- User Card 5 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-slate-50" data-alt="A professional portrait of a senior teacher in a refined office, holding a leather-bound notebook. The background is a sophisticated mix of traditional and modern academic elements, like dark wood and glass. Soft, high-key lighting creates a clean, professional look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuJEstHOpH00DobGtcpfvWutZZV15t-6Dadx7SL8GkybjcySr29bEP_uZ3eG1bS_18GaMSWnW6fGZ764QqOOlYeW97rfOqQaIWi6-dzXTQbldHTwJMAGyHqceLrDrSFBhe5VA77TO1BEBwWlQfy4X9mAKaAXl_nrDUz8Tju5eK6bv3Tx4S5xv8pByVYcf5mW6r6egPNUDy23uNPAlGriEWnbXcLzaMv_0f1LwkUvxykqdNteMHtG6o6LGFON5jmac30G4XFC_iTLd9"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-on-background truncate">Marcus Reed</h3>
+<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 text-[10px] font-bold uppercase tracking-wider border border-blue-100">Teacher</span>
+</div>
+<p class="text-body-sm text-slate-500 truncate">m.reed@primakov.edu</p>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed right-6 bottom-24 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center active:scale-95 transition-transform z-50">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-800 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-red-900 bg-red-50/50 rounded-xl px-3 py-1 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Users</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-800 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Content</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-800 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Inbox</span>
+</a>
+</nav>
+</body></html>

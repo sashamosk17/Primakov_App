@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Lesson = void 0;
 class Lesson {
-    constructor(id, subject, teacherId, timeSlot, room, floor, hasHomework = false) {
+    constructor(id, subject, teacherId, timeSlot, room, floor, hasHomework = false, homeworkDescription) {
         this.id = id;
         this.subject = subject;
         this.teacherId = teacherId;
@@ -10,6 +10,7 @@ class Lesson {
         this.room = room;
         this.floor = floor;
         this.hasHomework = hasHomework;
+        this.homeworkDescription = homeworkDescription;
     }
     isNow() {
         const now = new Date();

@@ -63,6 +63,30 @@ export class MockStoryRepository implements IStoryRepository {
         expiresAt: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000),
         viewedBy: ["user-1", "user-2", "user-3"],
       },
+      {
+        id: "story-6",
+        title: "30-я юбилейная конференция «Санкт-Петербургская Модель ООН»",
+        description: "Торжественное мероприятие, посвященное 30-летию конференции",
+        imageUrl: "assets/images/primakov_stories.jpeg",
+        author: "admin",
+        createdAt: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
+        expiresAt: new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000),
+        viewedBy: [],
+        linkUrl: "https://primakov.school/news/yubileynaya-konferentsiya-sankt-model-oon-",
+        linkText: "30-я юбилейная конференция «Санкт-Петербургская Модель ООН»",
+      },
+      {
+        id: "story-7",
+        title: "Встреча, после которой космос уже не кажется далёким",
+        description: "Уникальная встреча с представителями космической отрасли",
+        imageUrl: "assets/images/primakov_strories2.jpeg",
+        author: "admin",
+        createdAt: today,
+        expiresAt: new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000),
+        viewedBy: [],
+        linkUrl: "https://primakov.school/news/vstrecha-posle-kotoroy-kosmos-uzhe-ne-kazhetsya-dalyokim",
+        linkText: "Встреча, после которой космос уже не кажется далёким",
+      },
     ];
   }
 

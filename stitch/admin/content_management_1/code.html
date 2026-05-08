@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "inverse-surface": "#213145",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e5eeff",
+                    "on-surface-variant": "#57423e",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "tertiary-container": "#484b4d",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#ffa396",
+                    "primary": "#6c0c08",
+                    "secondary": "#545f73",
+                    "outline-variant": "#dec0bb",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "primary-container": "#8c251c",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-background": "#0b1c30",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#111c2d",
+                    "inverse-primary": "#ffb4a9",
+                    "tertiary-fixed": "#e0e3e5",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#313536",
+                    "primary-fixed": "#ffdad5",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-variant": "#d3e4fe",
+                    "on-tertiary-fixed": "#191c1e",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "on-primary-fixed-variant": "#862118",
+                    "surface-dim": "#cbdbf5",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-fixed-dim": "#ffb4a9",
+                    "on-surface": "#0b1c30",
+                    "on-primary-fixed": "#410001",
+                    "secondary-container": "#d5e0f8",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#b8bbbd",
+                    "background": "#f8f9ff",
+                    "on-secondary-container": "#586377",
+                    "outline": "#8b716d",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#a7382d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "1rem",
+                    "gutter": "1rem",
+                    "stack-md": "1rem",
+                    "section-gap": "2rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "1.5rem"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "body-sm": ["Manrope"],
+                    "title-lg": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "label-lg": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-white border-b border-slate-200 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-primary/20">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot avatar of a school administrator, styled with a clean and modern digital illustration feel. The character has a friendly expression, set against a soft burgundy background that matches the Primakov brand's prestige. High-quality vector art with smooth gradients and professional lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHIJsX5qqsk_hhYqr53qVBS2bmC2HMISBySC50EnKlUTG1WxM12DZ5FWznEbfNy4z_WZSHYp1z2oVwgfU-4dGDVxAtFSGtKdcgNufogwneUk71_UWK9vBl3GIh42vNNGPfbFRgS-7sQFTaEv_hMd5x2dl4FiKSTxTaKvtsD7iLczRBYK_kTFYLumqPd7IOX_0P7AamIxVzh2OjzmxyAlZEzXfi4JP6Y9ipUsGIjmSMYeyl2XOQgRinodWQ74y9dnAXHdW9_Wo7pW_N"/>
+</div>
+<h1 class="text-lg font-extrabold text-red-900 tracking-tighter">Primakov Admin</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors duration-200 active:opacity-70">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="mt-16 px-4 pt-6">
+<!-- Content Header / Tabs -->
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-md text-headline-md text-primary">Content Management</h2>
+<p class="font-body-sm text-body-sm text-secondary">Manage school-wide communications and updates</p>
+</div>
+<!-- Tab Switcher -->
+<div class="flex p-1 bg-surface-container-low rounded-xl border border-slate-200">
+<button class="flex-1 py-2.5 rounded-lg text-label-lg font-label-lg transition-all bg-white text-primary shadow-sm border border-slate-100">
+                    Announcements
+                </button>
+<button class="flex-1 py-2.5 rounded-lg text-label-lg font-label-lg transition-all text-secondary hover:text-primary">
+                    Stories
+                </button>
+</div>
+</div>
+<!-- Section: Announcements -->
+<div class="mt-8 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-on-background">Latest Announcements</h3>
+<span class="font-label-sm text-label-sm text-secondary">Showing 12 items</span>
+</div>
+<!-- Announcement Card 1 -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-red-50 text-red-900 text-[10px] font-bold uppercase tracking-wider rounded-md border border-red-100">Academic</span>
+<span class="font-label-sm text-label-sm text-secondary">2h ago</span>
+</div>
+<h4 class="font-title-lg text-body-md font-bold text-on-surface leading-tight">Annual Primakov Science Fair: Registration Now Open for All Grades</h4>
+<div class="flex items-center gap-4 border-t border-slate-100 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+<span class="text-label-sm font-label-sm">1.2k views</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm">Oct 24, 2023</span>
+</div>
+</div>
+</div>
+<!-- Announcement Card 2 -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-surface-container-high text-on-secondary-container text-[10px] font-bold uppercase tracking-wider rounded-md border border-slate-200">Community</span>
+<span class="font-label-sm text-label-sm text-secondary">Yesterday</span>
+</div>
+<h4 class="font-title-lg text-body-md font-bold text-on-surface leading-tight">Weekend Campus Maintenance: South Gate Access Changes</h4>
+<div class="flex items-center gap-4 border-t border-slate-100 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+<span class="text-label-sm font-label-sm">840 views</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm">Oct 23, 2023</span>
+</div>
+</div>
+</div>
+<!-- Announcement Card 3 -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-red-50 text-red-900 text-[10px] font-bold uppercase tracking-wider rounded-md border border-red-100">Urgent</span>
+<span class="font-label-sm text-label-sm text-secondary">3 days ago</span>
+</div>
+<h4 class="font-title-lg text-body-md font-bold text-on-surface leading-tight">Health Safety Update: New Guidelines for Indoor Gathering Areas</h4>
+<div class="flex items-center gap-4 border-t border-slate-100 pt-3 mt-1">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+<span class="text-label-sm font-label-sm">2.4k views</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm">Oct 21, 2023</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Stories (Visual Preview for Grid demonstration) -->
+<div class="mt-12 mb-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-title-lg text-title-lg text-on-background">Story Highlights</h3>
+<button class="text-primary font-label-lg">View All</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Story Card 1 -->
+<div class="relative aspect-square rounded-2xl overflow-hidden group border border-slate-200 shadow-md">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-angle cinematic shot of a modern, prestigious school hallway with polished marble floors and burgundy banners. The lighting is soft and warm, highlighting the architectural details and the clean academic environment. The scene is bright and organized, conveying a sense of excellence and heritage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqPLf-XS0hn4j0eIg9XUu4noAwu2lYF-_d1B4SAd4OB1rAU9N7U1Woghk-1sai50TzG22DtS23gKneUE7jiiYz84MQpbg-YRWD0rbVmH9f-5ipgnSDei758gazJEtk2mpeiY8mAoKx9lNzR5PZtO98tjyBD68UGpm5iqqSE62LIAD_XtfDiUpzc5cfUodG4Fq1v9amFvybgvV1twOSA040z9Dc35kvqg7_sAXqlmu2nu923_STMDXhbLlwyoZF0aXNBM1VgftAQ3cF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-primary text-white text-[10px] font-bold rounded-full">Active</div>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="text-[10px] font-bold uppercase tracking-wider text-white/70">Campus Life</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="visibility">visibility</span>
+<span class="text-[10px] font-bold">3.1k</span>
+</div>
+</div>
+</div>
+<!-- Story Card 2 -->
+<div class="relative aspect-square rounded-2xl overflow-hidden group border border-slate-200 shadow-md">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A close-up shot of an educational robotics kit and a tablet on a modern white desk. The lighting is crisp and cool, reflecting off the sleek technological components. A burgundy school logo is subtly visible in the background, reinforcing the academic brand identity. The mood is innovative and focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ6IEgd0m8lfJ1EBYpKCqPlMbH8s-GflZrPR_W6GFINQVFUHt3CBkZg__TxKjVCK4cSia5zapnlKDax-ItGvMipUbou2oXgUDbJgKdty9gyTWD3MmnaSfPSobXyix0l_NmoG11gNJj4MWNO_Fic12zNYpOxJHr6WLf60_s7eLod_4RyjRI3X3thozQjCXEEOt6bPmKzHJzbziO67V_0eHf0YFCk3WteZZlf6aZWe6z7d2vvmAbuWDOjqXIhAZ1tO_CFcxcnpZcycV5"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-slate-500 text-white text-[10px] font-bold rounded-full">Expiring</div>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="text-[10px] font-bold uppercase tracking-wider text-white/70">Tech Lab</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="visibility">visibility</span>
+<span class="text-[10px] font-bold">1.8k</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center transition-transform active:scale-90 z-40">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="group">group</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest">Users</span>
+</button>
+<!-- Active Item: Content -->
+<button class="flex flex-col items-center justify-center text-red-900 bg-red-50 rounded-xl px-3 py-1 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest">Content</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="pending_actions">pending_actions</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest">Requests</span>
+</button>
+</nav>
+</body></html>

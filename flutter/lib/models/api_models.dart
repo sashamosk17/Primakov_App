@@ -41,6 +41,30 @@ class User {
     'isActive': isActive,
     'vkId': vkId,
   };
+
+  // ДОБАВИТЬ: метод copyWith для иммутабельных обновлений в Riverpod
+  User copyWith({
+    String? id,
+    String? email,
+    String? firstName,
+    String? lastName,
+    UserRole? role,
+    bool? isActive,
+    String? vkId,
+  }) {
+    return User(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      role: role ?? this.role,
+      isActive: isActive ?? this.isActive,
+      vkId: vkId ?? this.vkId,
+    );
+  }
+
+  // ДОБАВИТЬ: вычисляемое свойство для полного имени
+  String get fullName => '$firstName $lastName'.trim();
 }
 
 enum UserRole { STUDENT, TEACHER, ADMIN }
@@ -49,28 +73,32 @@ class Lesson {
   final String id;
   final String subject;
   final String teacherId;
+  final String? teacherName;
   final String startTime;
   final String endTime;
   final String room;
   final int floor;
   final bool hasHomework;
+  final String? homeworkDescription;
 
   Lesson({
     required this.id,
     required this.subject,
     required this.teacherId,
+    this.teacherName,
     required this.startTime,
     required this.endTime,
     required this.room,
     required this.floor,
     required this.hasHomework,
+    this.homeworkDescription,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
     // Адаптер для формата бэкенда
     String startTime;
     String endTime;
-    
+
     if (json['timeSlot'] != null) {
       startTime = json['timeSlot']['_startTime'] as String? ?? '';
       endTime = json['timeSlot']['_endTime'] as String? ?? '';
@@ -78,23 +106,25 @@ class Lesson {
       startTime = json['startTime'] as String? ?? '';
       endTime = json['endTime'] as String? ?? '';
     }
-    
+
     String room;
     if (json['room'] != null && json['room'] is Map) {
       room = json['room']['_number'] as String? ?? '';
     } else {
       room = json['room'] as String? ?? '';
     }
-    
+
     return Lesson(
       id: json['id'] as String,
       subject: json['subject'] as String,
       teacherId: json['teacherId'] as String,
+      teacherName: json['teacherName'] as String?,
       startTime: startTime,
       endTime: endTime,
       room: room,
       floor: json['floor'] as int? ?? 3,
       hasHomework: json['hasHomework'] as bool? ?? false,
+      homeworkDescription: json['homeworkDescription'] as String?,
     );
   }
 
@@ -102,11 +132,13 @@ class Lesson {
     'id': id,
     'subject': subject,
     'teacherId': teacherId,
+    'teacherName': teacherName,
     'startTime': startTime,
     'endTime': endTime,
     'room': room,
     'floor': floor,
     'hasHomework': hasHomework,
+    'homeworkDescription': homeworkDescription,
   };
 }
 
@@ -201,6 +233,8 @@ class Story {
   final String? imageUrl;
   final String? videoUrl;
   final List<String> viewedBy;
+  final String? linkUrl;
+  final String? linkText;
 
   Story({
     required this.id,
@@ -209,6 +243,8 @@ class Story {
     this.imageUrl,
     this.videoUrl,
     required this.viewedBy,
+    this.linkUrl,
+    this.linkText,
   });
 
   factory Story.fromJson(Map<String, dynamic> json) {
@@ -219,6 +255,8 @@ class Story {
       imageUrl: json['imageUrl'] as String?,
       videoUrl: json['videoUrl'] as String?,
       viewedBy: List<String>.from(json['viewedBy'] as List<dynamic>? ?? []),
+      linkUrl: json['linkUrl'] as String?,
+      linkText: json['linkText'] as String?,
     );
   }
 
@@ -229,13 +267,15 @@ class Story {
     'imageUrl': imageUrl,
     'videoUrl': videoUrl,
     'viewedBy': viewedBy,
+    'linkUrl': linkUrl,
+    'linkText': linkText,
   };
 }
 
 class Rating {
   final String id;
   final String teacherId;
-  final String studentId;
+  final String? studentId;
   final double rate;
   final String comment;
   final String createdAt;
@@ -243,7 +283,7 @@ class Rating {
   Rating({
     required this.id,
     required this.teacherId,
-    required this.studentId,
+    this.studentId,
     required this.rate,
     required this.comment,
     required this.createdAt,
@@ -253,9 +293,9 @@ class Rating {
     return Rating(
       id: json['id'] as String,
       teacherId: json['teacherId'] as String,
-      studentId: json['studentId'] as String,
+      studentId: json['studentId'] as String?,
       rate: (json['rate'] as num).toDouble(),
-      comment: json['comment'] as String,
+      comment: json['comment'] as String? ?? '',
       createdAt: json['createdAt'] as String,
     );
   }
@@ -679,5 +719,50 @@ class CanteenMenu {
     'mealType': mealType.name,
     'items': items.map((e) => e.toJson()).toList(),
     'createdAt': createdAt,
+  };
+}
+
+/// Notification Settings Model
+class NotificationSettings {
+  final bool pushEnabled;
+  final bool deadlineNotifications;
+  final bool scheduleNotifications;
+  final bool announcementNotifications;
+
+  const NotificationSettings({
+    this.pushEnabled = true,
+    this.deadlineNotifications = true,
+    this.scheduleNotifications = true,
+    this.announcementNotifications = true,
+  });
+
+  NotificationSettings copyWith({
+    bool? pushEnabled,
+    bool? deadlineNotifications,
+    bool? scheduleNotifications,
+    bool? announcementNotifications,
+  }) {
+    return NotificationSettings(
+      pushEnabled: pushEnabled ?? this.pushEnabled,
+      deadlineNotifications: deadlineNotifications ?? this.deadlineNotifications,
+      scheduleNotifications: scheduleNotifications ?? this.scheduleNotifications,
+      announcementNotifications: announcementNotifications ?? this.announcementNotifications,
+    );
+  }
+
+  factory NotificationSettings.fromJson(Map<String, dynamic> json) {
+    return NotificationSettings(
+      pushEnabled: json['pushEnabled'] as bool? ?? true,
+      deadlineNotifications: json['deadlineNotifications'] as bool? ?? true,
+      scheduleNotifications: json['scheduleNotifications'] as bool? ?? true,
+      announcementNotifications: json['announcementNotifications'] as bool? ?? true,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'pushEnabled': pushEnabled,
+    'deadlineNotifications': deadlineNotifications,
+    'scheduleNotifications': scheduleNotifications,
+    'announcementNotifications': announcementNotifications,
   };
 }

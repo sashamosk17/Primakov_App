@@ -2,12 +2,12 @@
 /// Shows 3-5 nearest deadlines with "View All" button
 
 import 'package:flutter/material.dart';
+import '../../config/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../models/api_models.dart';
 import '../providers/deadline_provider.dart';
 import '../screens/main/deadline_screen.dart';
-import '../config/app_colors.dart';
 import '../config/app_spacing.dart';
 import '../config/app_typography.dart';
 
@@ -93,14 +93,14 @@ class _DeadlineCompactCard extends StatelessWidget {
       urgencyColor = AppColors.warning;
     } else {
       urgencyText = dateFormat.format(dueDate);
-      urgencyColor = AppColors.textSecondary;
+      urgencyColor = AppColors.textPrimary;
     }
 
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
       padding: AppSpacing.paddingMD,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.backgroundSecondary,
         borderRadius: AppSpacing.borderRadiusMD,
         boxShadow: AppColors.toggleShadow,
       ),
@@ -111,14 +111,14 @@ class _DeadlineCompactCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
-                color: AppColors.backgroundTertiary,
+                color: AppColors.backgroundSecondary,
                 borderRadius: BorderRadius.circular(AppSpacing.sm),
               ),
               child: Text(
                 deadline.subject!.toUpperCase(),
                 style: AppTypography.labelSmall.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textSecondary,
+                  color: AppColors.textPrimary,
                   letterSpacing: 1,
                 ),
               ),

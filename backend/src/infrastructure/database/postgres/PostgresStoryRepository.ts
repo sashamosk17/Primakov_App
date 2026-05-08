@@ -18,7 +18,7 @@ export class PostgresStoryRepository implements IStoryRepository {
     try {
       const query = `
         SELECT s.id, s.title, s.description, s.image_url, s.video_url,
-               s.author_id, s.created_at, s.expires_at,
+               s.author_id, s.created_at, s.expires_at, s.link_url, s.link_text,
                COALESCE(
                  array_agg(sv.user_id) FILTER (WHERE sv.user_id IS NOT NULL),
                  ARRAY[]::uuid[]
@@ -44,7 +44,7 @@ export class PostgresStoryRepository implements IStoryRepository {
     try {
       const query = `
         SELECT s.id, s.title, s.description, s.image_url, s.video_url,
-               s.author_id, s.created_at, s.expires_at,
+               s.author_id, s.created_at, s.expires_at, s.link_url, s.link_text,
                COALESCE(
                  array_agg(sv.user_id) FILTER (WHERE sv.user_id IS NOT NULL),
                  ARRAY[]::uuid[]
@@ -183,6 +183,8 @@ export class PostgresStoryRepository implements IStoryRepository {
       expiresAt: new Date(row.expires_at),
       viewedBy: row.viewed_by || [],
       author: row.author_id,
+      linkUrl: row.link_url,
+      linkText: row.link_text,
     };
   }
 }

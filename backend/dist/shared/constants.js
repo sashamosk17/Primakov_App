@@ -7,9 +7,7 @@ exports.ROLE_PERMISSIONS = {
         "deadline:create",
         "deadline:read",
         "deadline:update:own",
-        "rating:create",
-        "rating:update:own",
-        "review:read"
+        "rating:create"
     ],
     TEACHER: ["schedule:read", "review:read:own", "rating:read:own"],
     ADMIN: [
@@ -18,7 +16,8 @@ exports.ROLE_PERMISSIONS = {
         "users:read:all",
         "users:update",
         "users:delete",
-        "analytics:read"
+        "analytics:read",
+        "rating:read:all"
     ],
     SUPERADMIN: [
         "schedule:read",
@@ -26,6 +25,7 @@ exports.ROLE_PERMISSIONS = {
         "users:read:all",
         "users:update",
         "users:delete",
-        "analytics:read"
+        "analytics:read",
+        "rating:read:all"
     ]
 };

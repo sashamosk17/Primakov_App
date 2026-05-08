@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e5eeff",
+                        "on-surface-variant": "#57423e",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "tertiary-container": "#484b4d",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#ffa396",
+                        "primary": "#6c0c08",
+                        "secondary": "#545f73",
+                        "outline-variant": "#dec0bb",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "primary-container": "#8c251c",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-background": "#0b1c30",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#111c2d",
+                        "inverse-primary": "#ffb4a9",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#313536",
+                        "primary-fixed": "#ffdad5",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-primary-fixed-variant": "#862118",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed": "#410001",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#b8bbbd",
+                        "background": "#f8f9ff",
+                        "on-secondary-container": "#586377",
+                        "outline": "#8b716d",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#a7382d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "gutter": "1rem",
+                        "stack-md": "1rem",
+                        "section-gap": "2rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "label-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-white border-b border-slate-200 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a school administrator in a clean, modern office setting. The lighting is bright and natural, emphasizing a high-key academic aesthetic. The individual wears professional attire, and the background features blurred educational elements like a bookshelf and a sleek white desk, matching the Primakov School prestige." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQrOC_rUsh2G_0-z-PTHbwg1D1lS7LtxjjibO-xxOoxTQZ4aHNtSd1ojYU1HSKJ9ePu-N7hfEd9UjDaAcr0sz_y6JLe7xK_HniQOQE-ZuV1-LRQtvXv5ul1w8GlDeapcC5mlkY5G8Y5L44hHEyMlFTjA1Rp89OwmGxzo0Zd9UOsvBqojFTEKP0MTJ2opZd1QUcWAkX4oXR2Zv2MkISwFr260uah-5uIpOQ-xFzWjqZRH_yj1w50QJkRtM7UYYf85-kJM0_hFNIVrg-"/>
+</div>
+<h1 class="font-manrope text-lg font-extrabold text-red-900 tracking-tighter">Primakov Admin</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors duration-200 active:opacity-70 text-red-900">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors duration-200 active:opacity-70 text-red-900">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-28 px-4 max-w-2xl mx-auto">
+<!-- Dashboard Header / Welcome -->
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Service Requests</h2>
+<p class="font-body-sm text-body-sm text-secondary">Manage school infrastructure and digital assets.</p>
+</div>
+<!-- Filter Tabs -->
+<div class="flex p-1 bg-surface-container-low rounded-xl mb-6">
+<button class="flex-1 py-2.5 rounded-lg bg-white shadow-sm text-primary font-label-lg transition-all duration-200">
+                IT Support
+            </button>
+<button class="flex-1 py-2.5 rounded-lg text-secondary font-label-lg hover:bg-slate-50 transition-all duration-200">
+                Maintenance
+            </button>
+</div>
+<!-- Request Cards List -->
+<div class="space-y-4">
+<!-- Urgent Request Card -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-label-sm text-primary uppercase tracking-widest mb-1">REQ-4029</span>
+<h3 class="font-title-lg text-title-lg text-on-surface leading-tight">Projector broken in Room 304</h3>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-error/10 text-error font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="priority_high">priority_high</span>
+                        URGENT
+                    </div>
+</div>
+<p class="text-body-sm text-on-secondary-container line-clamp-2">
+                    The smart projector has a distorted red tint and fails to connect via HDMI. Essential for the upcoming history lecture.
+                </p>
+<div class="flex items-center gap-3 py-2 border-y border-slate-50">
+<img alt="Author" class="w-6 h-6 rounded-full" data-alt="A portrait of a senior educator in a professional academic setting, smiling warmly. The aesthetic is clean and corporate, with soft natural light illuminating the face. The background consists of a sophisticated library with muted burgundy and navy blue tones, reflecting the high-end Primakov school environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTttnMxHk_97PLMWt97qwr7exXs07FgmYVoNajHtgTEzibyvzWSNPqZOjeElj0ArPaLHsXn_NT5ZUMsKk5Nns_ZxTS05lQCr7nQ4Ga2XmcsUfuV3W8Ijfw2JeNpvYyYAYSojUr9iSb872GY-6HFWWKauG2rFBAdogjs9xgUVqFXFO_PIrBOaxD48L870AfKDmgSxeUlQUaPq5gMogD7Ab_oVYL1cRmJ_gls7M7O9vYWwgIicFSOfyOHAbcc5k_sda-dJ6IHsf3Cgyk"/>
+<span class="font-body-sm text-on-surface">Dr. Elena Sokolova</span>
+<span class="ml-auto font-label-sm text-secondary">Oct 24, 09:15 AM</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="px-3 py-1 rounded-lg bg-surface-container-highest text-on-surface-variant font-label-sm">
+                        PENDING
+                    </div>
+<button class="text-primary font-label-lg flex items-center gap-1">
+                        Review Details <span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- In Progress Request Card -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-label-sm text-primary uppercase tracking-widest mb-1">REQ-3981</span>
+<h3 class="font-title-lg text-title-lg text-on-surface leading-tight">AC Unit Maintenance - Block B</h3>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="low_priority">low_priority</span>
+                        MEDIUM
+                    </div>
+</div>
+<p class="text-body-sm text-on-secondary-container line-clamp-2">
+                    Periodic filter replacement and coolant check for the central cooling system in the science wing.
+                </p>
+<div class="flex items-center gap-3 py-2 border-y border-slate-50">
+<img alt="Author" class="w-6 h-6 rounded-full" data-alt="Professional headshot of a campus facility manager in a modern, organized workshop environment. The lighting is crisp and clear, highlighting a high-tech school administrative vibe. Deep navy and charcoal colors dominate the background, maintaining a premium and serious academic tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtPoFb2rZNCp8LZ0hkueCNNHPNup_5fg5xOYierehBOKWcwUJvc8mVPrGlpCne3cM-LdsE0rDxzm0zh3CaCXBZkD9D4N-L2E9pMlN_weT8H5c5reUr9tXuM-cDQeEaWbons4IIASp0kT3bdCjDMPxmIzjgVRhRKbGKTOe74PT8tzBsoPuMvdoJwuoXpAwL_sOfMovmMcQ-w6AeoeRFR8SXAfJsEkltFusrPiNpkh2IUD6c2-tE2lC7OBtgqdGbabLSdmFVXluyo43a"/>
+<span class="font-body-sm text-on-surface">Ivan Petrov</span>
+<span class="ml-auto font-label-sm text-secondary">Oct 23, 02:30 PM</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="px-3 py-1 rounded-lg bg-surface-container-high text-primary font-label-sm">
+                        IN PROGRESS
+                    </div>
+<button class="text-primary font-label-lg flex items-center gap-1">
+                        Review Details <span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Resolved Request Card -->
+<div class="bg-white rounded-xl p-4 border border-slate-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] flex flex-col gap-3 opacity-80">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-label-sm text-secondary uppercase tracking-widest mb-1">REQ-3850</span>
+<h3 class="font-title-lg text-title-lg text-secondary leading-tight line-through">Wi-Fi Connectivity Issues</h3>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="keyboard_double_arrow_down">keyboard_double_arrow_down</span>
+                        LOW
+                    </div>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">
+                    Intermittent connection drops in the main library area during peak hours.
+                </p>
+<div class="flex items-center gap-3 py-2 border-y border-slate-50">
+<img alt="Author" class="w-6 h-6 rounded-full" data-alt="Close-up of a school librarian in a bright, contemporary library setting. Soft sunlight filters through large windows, illuminating a space filled with glass and wood. The overall mood is peaceful and professional, with a clean color palette of white, light oak, and subtle burgundy accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoi97AFGcQH913QSBLR_wtLBFbifpCuzJxxj9qlXJgs-nRf-cnb7zuwtvScQOGMHwK6seoX22o2OqyVG_S7khkJ5RZdhEn0ZBPUkP5Sy2kr4o_jV-cVljxy1aFDu-jwyEp4u_iSCUUZSdmtdqrn7bGK5nXG7wtaf5KaLezKR4p33ZHWmxJkUFwTQ_YQoP8HTPg6plTG0gGsdS8-wmln5bhE2dg1nRc-KYRX-6OFhprSAJuTWleE_1G9D5Bq22vEz4_h7E5QfJr7M36"/>
+<span class="font-body-sm text-slate-500">Maria Volkova</span>
+<span class="ml-auto font-label-sm text-slate-400">Oct 21, 11:00 AM</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="px-3 py-1 rounded-lg bg-green-50 text-green-700 font-label-sm">
+                        RESOLVED
+                    </div>
+<button class="text-slate-400 font-label-lg flex items-center gap-1">
+                        Archived <span class="material-symbols-outlined text-[18px]" data-icon="archive">archive</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for New Request -->
+<button class="fixed right-6 bottom-24 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center transition-transform active:scale-90 z-40">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Users</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-red-700 transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Content</span>
+</a>
+<a class="flex flex-col items-center justify-center text-red-900 bg-red-50 rounded-xl px-3 py-1 transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="pending_actions" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+<span class="font-manrope text-[10px] font-bold uppercase tracking-widest mt-1">Requests</span>
+</a>
+</nav>
+</body></html>

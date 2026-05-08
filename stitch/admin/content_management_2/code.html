@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Content Management - Primakov Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#410001",
+                        "surface-bright": "#f8f9ff",
+                        "outline-variant": "#dec0bb",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "tertiary-container": "#484b4d",
+                        "primary-fixed": "#ffdad5",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-background": "#0b1c30",
+                        "inverse-surface": "#213145",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-surface": "#0b1c30",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#a7382d",
+                        "secondary": "#545f73",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#57423e",
+                        "on-primary-container": "#ffa396",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#111c2d",
+                        "inverse-primary": "#ffb4a9",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "background": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "outline": "#8b716d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-container": "#586377",
+                        "primary-container": "#8c251c",
+                        "secondary-container": "#d5e0f8",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary": "#6c0c08",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "tertiary": "#313536",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#b8bbbd",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#862118"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "2rem",
+                        "gutter": "1rem",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem",
+                        "stack-lg": "1.5rem",
+                        "margin-mobile": "1rem"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "label-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-surface antialiased min-h-screen pb-24 pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Admin Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4SfxoF0iJd5Sp3iO9jrlOg7P-HHZhQ70ByU6mZZw38tTXe_ZE63bMC9Kt5TpECpl3Fj4i9Zooi9Pt9qTaMM33q3ayMfn0hKWsbu25QBzbmXlDrZG-7mmTKKNKisUiCkSYL7Z-mfHU-9podVO2Yw2zWhp86TepNItOMkGOFTdjzcttUSsDVeVAofPNxwfuVNCvVokcKM5KYp9J_3NR-ufXOetif6BplHApQPlm1RefRS9aJ2FeKewb66Wbx7vJGIGR8d4H5BxPcKRZ"/>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-title-lg">Primakov Admin</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200">
+<span class="material-symbols-outlined text-red-900 dark:text-red-500">notifications</span>
+</button>
+</header>
+<main class="px-4 py-6 max-w-5xl mx-auto space-y-8">
+<!-- Header Section -->
+<header class="space-y-2">
+<h2 class="font-display-lg text-display-lg text-on-background">Content Management</h2>
+<p class="font-body-md text-body-md text-secondary">Manage school communications and visual storytelling.</p>
+</header>
+<!-- Tab Navigation -->
+<nav class="flex gap-1 p-1 bg-surface-container-low rounded-xl border border-slate-200">
+<button class="flex-1 py-2.5 px-4 rounded-lg bg-white shadow-sm border border-slate-100 font-label-lg text-label-lg text-primary text-center">
+                Announcements
+            </button>
+<button class="flex-1 py-2.5 px-4 rounded-lg font-label-lg text-label-lg text-secondary hover:bg-white/50 transition-colors text-center">
+                Stories
+            </button>
+</nav>
+<!-- Bento Layout / Content Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Announcements List (Wide Column) -->
+<div class="md:col-span-8 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-on-surface">Recent Announcements</h3>
+<button class="text-primary font-label-lg text-label-lg flex items-center gap-1">
+                        View All <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Announcement Cards -->
+<div class="space-y-4">
+<!-- Important Card -->
+<article class="glass-card p-5 rounded-2xl border-l-4 border-l-primary shadow-sm flex gap-4 transition-transform active:scale-[0.99] border border-slate-100">
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="px-3 py-0.5 bg-red-100 text-primary rounded-full font-label-sm text-[10px] tracking-wide uppercase font-bold">Important</span>
+<span class="font-label-sm text-secondary">2 hours ago</span>
+</div>
+<h4 class="font-title-lg text-title-lg leading-tight">Campus-wide Maintenance: Library Access Limited</h4>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-2">The central library will undergo structural inspections this weekend. Digital resources remain available 24/7 via the portal.</p>
+</div>
+<div class="w-10 h-10 flex-shrink-0 bg-primary-container/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">push_pin</span>
+</div>
+</article>
+<!-- Event Card -->
+<article class="glass-card p-5 rounded-2xl shadow-sm flex gap-4 transition-transform active:scale-[0.99] border border-slate-100">
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="px-3 py-0.5 bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-[10px] tracking-wide uppercase font-bold">Event</span>
+<span class="font-label-sm text-secondary">Yesterday</span>
+</div>
+<h4 class="font-title-lg text-title-lg leading-tight">Annual Science Fair 2024 Registration Open</h4>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-2">Calling all aspiring scientists! Sign up your projects for the annual exhibition by the end of next week.</p>
+</div>
+</article>
+<!-- News Card -->
+<article class="glass-card p-5 rounded-2xl shadow-sm flex gap-4 transition-transform active:scale-[0.99] border border-slate-100">
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="px-3 py-0.5 bg-surface-container-highest text-secondary rounded-full font-label-sm text-[10px] tracking-wide uppercase font-bold">News</span>
+<span class="font-label-sm text-secondary">3 days ago</span>
+</div>
+<h4 class="font-title-lg text-title-lg leading-tight">Principal's Monthly Update: New Partnerships</h4>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-2">We are thrilled to announce new exchange programs with international institutions beginning next semester.</p>
+</div>
+</article>
+</div>
+</div>
+<!-- Stories Preview (Side Column / Web 2-col) -->
+<div class="md:col-span-4 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-title-lg text-title-lg text-on-surface">Active Stories</h3>
+<span class="material-symbols-outlined text-secondary">more_horiz</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Story Item 1 -->
+<div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A cinematic, low-angle shot of a grand academic hall with marble floors and sunlight streaming through tall windows, casting elegant shadows. The atmosphere is quiet and prestigious, using a sophisticated palette of deep navy and ivory with subtle burgundy details. The lighting is soft and natural, emphasizing the architectural heritage and modern academic excellence of the Primakov School environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq6iQHOTm-YGTm3cJFOD8JNsxxFyzx7xwR8wLq7cjNDNf19GPwbE_5r1ao1vy4DzOhv0r4G8j3gE6UlBUtzM_Egi1qbXXeGSptj6hbpt20SEhYoDOlZ_mzQ-gK8DlOiVlR9SNeKrcnSCpwLvxi2WabrCooD6oTTlroxqW5NqCQUUXlnmCXZEqA0YN8-RSavh5SCx3MRvvTrTm3QSdicFbikjCrLnN5JUySVoHCq5xwC0dfRJsl2gBdjcj-BX40F9UWossjfFQu9afs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+<div class="flex items-center gap-1 text-white font-label-sm">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                                1.2k
+                            </div>
+</div>
+</div>
+<!-- Story Item 2 -->
+<div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A focused close-up of a student writing in a leather-bound notebook in a modern, brightly lit laboratory. The room features high-tech equipment in the background, softly blurred to maintain focus on the academic work. The lighting is clean and crisp, characteristic of a high-end educational facility. The color palette consists of pristine whites, cool grays, and deep red accents, evoking a sense of technological advancement and scholarly discipline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVOx8ccu_4X4CEyTDFG7Si9ZB3Ny8YFZwolYnLsyJ0x9a0TOtRb-jO8twnyOE2gphsIWPZdOHj3wt-B-PIds3jCQuYwc--erHL6YN_-Ak7GjC7WVLq32alhPkjXvZXi-Uulu72GXSwvZl9UTE6B4UvZXPoh0Vbly_elJHm78aJGdIWDxX3KfsfrJsmDnBMJakAJoUQw3vs1zNphojMkRpbv1bJcmoJGC0QGd5BXrd-4zhIU2utD0AJAp_CYJxq1mRL3ToDLA_f64hX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+<div class="flex items-center gap-1 text-white font-label-sm">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                                856
+                            </div>
+</div>
+</div>
+<!-- Story Item 3 -->
+<div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A group of diverse students collaborating on a complex digital project in a sleek, glass-walled conference room. The atmosphere is vibrant and intellectual, illuminated by overhead warm studio lighting and the soft glow of multiple tablet screens. The visual style is premium corporate academic, utilizing professional furniture and a refined color scheme of slate, navy, and bold burgundy highlights. The mood is collaborative and forward-thinking." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKoT-n7jNGvTRpqsXZYZ7TOTE1Y28JXNfQ0pIjPfjHON9rOhwfYBBd-x-4dfP8XjE4bZ1PfG5K2I_7FM9L-0qcR54iOlOCf1uL1O3Qjcbh7RD389LPImpGaEJ6n1N8SFkHTaM40X9m0skCeQDA_RLgIeFlAduAygBv2wJpjtVTQryR9By_J3Kh6NXrS5PSACkNProsnr0s1PSYImgq7TaKDbeJ2M2R0asjM4_WQTFMI_pJOshgdXtsja6XuotCK286JvvI_ZeoiWxY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+<div class="flex items-center gap-1 text-white font-label-sm">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                                3.1k
+                            </div>
+</div>
+</div>
+<!-- Story Item 4 -->
+<div class="relative aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 hover:bg-slate-100 transition-colors">
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-3xl">add</span>
+<span class="font-label-sm">New Story</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-2xl shadow-xl flex items-center justify-center active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-lg">
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-red-800 dark:hover:text-red-300 transition-transform active:scale-95">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Stats</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-red-800 dark:hover:text-red-300 transition-transform active:scale-95">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Users</span>
+</button>
+<button class="flex flex-col items-center justify-center text-red-900 dark:text-red-400 bg-red-50/50 dark:bg-red-900/20 rounded-xl px-3 py-1 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Content</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:text-red-800 dark:hover:text-red-300 transition-transform active:scale-95">
+<span class="material-symbols-outlined">pending_actions</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Inbox</span>
+</button>
+</nav>
+</body></html>

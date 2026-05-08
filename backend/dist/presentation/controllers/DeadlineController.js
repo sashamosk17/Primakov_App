@@ -43,7 +43,9 @@ class DeadlineController {
                 if (!deadline) {
                     return res.status(404).json({ status: "error", error: { message: "Deadline not found" } });
                 }
-                const completeResult = deadline.complete();
+                const completeResult = deadline.status === DeadlineStatus_1.DeadlineStatus.COMPLETED
+                    ? deadline.uncomplete()
+                    : deadline.complete();
                 if (completeResult.isFailure) {
                     return res.status(400).json({ status: "error", error: { message: completeResult.error } });
                 }

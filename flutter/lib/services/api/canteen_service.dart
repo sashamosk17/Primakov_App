@@ -6,18 +6,51 @@ class CanteenService {
 
   CanteenService(this._dio);
 
-  Future<CanteenMenu> getTodaysMenu() async {
+  Future<CanteenMenu?> getTodaysMenu() async {
     try {
       final response = await _dio.get('/canteen/menu/today');
-      final apiResponse = ApiResponse<Map<String, dynamic>>.fromJson(
+      final apiResponse = ApiResponse<dynamic>.fromJson(
         response.data,
-        (data) => data as Map<String, dynamic>,
+        (data) => data,
       );
 
       if (apiResponse.isSuccess && apiResponse.data != null) {
-        return CanteenMenu.fromJson(apiResponse.data!);
+        // Backend returns array, check if it's empty
+        if (apiResponse.data is List && (apiResponse.data as List).isEmpty) {
+          return null;
+        }
+        // If it's a list with items, take the first one
+        if (apiResponse.data is List && (apiResponse.data as List).isNotEmpty) {
+          return CanteenMenu.fromJson((apiResponse.data as List).first as Map<String, dynamic>);
+        }
+        // If it's a map, parse directly
+        if (apiResponse.data is Map<String, dynamic>) {
+          return CanteenMenu.fromJson(apiResponse.data as Map<String, dynamic>);
+        }
       }
-      throw Exception(apiResponse.error?['message'] ?? 'Failed to load today\'s menu');
+      return null;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data?['error']?['message'] ?? e.message);
+    }
+  }
+
+  Future<List<CanteenMenu>> getTodaysMenuList() async {
+    try {
+      final response = await _dio.get('/canteen/menu/today');
+      final apiResponse = ApiResponse<dynamic>.fromJson(
+        response.data,
+        (data) => data,
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        // Backend returns array of menus
+        if (apiResponse.data is List) {
+          return (apiResponse.data as List)
+              .map((json) => CanteenMenu.fromJson(json as Map<String, dynamic>))
+              .toList();
+        }
+      }
+      return [];
     } on DioException catch (e) {
       throw Exception(e.response?.data?['error']?['message'] ?? e.message);
     }

@@ -11,7 +11,7 @@ class RegisterUseCase {
         if (result.isFailure) {
             return Result_1.Result.fail(result.error);
         }
-        return Result_1.Result.ok({ token: result.value.token });
+        return Result_1.Result.ok({ user: result.value.user, token: result.value.token });
     }
 }
 exports.RegisterUseCase = RegisterUseCase;

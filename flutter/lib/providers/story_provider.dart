@@ -64,6 +64,8 @@ class StoryNotifier extends StateNotifier<StoryState> {
             imageUrl: s.imageUrl,
             videoUrl: s.videoUrl,
             viewedBy: [...s.viewedBy, 'current_user'],
+            linkUrl: s.linkUrl,
+            linkText: s.linkText,
           );
         }
         return s;

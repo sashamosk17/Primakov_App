@@ -18,7 +18,11 @@ const config: PoolConfig = {
   // Connection pool settings
   max: parseInt(process.env.DB_POOL_MAX || "20", 10), // Maximum number of clients in the pool
   idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT || "30000", 10), // Close idle clients after 30s
-  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT || "2000", 10), // Return error after 2s if connection cannot be established
+  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT || "10000", 10), // Return error after 10s if connection cannot be established
+
+  // Keep connection alive
+  keepAlive: true,
+  keepAliveInitialDelayMillis: 10000,
 };
 
 // Singleton pool instance

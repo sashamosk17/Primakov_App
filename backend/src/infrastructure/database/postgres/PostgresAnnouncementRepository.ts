@@ -14,6 +14,7 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
   constructor(private readonly pool: Pool) {}
 
   async getAll(): Promise<Result<Announcement[]>> {
+    const client = await this.pool.connect();
     try {
       const query = `
         SELECT id, title, description, content, image_url, date, category, author_id, created_at
@@ -21,13 +22,15 @@ export class PostgresAnnouncementRepository implements IAnnouncementRepository {
         ORDER BY date DESC, created_at DESC
       `;
 
-      const result = await this.pool.query(query);
+      const result = await client.query(query);
       const announcements = result.rows.map((row) => this.mapRowToAnnouncement(row));
 
       return Result.ok(announcements);
     } catch (error) {
       console.error("Error getting all announcements:", error);
       return Result.fail("Failed to get announcements");
+    } finally {
+      client.release();
     }
   }
 

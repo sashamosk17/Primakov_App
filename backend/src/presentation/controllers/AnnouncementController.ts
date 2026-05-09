@@ -19,13 +19,16 @@ export class AnnouncementController {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }
 
-      // Map to Flutter-compatible format
-      const announcements = result.value?.map(a => ({
-        id: a.id,
-        title: a.title,
-        content: a.content || a.description,
-        createdAt: a.createdAt.toISOString(),
-      })) || [];
+      // Map to Flutter-compatible format (truncate content for list view)
+      const announcements = result.value?.map(a => {
+        const fullContent = a.content || a.description || '';
+        return {
+          id: a.id,
+          title: a.title,
+          content: fullContent.length > 150 ? fullContent.slice(0, 150) + '...' : fullContent,
+          createdAt: a.createdAt.toISOString(),
+        };
+      }) || [];
 
       return res.json({ status: "success", data: announcements });
     } catch (error) {
@@ -48,13 +51,16 @@ export class AnnouncementController {
         return res.status(400).json({ status: "error", error: { message: result.error } });
       }
 
-      // Map to Flutter-compatible format
-      const announcements = result.value?.map(a => ({
-        id: a.id,
-        title: a.title,
-        content: a.content || a.description,
-        createdAt: a.createdAt.toISOString(),
-      })) || [];
+      // Map to Flutter-compatible format (truncate content for list view)
+      const announcements = result.value?.map(a => {
+        const fullContent = a.content || a.description || '';
+        return {
+          id: a.id,
+          title: a.title,
+          content: fullContent.length > 150 ? fullContent.slice(0, 150) + '...' : fullContent,
+          createdAt: a.createdAt.toISOString(),
+        };
+      }) || [];
 
       return res.json({ status: "success", data: announcements });
     } catch (error) {

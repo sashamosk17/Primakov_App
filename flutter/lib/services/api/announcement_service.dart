@@ -13,7 +13,13 @@ class AnnouncementService {
     try {
       print('🔄 Getting announcements from: ${_dio.options.baseUrl}/announcements');
 
-      final response = await _dio.get('/announcements');
+      final response = await _dio.get(
+        '/announcements',
+        options: Options(
+          responseType: ResponseType.json,
+          validateStatus: (status) => status! < 500,
+        ),
+      );
 
       print('✅ Response received!');
       print('📊 Status code: ${response.statusCode}');
@@ -44,7 +50,7 @@ class AnnouncementService {
       print('📋 Data field length: ${dataField is List ? dataField.length : 'not a list'}');
 
       if (dataField is List) {
-        print('🔄 Parsing ${dataField.length} announcements...');
+        print('Parsing ${dataField.length} announcements...');
         final announcements = <Announcement>[];
 
         for (int i = 0; i < dataField.length; i++) {
@@ -54,8 +60,8 @@ class AnnouncementService {
             final announcement = Announcement.fromJson(item);
             announcements.add(announcement);
           } catch (parseError) {
-            print('❌ Error parsing announcement $i: $parseError');
-            print('📄 Problematic data: ${dataField[i]}');
+            print('Error parsing announcement $i: $parseError');
+            print('Problematic data: ${dataField[i]}');
           }
         }
 

@@ -62,6 +62,9 @@ async function startServer() {
 
     const app = express();
 
+    // Trust proxy - required for rate limiting behind Nginx
+    app.set('trust proxy', true);
+
     // Security headers
     app.use(helmet({
       contentSecurityPolicy: false, // Disable for API-only backend

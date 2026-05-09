@@ -18,26 +18,26 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   final ItemScrollController _itemScrollController = ItemScrollController();
   final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
 
-  String _selectedMealType = 'LUNCH'; // Начальное значение по умолчанию
+  MealType _selectedMealType = MealType.LUNCH; // Начальное значение по умолчанию
 
   // Флаг, чтобы не переключать вкладку во время программной прокрутки
   bool _isScrollingProgrammatically = false;
 
   // Карта для хранения индексов начала каждой секции в общем списке
-  Map<String, int> _sectionIndices = {};
+  Map<MealType, int> _sectionIndices = {};
 
-  final List<String> _mealTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACK'];
-  final Map<String, String> _mealTypeLabels = {
-    'BREAKFAST': 'Завтрак',
-    'LUNCH': 'Обед',
-    'DINNER': 'Ужин',
-    'SNACK': 'Перекус',
+  final List<MealType> _mealTypes = [MealType.BREAKFAST, MealType.LUNCH, MealType.DINNER, MealType.SNACK];
+  final Map<MealType, String> _mealTypeLabels = {
+    MealType.BREAKFAST: 'Завтрак',
+    MealType.LUNCH: 'Обед',
+    MealType.DINNER: 'Ужин',
+    MealType.SNACK: 'Перекус',
   };
-  final Map<String, IconData> _mealTypeIcons = {
-    'BREAKFAST': Icons.wb_sunny_outlined,
-    'LUNCH': Icons.restaurant,
-    'DINNER': Icons.nightlight_outlined,
-    'SNACK': Icons.coffee,
+  final Map<MealType, IconData> _mealTypeIcons = {
+    MealType.BREAKFAST: Icons.wb_sunny_outlined,
+    MealType.LUNCH: Icons.restaurant,
+    MealType.DINNER: Icons.nightlight_outlined,
+    MealType.SNACK: Icons.coffee,
   };
 
   @override
@@ -70,11 +70,11 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
 
   String _getInitialMealType() {
     final hour = DateTime.now().hour;
-    if (hour < 11) return 'BREAKFAST';
-    if (hour < 16) return 'LUNCH';
-    if (hour < 20) return 'DINNER';
+    if (hour < 11) return MealType.BREAKFAST;
+    if (hour < 16) return MealType.LUNCH;
+    if (hour < 20) return MealType.DINNER;
     // Поздним вечером или если ничего не подошло, покажем обед
-    return 'LUNCH';
+    return MealType.LUNCH;
   }
 
   @override
@@ -114,7 +114,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   }
 
   // Прокрутка к секции по нажатию на таб
-  void _scrollToSection(String mealType, {bool isInitial = false}) {
+  void _scrollToSection(MealType mealType, {bool isInitial = false}) {
     final index = _sectionIndices[mealType];
 
     // Если индекса нет (например, секция пуста и не была добавлена), ничего не делаем
@@ -330,7 +330,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
     return items;
   }
 
-  Widget _buildMealTypeChip(String type, String label, IconData icon) {
+  Widget _buildMealTypeChip(MealType type, String label, IconData icon) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isSelected = _selectedMealType == type;
 

@@ -68,7 +68,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
     });
   }
 
-  String _getInitialMealType() {
+  MealType _getInitialMealType() {
     final hour = DateTime.now().hour;
     if (hour < 11) return MealType.BREAKFAST;
     if (hour < 16) return MealType.LUNCH;
@@ -96,7 +96,7 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
 
     final firstVisibleIndex = visibleIndexes.reduce((a, b) => a < b ? a : b);
 
-    String? currentSection;
+    MealType? currentSection;
     // Находим, какой секции принадлежит этот индекс
     for (final mealType in _mealTypes.reversed) {
       final sectionIndex = _sectionIndices[mealType];

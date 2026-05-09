@@ -36,23 +36,44 @@ class CanteenService {
 
   Future<List<CanteenMenu>> getTodaysMenuList() async {
     try {
+      print('🌐 [CanteenService] Requesting /canteen/menu/today');
       final response = await _dio.get('/canteen/menu/today');
+      print('📦 [CanteenService] Raw response: ${response.data}');
+
       final apiResponse = ApiResponse<dynamic>.fromJson(
         response.data,
         (data) => data,
       );
 
+      print('✅ [CanteenService] API Response status: ${apiResponse.status}');
+      print('📊 [CanteenService] API Response data type: ${apiResponse.data.runtimeType}');
+
       if (apiResponse.isSuccess && apiResponse.data != null) {
         // Backend returns array of menus
         if (apiResponse.data is List) {
-          return (apiResponse.data as List)
-              .map((json) => CanteenMenu.fromJson(json as Map<String, dynamic>))
+          print('📋 [CanteenService] Data is List with ${(apiResponse.data as List).length} items');
+          final menus = (apiResponse.data as List)
+              .map((json) {
+                print('🍴 [CanteenService] Parsing menu: $json');
+                return CanteenMenu.fromJson(json as Map<String, dynamic>);
+              })
               .toList();
+          print('✅ [CanteenService] Successfully parsed ${menus.length} menus');
+          return menus;
+        } else {
+          print('⚠️ [CanteenService] Data is not a List: ${apiResponse.data}');
         }
+      } else {
+        print('❌ [CanteenService] API response not successful or data is null');
       }
       return [];
     } on DioException catch (e) {
+      print('❌ [CanteenService] DioException: ${e.message}');
+      print('❌ [CanteenService] Response: ${e.response?.data}');
       throw Exception(e.response?.data?['error']?['message'] ?? e.message);
+    } catch (e) {
+      print('❌ [CanteenService] Unexpected error: $e');
+      rethrow;
     }
   }
 

@@ -37,9 +37,15 @@ class CanteenNotifier extends StateNotifier<CanteenState> {
   Future<void> fetchTodayMenu() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
+      print('🍽️ [CanteenProvider] Fetching today menu...');
       final menus = await _canteenService.getTodaysMenuList();
+      print('🍽️ [CanteenProvider] Received ${menus.length} menus');
+      for (var menu in menus) {
+        print('🍽️ [CanteenProvider] Menu: ${menu.mealType}, items: ${menu.items.length}');
+      }
       state = CanteenState(todayMenu: menus, isLoading: false, error: null);
     } catch (e) {
+      print('❌ [CanteenProvider] Error: $e');
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }

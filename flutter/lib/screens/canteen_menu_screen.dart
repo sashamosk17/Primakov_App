@@ -273,17 +273,32 @@ class _CanteenMenuScreenState extends ConsumerState<CanteenMenuScreen> {
   List<Widget> _buildAndMapListItems(List<CanteenMenu>? menus) {
     _sectionIndices.clear();
     final List<Widget> items = [];
+
+    print('🎨 [CanteenScreen] Building list items...');
+    print('🎨 [CanteenScreen] Menus: ${menus?.length ?? 0}');
+
     if (menus == null || menus.isEmpty) {
+      print('⚠️ [CanteenScreen] No menus to display');
       return items;
+    }
+
+    for (final menu in menus) {
+      print('🎨 [CanteenScreen] Menu: ${menu.mealType}, items: ${menu.items.length}');
     }
 
     for (final mealType in _mealTypes) {
       // Собираем блюда для этой секции
       final sectionItems = <CanteenMenuItem>[];
       for (final menu in menus) {
-        sectionItems.addAll(menu.items.where(
-            (item) => item.category?.toLowerCase() == mealType.toLowerCase()));
+        // Фильтруем по mealType меню, а не по category блюда
+        if (menu.mealType == mealType) {
+          print('✅ [CanteenScreen] Found menu for $mealType with ${menu.items.length} items');
+          sectionItems.addAll(menu.items);
+        }
       }
+
+      print('📊 [CanteenScreen] Section $mealType has ${sectionItems.length} items');
+
 
       // Если в секции есть блюда, добавляем заголовок и сами блюда в общий список
       if (sectionItems.isNotEmpty) {

@@ -1,18 +1,14 @@
-# Dependencies
 node_modules/
 **/node_modules/
 
-# Node.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Expo
 .expo/
 .expo-shared/
 
-# React Native
 *.jks
 *.p8
 *.p12
@@ -20,7 +16,6 @@ yarn-error.log*
 *.mobileprovision
 *.orig.*
 
-# Android
 android/.gradle/
 android/app/build/
 android/build/
@@ -67,17 +62,9 @@ dist/
 build/
 coverage/
 
-# Database
 *.db
 *.sqlite
 *.sqlite3
 
-# Temporary files
 *.tmp
 *.temp
-
-# Claude Code
-.claude/
-
-# GitHub Copilot
-.github/copilot/
